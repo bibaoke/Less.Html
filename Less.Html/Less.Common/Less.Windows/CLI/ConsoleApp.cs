@@ -50,6 +50,8 @@ namespace Less.Windows
             foreach (string i in ConsoleApp.NameList)
                 Console.WriteLine("{0}： {1}".FormatString(i, ConsoleApp.Functions[i].Description));
 
+            Console.WriteLine();
+
             while (true)
             {
                 string command = Console.ReadLine();
