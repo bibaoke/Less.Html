@@ -4,13 +4,16 @@ using System;
 
 namespace Test
 {
-    /// <summary>
-    /// http://bbs.csdn.net/topics/392175840
-    /// 这个测试用例是上面的链接提供的
-    /// 我改进了一下，给 Query 类型添加了枚举器
-    /// </summary>
     public class Test1 : Function
     {
+        public override string Description
+        {
+            get
+            {
+                return "测试 http://bbs.csdn.net/topics/392175840 这个用例";
+            }
+        }
+
         public override bool Execute(params string[] args)
         {
             string testHtml =

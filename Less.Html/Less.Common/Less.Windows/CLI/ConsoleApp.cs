@@ -13,17 +13,27 @@ namespace Less.Windows
     public static class ConsoleApp
     {
         /// <summary>
-        /// 功能集合
+        /// 名称列表
         /// </summary>
-        public static Dictionary<string, Function> Funtions
+        private static List<string> NameList
         {
             get;
-            private set;
+            set;
+        }
+
+        /// <summary>
+        /// 功能集合
+        /// </summary>
+        private static Dictionary<string, Function> Functions
+        {
+            get;
+            set;
         }
 
         static ConsoleApp()
         {
-            ConsoleApp.Funtions = new Dictionary<string, Function>();
+            ConsoleApp.Functions = new Dictionary<string, Function>();
+            ConsoleApp.NameList = new List<string>();
 
             ConsoleApp.AddFuntion(new Exit());
         }
@@ -33,6 +43,16 @@ namespace Less.Windows
         /// </summary>
         public static void Start()
         {
+            Console.WriteLine();
+            Console.WriteLine("键入一下命令调用对应的程序：");
+            Console.WriteLine();
+
+            foreach (string i in ConsoleApp.NameList)
+            {
+                Console.WriteLine("{0}： {1}".FormatString(i, ConsoleApp.Functions[i].Description));
+                Console.WriteLine();
+            }
+
             while (true)
             {
                 string command = Console.ReadLine();
@@ -43,7 +63,7 @@ namespace Less.Windows
                 {
                     Function function;
 
-                    if (ConsoleApp.Funtions.TryGetValue(array[0].ToLower(), out function))
+                    if (ConsoleApp.Functions.TryGetValue(array[0].ToLower(), out function))
                     {
                         if (!function.Execute(array.SubArray(1)))
                             break;
@@ -64,7 +84,9 @@ namespace Less.Windows
         /// <param name="function"></param>
         public static void AddFuntion(Function function)
         {
-            ConsoleApp.Funtions.Add(function.Name, function);
+            ConsoleApp.Functions.Add(function.Name, function);
+
+            ConsoleApp.NameList.Add(function.Name);
         }
     }
 }

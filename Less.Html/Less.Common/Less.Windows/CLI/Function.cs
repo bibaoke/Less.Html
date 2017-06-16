@@ -21,6 +21,14 @@ namespace Less.Windows
         }
 
         /// <summary>
+        /// 描述
+        /// </summary>
+        public virtual string Description
+        {
+            get;
+        }
+
+        /// <summary>
         /// 执行
         /// </summary>
         /// <param name="args"></param>

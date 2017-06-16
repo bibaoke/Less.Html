@@ -7,6 +7,14 @@ namespace Less.Windows
     /// </summary>
     public class Exit : Function
     {
+        public override string Description
+        {
+            get
+            {
+                return "退出";
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
