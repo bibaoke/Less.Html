@@ -4,14 +4,13 @@
 <p align="left">
     我写了这个解析器之后才知道，原来 C# 写的 html 解析器有很多。但是因为我没有参照别人的做法，Less.Html 有一个特点，就是它的用法是最接近 jQuery 的。我刻意模仿了 jQuery。比如我写的 test1：
 </p>
-<pre class="brush:csharp">    var q = HtmlParser.Query(testHtml);
+<pre class="brush:csharp">  var q = HtmlParser.Query(testHtml);
 
     foreach (Element i in q("td"))
     {
         if (!q(i).find("table").hasElement)
             Console.WriteLine(i.textContent);
-    }
-</pre>
+    }</pre>
 <p align="left">
     解析之后返回的 q 对象，等同于 jQuery 的 $，因为 C# 不支持用 $ 做变量名，所以我用 q 代替。foreach 循环的部分，在 jQuery 的写法应该是 for(var i = 0; i &lt;&nbsp;$("td").length; i++) ，其实在 Less.Html 里面，同样可以这样写，jQuery 不能使用foreach 的原因是，它会枚举对象的属性，C# 没有这个烦恼，所以我做了些改进。if 条件部分，q 和 jQuery 的 $ 一样，是可以传入 Element 类型的，然后调用的 find 方法，作用也是和 jQuery 一样的。hasElement 这个属性，实际上就是 length &gt; 0 的判断，是我写的一个扩展属性，当然，你在 jQuery 里面也可以通过 prototype 做同样的事情。输出部分，textContent 是 HTML DOM 标准的一个方法，作用是获取节点及其后代的文本内容，这和你在编写浏览器运行的 javascript 是一样的。
 </p>
