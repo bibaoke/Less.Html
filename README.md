@@ -103,5 +103,5 @@
     以及它们的组合使用，比如 .class element.class 或者 .class.class，暂时不支持 .class&gt;.class 这种。
 </p>
 <p align="left">
-    因为时间紧迫，加上对我来说够用了，我并没有实现所有的 css3 选择器，不过这是很容易加上去的。<span>所以我想让大家使用 Less.Html，这样我可以得到测试用例，以便更好地改进。<span style="color:#E53333;">只要你有解析 html 的任务，</span></span><span style="color:#E53333;">我可以帮忙写</span><span style="color:#E53333;">，并加入到自己的测试中。</span>
+    因为时间紧迫，加上对我来说够用了，我并没有实现所有的 css3 选择器，不过这是很容易加上去的。<span>所以我想让大家使用 Less.Html，这样我可以得到测试用例，以便更好地改进。<span style="color:#E53333;">只要你有解析 html 的任务，</span></span><span style="color:#E53333;">我可以帮忙写</span><span style="color:#E53333;">，并加入到测试中。</span>
 </p>
