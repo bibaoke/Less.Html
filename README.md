@@ -6,7 +6,6 @@
 </p>
 <pre class="brush:csharp">    
     var q = HtmlParser.Query(testHtml);
-
     foreach (Element i in q("td"))
     {
         if (!q(i).find("table").hasElement)
