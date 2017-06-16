@@ -4,8 +4,7 @@
 <p align="left">
     我写了这个解析器之后才知道，原来 C# 写的 html 解析器有很多。但是因为我没有参照别人的做法，Less.Html 有一个特点，就是它的用法是最接近 jQuery 的。我刻意模仿了 jQuery。比如我写的 test1：
 </p>
-<pre class="brush:csharp">  var q = HtmlParser.Query(testHtml);
-
+<pre class="brush:csharp">    var q = HtmlParser.Query(testHtml);
     foreach (Element i in q("td"))
     {
         if (!q(i).find("table").hasElement)
@@ -39,7 +38,7 @@
     Less.Html 只支持了几种基本的选择器语法：
 </p>
 <p align="left">
-    <table style="margin:15px 0px 0px;padding:0px;border:1px solid #AAAAAA;border-collapse:collapse;width:90%;color:#000000;font-family:PingFangSC-Regular, Verdana, Arial, 微软雅黑, 宋体;font-size:16px;font-style:normal;font-weight:normal;text-align:left;background-color:#FDFCF8;">
+    <table cellpadding="5" style="margin:15px 0px 0px;padding:0px;border:1px solid #AAAAAA;border-collapse:collapse;width:90%;color:#000000;font-family:PingFangSC-Regular, Verdana, Arial, 微软雅黑, 宋体;font-size:16px;font-style:normal;font-weight:normal;text-align:left;background-color:#FDFCF8;">
         <tbody>
             <tr>
                 <th style="border:1px solid #3F3F3F;vertical-align:baseline;background-color:#3F3F3F;text-align:left;color:#FFFFFF;">
@@ -104,4 +103,19 @@
 </p>
 <p align="left">
     因为时间紧迫，加上对我来说够用了，我并没有实现所有的 css3 选择器，不过这是很容易加上去的。<span>所以我想让大家使用 Less.Html，这样我可以得到测试用例，以便更好地改进。<span style="color:#E53333;">只要你有解析 html 的任务，</span></span><span style="color:#E53333;">我可以帮忙写</span><span style="color:#E53333;">，并加入到测试中。</span>
+</p>
+<p align="left">
+    如果你实在不想用&nbsp;Less.Html，我可以介绍一些其他选择：
+</p>
+<p align="left">
+    Html Agility Pack，<a href="http://html-agility-pack.net/" target="_blank">http://html-agility-pack.net</a>/，这个应该是最早的一个，我当时没有用，是因为网上有人说有容错性的问题，如果一个标签没有结束，解析的结果和浏览器不一致。不过这个项目现在都还有维护，我想应该有所改进的。
+</p>
+<p align="left">
+    <span id="__kindeditor_bookmark_start_68__"></span>CsQuery<span id="__kindeditor_bookmark_end_69__"></span>，<a href="https://github.com/jamietre/CsQuery" target="_blank">https://github.com/jamietre/CsQuery</a>，两年前就没有维护了。网上说这个项目有很好的 css 选择器。我看了介绍，它使用的是&nbsp;<span style="color:#24292E;font-family:-apple-system, BlinkMacSystemFont, " background-color:#ffffff;"="">Gecko 的解析器，如果是这样的话，可用性和速度都是有保证的。</span>
+</p>
+<p align="left">
+    AngleSharp，<a href="https://github.com/AngleSharp/AngleSharp" target="_blank">https://github.com/AngleSharp/AngleSharp</a>，我看了一下介绍，这个项目还有 GUI，应该是功能最强大的一个吧。
+</p>
+<p align="left">
+    <span>Ju</span><span>mony</span>，<a href="https://github.com/Ivony/Jumony" target="_blank">https://github.com/Ivony/Jumony</a>，国产。如果我自己没有写的话，我会使用这个，因为有中文的说明。
 </p>
