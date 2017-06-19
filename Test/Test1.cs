@@ -10,7 +10,7 @@ namespace Test
         {
             get
             {
-                return "测试 http://bbs.csdn.net/topics/392175840 这个用例";
+                return "示例一：获取嵌套元素中的正确内容 http://bibaoke.com/post/75";
             }
         }
 
