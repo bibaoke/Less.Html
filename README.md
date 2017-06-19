@@ -56,7 +56,7 @@
                     *
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    $("*")
+                    q("*")
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
                     所有元素
@@ -67,7 +67,7 @@
                     #<i>id</i>
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    $("#lastname")
+                    q("#lastname")
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
                     id="lastname" 的元素
@@ -78,7 +78,7 @@
                     .<i>class</i>
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    $(".intro")
+                    q(".intro")
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
                     所有 class="intro" 的元素
@@ -89,7 +89,7 @@
                     <i>element</i>
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    $("p")
+                    q("p")
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
                     所有元素
@@ -108,14 +108,14 @@
     如果你实在不想用&nbsp;Less.Html，我可以介绍一些其他选择：
 </p>
 <p align="left">
-    Html Agility Pack，<a href="http://html-agility-pack.net/" target="_blank">http://html-agility-pack.net</a>/，这个应该是最早的一个，我当时没有用，是因为网上有人说有容错性的问题，如果一个标签没有结束，解析的结果和浏览器不一致。不过这个项目现在都还有维护，我想应该有所改进的。
+    <a href="https://github.com/zzzprojects/html-agility-pack" target="_blank">Html Agility Pack</a>，这个应该是最早的一个，我当时没有用，是因为网上有人说有容错性的问题，如果一个标签没有结束，解析的结果和浏览器不一致。不过这个项目现在都还有维护，我想应该有所改进的。
 </p>
 <p align="left">
-    <span id="__kindeditor_bookmark_start_68__"></span>CsQuery<span id="__kindeditor_bookmark_end_69__"></span>，<a href="https://github.com/jamietre/CsQuery" target="_blank">https://github.com/jamietre/CsQuery</a>，两年前就没有维护了。网上说这个项目有很好的 css 选择器。我看了介绍，它使用的是&nbsp;<span style="color:#24292E;font-family:-apple-system, BlinkMacSystemFont, " background-color:#ffffff;"="">Gecko 的解析器，如果是这样的话，可用性和速度都是有保证的。</span>
+    <a href="https://github.com/jamietre/CsQuery" target="_blank">CsQuery</a>，两年前就没有维护了，网上说这个项目有很好的 css 选择器。我看了介绍，它使用的是&nbsp;Gecko 的解析器，如果是这样的话，可用性和速度都是有保证的。
 </p>
 <p align="left">
-    AngleSharp，<a href="https://github.com/AngleSharp/AngleSharp" target="_blank">https://github.com/AngleSharp/AngleSharp</a>，我看了一下介绍，这个项目还有 GUI，应该是功能最强大的一个吧。
+    <a href="https://github.com/AngleSharp/AngleSharp" target="_blank">AngleSharp</a><span style="line-height:1.6;">，我看了一下介绍，这个项目还有 GUI，应该是功能最强大的一个吧。</span>
 </p>
 <p align="left">
-    <span>Ju</span><span>mony</span>，<a href="https://github.com/Ivony/Jumony" target="_blank">https://github.com/Ivony/Jumony</a>，国产。如果我自己没有写的话，我会使用这个，因为有中文的说明。
+    <a href="https://github.com/Ivony/Jumony" target="_blank">Jumony</a>，国产。如果我自己没有写的话，我会使用这个，因为有中文的说明。<span id="__kindeditor_bookmark_start_68__"></span>
 </p>
