@@ -11,6 +11,17 @@ namespace Less.Collection
     {
         /// <summary>
         /// 按次数迭代
+        /// </summary>
+        /// <param name="count">迭代次数</param>
+        /// <param name="action">迭代处理的委托</param>
+        public static void Each(this int count, Action action)
+        {
+            for (int i = 0; i < count; i++)
+                action();
+        }
+
+        /// <summary>
+        /// 按次数迭代
         /// 在处理委托中得到当前的计数
         /// </summary>
         /// <param name="count">迭代次数</param>

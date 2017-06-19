@@ -64,6 +64,7 @@
     <Compile Include="Less.Common\Less.Text\CompareExtensions.cs" />
     <Compile Include="Less.Common\Less.Text\ConvertExtensions.cs" />
     <Compile Include="Less.Common\Less.Text\EditExtensions.cs" />
+    <Compile Include="Less.Common\Less.Text\EncodeExtensions.cs" />
     <Compile Include="Less.Common\Less.Text\MyEncoding.cs" />
     <Compile Include="Less.Common\Less.Text\SeparatorOptions.cs" />
     <Compile Include="Less.Common\Less.Text\SplitExtensions.cs" />

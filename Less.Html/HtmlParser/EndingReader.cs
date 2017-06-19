@@ -1,5 +1,7 @@
 ﻿//bibaoke.com
 
+using Less.Collection;
+
 namespace Less.Html
 {
     /// <summary>
@@ -13,6 +15,20 @@ namespace Less.Html
         /// <returns></returns>
         internal override ReaderBase Read()
         {
+            //处理没有关闭的标签
+            this.MarkStack.Count.Each(() =>
+            {
+                Element element = (Element)this.CurrentNode;
+
+                //设置元素结束位置
+                element.End = this.Position - 1;
+
+                element.InnerEnd = element.End;
+
+                //设置当前节点为上一级节点
+                this.CurrentNode = this.CurrentNode.parentNode;
+            });
+
             //文档结束索引
             int end = this.Content.Length - 1;
 
