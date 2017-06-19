@@ -48,10 +48,9 @@ namespace Less.Windows
             Console.WriteLine();
 
             foreach (string i in ConsoleApp.NameList)
-            {
                 Console.WriteLine("{0}： {1}".FormatString(i, ConsoleApp.Functions[i].Description));
-                Console.WriteLine();
-            }
+
+            Console.WriteLine();
 
             while (true)
             {
