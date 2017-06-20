@@ -44,7 +44,7 @@ namespace Less.Windows
         public static void Start()
         {
             Console.WriteLine();
-            Console.WriteLine("键入一下命令调用对应的程序：");
+            Console.WriteLine("键入以下命令调用对应的程序：");
             Console.WriteLine();
 
             foreach (string i in ConsoleApp.NameList)
