@@ -24,6 +24,9 @@ namespace Less.Html
             set;
         }
 
+        /// <summary>
+        /// 是否开启自检程序
+        /// </summary>
         private bool SelfChecking
         {
             get
@@ -326,11 +329,13 @@ namespace Less.Html
         /// <returns></returns>
         public Node appendChild(Node node)
         {
+            //是否需要自检
             bool checking = false;
 
             //如果节点已经有所属文档
             if (node.ownerDocument.IsNotNull())
             {
+                //如果添加的节点有所属文档，则需要自检
                 checking = true;
 
                 //在原文档中删除节点
@@ -339,14 +344,15 @@ namespace Less.Html
                 //设置父节点
                 node.parentNode = this;
 
-                //父节点一定是元素
-                Element element = (Element)this;
+                //如果父节点是元素
+                Element element = this as Element;
 
-                //插入位置
-                int begin = element.InnerEnd + 1;
+                //插入位置 
+                //如果父节点不是元素，一定是文档
+                int begin = element.IsNotNull() ? element.InnerEnd + 1 : this.End + 1;
 
                 //修改此文档的内容
-                element.ownerDocument.Content = element.ownerDocument.Content.Insert(begin, node.Content);
+                this.ownerDocument.Content = this.ownerDocument.Content.Insert(begin, node.Content);
 
                 //设置新的索引
                 node.SetIndex(begin - node.Begin);
@@ -372,6 +378,7 @@ namespace Less.Html
             //重置文档 all 属性缓存
             this.ownerDocument.ResetAllCache();
 
+            //自检
             if (checking)
                 this.ownerDocument.SelfCheck();
 

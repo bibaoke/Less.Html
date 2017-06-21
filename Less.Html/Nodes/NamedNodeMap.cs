@@ -111,7 +111,8 @@ namespace Less.Html
         /// <returns></returns>
         public T setNamedItem(T item)
         {
-            T node = this[item.nodeName];
+            //有些属性的 nodeName 是空引用，比如 !DOCTYPE 里面的属性
+            T node = item.nodeName.IsNotNull() ? this[item.nodeName] : null;
 
             if (node.IsNull())
             {

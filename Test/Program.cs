@@ -7,6 +7,7 @@ namespace Test
         static void Main(string[] args)
         {
             ConsoleApp.AddFuntion(new Test1());
+            ConsoleApp.AddFuntion(new Test2());
 
             ConsoleApp.Start();
         }
