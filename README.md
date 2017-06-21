@@ -38,7 +38,7 @@
     Less.Html 只支持了几种基本的选择器语法：
 </p>
 <p align="left">
-    <table cellpadding="5" style="margin:15px 0px 0px;padding:0px;border:1px solid #AAAAAA;border-collapse:collapse;width:90%;color:#000000;font-family:PingFangSC-Regular, Verdana, Arial, 微软雅黑, 宋体;font-size:16px;font-style:normal;font-weight:normal;text-align:left;background-color:#FDFCF8;">
+    <table style="margin:15px 0px 0px;padding:0px;border:1px solid #AAAAAA;border-collapse:collapse;width:90%;color:#000000;font-family:PingFangSC-Regular, Verdana, Arial, 微软雅黑, 宋体;font-size:16px;font-style:normal;font-weight:normal;text-align:left;background-color:#FDFCF8;" cellpadding="5">
         <tbody>
             <tr>
                 <th style="border:1px solid #3F3F3F;vertical-align:baseline;background-color:#3F3F3F;text-align:left;color:#FFFFFF;">
@@ -67,7 +67,7 @@
                     #<i>id</i>
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    <span style="background-color:#FDFCF8;">q</span>("#lastname")
+                    q("#lastname")
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
                     id="lastname" 的元素
@@ -78,7 +78,7 @@
                     .<i>class</i>
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    <span style="background-color:#FDFCF8;">q</span>(".intro")
+                    q(".intro")
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
                     所有 class="intro" 的元素
@@ -89,10 +89,21 @@
                     <i>element</i>
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    <span style="background-color:#FDFCF8;">q</span>("p")
+                    q("p")
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    所有元素
+                    所有&lt;p&gt;元素
+                </td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    :<i>first</i>
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    q("p:first")
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    第一个&lt;p&gt;元素
                 </td>
             </tr>
         </tbody>
@@ -105,7 +116,8 @@
     因为时间紧迫，加上对我来说够用了，我并没有实现所有的 css3 选择器，不过这是很容易加上去的。<span>所以我想让大家使用 Less.Html，这样我可以得到测试用例，以便更好地改进。<span style="color:#E53333;">只要你有解析 html 的任务，</span></span><span style="color:#E53333;">我可以帮忙写</span><span style="color:#E53333;">，并加入到示例列表中：</span>
 </p>
 <p align="left">
-    <a href="http://bibaoke.com/post/75" target="_blank">示例一：获取嵌套元素中的正确内容</a>
+    <a href="http://bibaoke.com/post/75" target="_blank">示例一：获取嵌套元素中的正确内容</a> <br />
+    <a href="http://bibaoke.com/post/76" target="_blank">示例二：以 Less.Html&nbsp;做视图引擎 </a>
 </p>
 <p align="left">
     如果你实在不想用&nbsp;Less.Html，我可以介绍一些其他选择：
