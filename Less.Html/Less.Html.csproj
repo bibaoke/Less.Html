@@ -29,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Less.Html.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -103,6 +104,9 @@
     <Compile Include="Query\Query.cs" />
     <Compile Include="Query\Selector.cs" />
     <Compile Include="Query\SelectorParam.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Less.Html.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
