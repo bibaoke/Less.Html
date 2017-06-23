@@ -59,14 +59,34 @@ namespace Test
                 q("div").after("<ul></ul>");
 
                 //左边节点
-                dynamic left = data.Where(i => i.pid == id && i._float == "left").FirstOrDefault();
+                dynamic left = data.Where(
+                    i =>
+                    i.pid == id &&
+                    i._float == "left").FirstOrDefault();
 
-                q("ul:first").append(q("<li>" + this.RenderNode(data, left != null ? left.id : -1, template) + "</li>").attr("style", "float:left"));
+                q("ul:first").append(
+                    q(string.Concat(
+                        "<li>",
+                        this.RenderNode(
+                            data,
+                            left != null ? left.id : -1,
+                            template),
+                        "</li>")).attr("style", "float:left"));
 
                 //右边节点
-                dynamic right = data.Where(i => i.pid == id && i._float == "right").FirstOrDefault();
+                dynamic right = data.Where(
+                    i =>
+                    i.pid == id &&
+                    i._float == "right").FirstOrDefault();
 
-                q("ul:first").append(q("<li>" + this.RenderNode(data, right != null ? right.id : -1, template) + "</li>").attr("style", "float:right"));
+                q("ul:first").append(
+                    q(string.Concat(
+                        "<li>",
+                        this.RenderNode(
+                            data,
+                            right != null ? right.id : -1,
+                            template),
+                        "</li>")).attr("style", "float:right"));
             }
             //空节点
             else
