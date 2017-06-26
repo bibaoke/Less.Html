@@ -21,14 +21,10 @@ foreach (Element i in q("td"))
     <img alt="" src="http://bibaoke.com/img/0HDawfRQu02dKLsw5_nouQ?auth=post" />
 </p>
 <p align="left">
-    示例一代码：<br />
-    <a href="https://github.com/bibaoke/Less.Html/blob/master/Test/Test1.cs" target="_blank">https://github.com/bibaoke/Less.Html/blob/master/Test/Test1.cs</a><br />
-    <a href="https://code.csdn.net/closurer/less-html/tree/master/Test/Test1.cs" target="_blank">https://code.csdn.net/closurer/less-html/tree/master/Test/Test1.cs</a>
+    示例一代码：<a href="https://github.com/bibaoke/Less.Html/blob/master/Test/Test1.cs" target="_blank">GitHub</a>&nbsp; &nbsp;&nbsp;<a href="https://code.csdn.net/closurer/less-html/tree/master/Test/Test1.cs" target="_blank">CSDN</a>
 </p>
 <p align="left">
-    项目代码：<br />
-    <a href="https://github.com/bibaoke/Less.Html" target="_blank">https://github.com/bibaoke/Less.Html</a><br />
-    <a href="https://code.csdn.net/closurer/less-html/tree/master" target="_blank">https://code.csdn.net/closurer/less-html/tree/master</a>
+    项目代码：<a href="https://github.com/bibaoke/Less.Html" target="_blank">GitHub</a>&nbsp; &nbsp;&nbsp;<a href="https://code.csdn.net/closurer/less-html/tree/master" target="_blank">CSDN</a>
 </p>
 <p align="left">
     我当时写这个解析器是因为要做网页爬虫，核心三天写完就能用了，并用来解析了几百万个网页，可用性上是没有问题的。后来我觉得 Razor 语法还是不够好，于是我改进了这个解析器，加上了选择器和操作 html 文档的方法，制作了我自己的视图引擎 QPage。我的个人博客就是使用这个引擎写的：
