@@ -1,9 +1,9 @@
 ﻿//bibaoke.com
 
-using System.Net;
 using Less.Text;
 using System;
 using Less.Collection;
+using System.Web;
 
 namespace Less.Html
 {
@@ -98,7 +98,7 @@ namespace Less.Html
             get
             {
                 if (this.ValueLength > -1)
-                    return WebUtility.HtmlDecode(this.ownerDocument.Content.Substring(this.ValueBegin, this.ValueLength));
+                    return HttpUtility.HtmlDecode(this.ownerDocument.Content.Substring(this.ValueBegin, this.ValueLength));
 
                 return null;
             }

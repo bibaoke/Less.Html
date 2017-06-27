@@ -1,7 +1,7 @@
 ﻿//bibaoke.com
 
 using System.Collections.Generic;
-using Less.Collection;
+using System.Linq;
 
 namespace Less.Html
 {
@@ -17,7 +17,7 @@ namespace Less.Html
         /// <returns></returns>
         internal static IEnumerable<Element> GetElements(this IEnumerable<Node> nodes)
         {
-            return nodes.Select<Element>();
+            return nodes.Where(i => i is Element).Cast<Element>();
         }
     }
 }

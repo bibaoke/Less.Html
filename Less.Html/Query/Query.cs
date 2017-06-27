@@ -117,7 +117,7 @@ namespace Less.Html
         {
             var parent = this.Copy();
 
-            parent.Selector.ExtFilterList.Add(selected => selected.Select(i => i.parentNode).Select<Element>());
+            parent.Selector.ExtFilterList.Add(selected => selected.Select(i => i.parentNode).GetElements());
 
             return parent;
         }

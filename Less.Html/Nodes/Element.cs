@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Net;
+using System.Web;
 
 namespace Less.Html
 {
@@ -124,7 +125,7 @@ namespace Less.Html
             }
             set
             {
-                this.innerHTML = WebUtility.HtmlEncode(value);
+                this.innerHTML = HttpUtility.HtmlEncode(value);
             }
         }
 

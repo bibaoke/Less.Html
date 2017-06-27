@@ -3,10 +3,10 @@
 using Less.Text;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text.RegularExpressions;
 using Less.Collection;
 using System;
+using System.Web;
 
 namespace Less.Html
 {
@@ -520,7 +520,7 @@ namespace Less.Html
         /// <returns></returns>
         protected string Decode(string text)
         {
-            return WebUtility.HtmlDecode(
+            return HttpUtility.HtmlDecode(
                 Node.Pattern.Replace(text.Trim(), Symbol.Space).Replace("&nbsp;", Symbol.Space));
         }
 

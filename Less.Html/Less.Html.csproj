@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Less.Html</RootNamespace>
     <AssemblyName>Less.Html</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -32,7 +32,12 @@
     <DocumentationFile>bin\Release\Less.Html.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Less.Common, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Less.Common.1.0.0.1\lib\net35\Less.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HtmlParser\AttributeReader.cs" />
@@ -43,34 +48,6 @@
     <Compile Include="HtmlParser\ReaderBase.cs" />
     <Compile Include="HtmlParser\TagMark.cs" />
     <Compile Include="HtmlParser\TagReader.cs" />
-    <Compile Include="Less.Common\DynamicString.cs" />
-    <Compile Include="Less.Common\Extensions\CharExtensions.cs" />
-    <Compile Include="Less.Common\Extensions\DecimalExtensions.cs" />
-    <Compile Include="Less.Common\Extensions\FloatExtensions.cs" />
-    <Compile Include="Less.Common\Extensions\IntExtensions.cs" />
-    <Compile Include="Less.Common\Extensions\ObjectExtensions.cs" />
-    <Compile Include="Less.Common\Less.Collection\ArrayExtensions.cs" />
-    <Compile Include="Less.Common\Less.Collection\EnumInfo.cs" />
-    <Compile Include="Less.Common\Less.Collection\IEnumerableExtensions.cs" />
-    <Compile Include="Less.Common\Less.Collection\IntExtensions.cs" />
-    <Compile Include="Less.Common\Less.Collection\ObjectExtensions.cs" />
-    <Compile Include="Less.Common\Less.Text\CaseOptions.cs" />
-    <Compile Include="Less.Common\Less.Text\CombineExtensions.cs" />
-    <Compile Include="Less.Common\Less.Text\CompareExtensions.cs" />
-    <Compile Include="Less.Common\Less.Text\ConvertExtensions.cs" />
-    <Compile Include="Less.Common\Less.Text\EditExtensions.cs" />
-    <Compile Include="Less.Common\Less.Text\EncodeExtensions.cs" />
-    <Compile Include="Less.Common\Less.Text\MyEncoding.cs" />
-    <Compile Include="Less.Common\Less.Text\SeparatorOptions.cs" />
-    <Compile Include="Less.Common\Less.Text\SplitExtensions.cs" />
-    <Compile Include="Less.Common\Less.Text\StringEnum.cs" />
-    <Compile Include="Less.Common\Less.Text\Symbol.cs" />
-    <Compile Include="Less.Common\Less.Text\VerifyExtensions.cs" />
-    <Compile Include="Less.Common\Less.Windows\Application.cs" />
-    <Compile Include="Less.Common\Less.Windows\CLI\ConsoleApp.cs" />
-    <Compile Include="Less.Common\Less.Windows\CLI\Function.cs" />
-    <Compile Include="Less.Common\Less.Windows\CLI\Funtions\Exit.cs" />
-    <Compile Include="Less.Common\Less.Windows\IO\StringExtensions.cs" />
     <Compile Include="Nodes\Attr.cs" />
     <Compile Include="Nodes\Comment.cs" />
     <Compile Include="Nodes\Document.cs" />
@@ -102,6 +79,7 @@
     <None Include="Less.Html.nuspec">
       <SubType>Designer</SubType>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
