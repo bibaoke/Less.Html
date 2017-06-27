@@ -12,7 +12,7 @@ namespace Test
         {
             get
             {
-                return " 示例三：与 WebClient 的配合使用，以抓取 CSDN 论坛内容为例 http://bibaoke.com/post/77";
+                return "示例三：与 WebClient 的配合使用，以抓取 CSDN 论坛内容为例 http://bibaoke.com/post/77";
             }
         }
 
@@ -22,7 +22,8 @@ namespace Test
 
             client.Encoding = Encoding.UTF8;
 
-            string aspDotNet = client.DownloadString("http://bbs.csdn.net/forums/ASPDotNET");
+            string aspDotNet = client.DownloadString(
+                "http://bbs.csdn.net/forums/ASPDotNET");
 
             var q = HtmlParser.Query(aspDotNet);
 
