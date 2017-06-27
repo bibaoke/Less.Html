@@ -11,7 +11,7 @@ namespace Test
         {
             get
             {
-                return "示例二：以 Less.Html 做视图引擎 http://bibaoke.com/write/76";
+                return "示例二：以 Less.Html 做视图引擎 http://bibaoke.com/post/76";
             }
         }
 
