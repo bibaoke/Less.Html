@@ -15,10 +15,13 @@ foreach (Element i in q("td"))
     解析之后返回的 q 对象，等同于 jQuery 的 $，因为 C# 不支持用 $ 做变量名，所以我用 q 代替。foreach 循环的部分，在 jQuery 的写法应该是 for(var i = 0; i &lt;&nbsp;$("td").length; i++) ，其实在 Less.Html 里面，同样可以这样写，jQuery 不能使用foreach 的原因是，它会枚举对象的属性，C# 没有这个烦恼，所以我做了些改进。if 条件部分，q 和 jQuery 的 $ 一样，是可以传入 Element 类型的，然后调用的 find 方法，作用也是和 jQuery 一样的。hasElement 这个属性，实际上就是 length &gt; 0 的判断，是我写的一个扩展属性，当然，你在 jQuery 里面也可以通过 prototype 做同样的事情。输出部分，textContent 是 HTML DOM 标准的一个方法，作用是获取节点及其后代的文本内容，这和你在编写浏览器运行的 javascript 是一样的。
 </p>
 <p align="left">
-    Less.Html 从解析核心到 DOM、选择器都是我手写的，没有任何依赖项，编译之后只有一个 dll：
+    Less.Html 从解析核心到 DOM、选择器都是我手写的，没有任何依赖项，编译之后只有两个 dll：
 </p>
 <p align="left">
-    <img alt="" src="http://bibaoke.com/img/0HDawfRQu02dKLsw5_nouQ?auth=post" />
+    <img src="http://bibaoke.com/img/o5lKTxHObUiq-4pLMxnD9Q?auth=post" alt="" />
+</p>
+<p align="left">
+    其中一个是我的基础类库，也是开源的。
 </p>
 <p align="left">
     示例一代码：<a href="https://github.com/bibaoke/Less.Html/blob/master/Test/Test1.cs" target="_blank">GitHub</a>&nbsp; &nbsp;&nbsp;<a href="https://code.csdn.net/closurer/less-html/tree/master/Test/Test1.cs" target="_blank">CSDN</a>
