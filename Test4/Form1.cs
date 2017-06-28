@@ -40,50 +40,52 @@ namespace Test4
                 {
                     Thread.Sleep(1000);
 
-                    bool finished = false;
+                    Document document = null;
 
                     this.Invoke(new Action(() =>
                     {
-                        var q = HtmlParser.Query(this.webBrowser1.Document.Body.InnerHtml);
-
-                        var sku = q(".j-sku-item");
-
-                        List<ValueSet<string, string>> list = new List<ValueSet<string, string>>();
-
-                        foreach (Element i in sku)
-                        {
-                            string name = q(i).find(".p-name a em").text();
-
-                            string price = q(i).find(".p-price .J_price:first").text();
-
-                            if (name.IsNotWhiteSpace() && price.IsNotWhiteSpace())
-                            {
-                                list.Add(new ValueSet<string, string>(name, price));
-                            }
-                            else
-                            {
-                                list.Clear();
-
-                                break;
-                            }
-                        }
-
-                        if (list.Count > 0)
-                        {
-                            foreach (var i in list)
-                                Console.WriteLine(i.Value1.Combine(Symbol.Tab, i.Value2));
-
-                            finished = true;
-
-                            this.Close();
-                        }
+                        document = HtmlParser.Parse(this.webBrowser1.Document.Body.InnerHtml);
                     }));
 
-                    if (finished)
+                    var q = Selector.Bind(document);
+
+                    var sku = q(".j-sku-item");
+
+                    List<ValueSet<string, string>> list = new List<ValueSet<string, string>>();
+
+                    foreach (Element i in sku)
+                    {
+                        string name = q(i).find(".p-name a em").text();
+
+                        string price = q(i).find(".p-price .J_price:first").text();
+
+                        if (name.IsNotWhiteSpace() && price.IsNotWhiteSpace())
+                        {
+                            list.Add(new ValueSet<string, string>(name, price));
+                        }
+                        else
+                        {
+                            list.Clear();
+
+                            break;
+                        }
+                    }
+
+                    if (list.Count > 0)
+                    {
+                        foreach (var i in list)
+                            Console.WriteLine(i.Value1.Combine(Symbol.Tab, i.Value2));
+
                         break;
+                    }
 
                     times++;
                 }
+
+                this.Invoke(new Action(() =>
+                {
+                    this.Close();
+                }));
             });
         }
     }
