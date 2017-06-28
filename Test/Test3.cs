@@ -1,5 +1,4 @@
 ﻿using Less.Html;
-using Less.Text;
 using Less.Windows;
 using System.Net;
 using System.Text;
@@ -27,7 +26,9 @@ namespace Test
 
             var q = HtmlParser.Query(aspDotNet);
 
-            foreach (Element i in q("table.child_forum tr td.title"))
+            var title = q("table.child_forum tr td.title");
+
+            foreach (Element i in title)
             {
                 q(i).find(".forum_link").remove();
 

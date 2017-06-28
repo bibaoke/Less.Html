@@ -9,6 +9,7 @@ namespace Test
             ConsoleApp.AddFuntion(new Test1());
             ConsoleApp.AddFuntion(new Test2());
             ConsoleApp.AddFuntion(new Test3());
+            ConsoleApp.AddFuntion(new Test4());
 
             ConsoleApp.Start();
         }
