@@ -4,7 +4,6 @@ using System;
 using System.Threading;
 using Less.Text;
 using System.Collections.Generic;
-using Less;
 using Less.MultiThread;
 
 namespace Test4
@@ -36,6 +35,7 @@ namespace Test4
 
         private void WebBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
+            //启动一个等待线程
             Asyn.Exec(() =>
             {
                 int times = 0;
@@ -46,27 +46,34 @@ namespace Test4
 
                     Document document = null;
 
+                    //交还 UI 线程获取这个时候的文档
                     this.Invoke(new Action(() =>
                     {
                         document = HtmlParser.Parse(this.webBrowser1.Document.Body.InnerHtml);
                     }));
 
+                    //绑定选择器
                     var q = Selector.Bind(document);
 
+                    //获取页面所有的商品
                     var sku = q(".j-sku-item");
 
-                    List<ValueSet<string, string>> list = new List<ValueSet<string, string>>();
+                    List<Tuple<string, string>> list = new List<Tuple<string, string>>();
 
                     foreach (Element i in sku)
                     {
+                        //商品名称
                         string name = q(i).find(".p-name a em").text();
 
+                        //商品价格
                         string price = q(i).find(".p-price .J_price:first").text();
 
                         if (name.IsNotWhiteSpace() && price.IsNotWhiteSpace())
                         {
-                            list.Add(new ValueSet<string, string>(name, price));
+                            list.Add(new Tuple<string, string>(name, price));
                         }
+                        //如果找不到商品名称或商品价格
+                        //说明 ajax 请求还没完成
                         else
                         {
                             list.Clear();
@@ -78,7 +85,7 @@ namespace Test4
                     if (list.Count > 0)
                     {
                         foreach (var i in list)
-                            Console.WriteLine(i.Value1.Combine(Symbol.Tab, i.Value2));
+                            Console.WriteLine(i.Item1.Combine(Symbol.Tab, i.Item2));
 
                         break;
                     }
