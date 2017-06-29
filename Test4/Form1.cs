@@ -18,6 +18,10 @@ namespace Test4
             this.Width = 1100;
             this.Height = 768;
 
+            this.Opacity = 0;
+
+            this.ShowInTaskbar = false;
+
             this.StartPosition = FormStartPosition.CenterScreen;
 
             this.Load += Form1_Load;
