@@ -63,10 +63,12 @@ namespace Test4
                     foreach (Element i in sku)
                     {
                         //商品名称
-                        string name = q(i).find(".p-name a em").text();
+                        string name = q(i).find(
+                            ".p-name a em").text();
 
                         //商品价格
-                        string price = q(i).find(".p-price .J_price:first").text();
+                        string price = q(i).find(
+                            ".p-price .J_price:first").text();
 
                         if (name.IsNotWhiteSpace() && price.IsNotWhiteSpace())
                         {
