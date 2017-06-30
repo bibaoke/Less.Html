@@ -121,7 +121,10 @@ foreach (Element i in q("td"))
 </p>
 <p align="left">
     <a href="http://bibaoke.com/post/75" target="_blank">示例一：获取嵌套元素中的正确内容</a> <br />
-    <a href="http://bibaoke.com/post/76" target="_blank">示例二：以 Less.Html&nbsp;做视图引擎 </a>
+    <a href="http://bibaoke.com/post/76" target="_blank">示例二：以 Less.Html&nbsp;做视图引擎 </a><br />
+    <a href="http://bibaoke.com/post/77" target="_blank">示例三：与 WebClient 的配合使用，以抓取 CSDN 论坛内容为例</a><br />
+    <a href="http://bibaoke.com/post/78" target="_blank">示例四：与 WebBrowser 的配合使用，以抓取京东手机价格为例</a><br />
+    <a href="http://bibaoke.com/post/79" target="_blank">示例五：使用方法详解</a>
 </p>
 <p align="left">
     如果你实在不想用&nbsp;Less.Html，我可以介绍一些其他选择：
