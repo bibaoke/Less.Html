@@ -114,13 +114,23 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 指定 id 的元素
+        /// 返回对拥有指定 id 的第一个对象
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public Element getElementById(string id)
         {
             return this.all.Where(i => i.id.CompareIgnoreCase(id)).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// 返回带有指定标签名的对象集合
+        /// </summary>
+        /// <param name="tagName"></param>
+        /// <returns></returns>
+        public Element[] getElementsByTagName(string tagName)
+        {
+            return this.all.Where(i => i.Name.CompareIgnoreCase(tagName)).ToArray();
         }
 
         /// <summary>

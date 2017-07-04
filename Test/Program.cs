@@ -11,6 +11,7 @@ namespace Test
             ConsoleApp.AddFuntion(new Test3());
             ConsoleApp.AddFuntion(new Test4());
             ConsoleApp.AddFuntion(new Test5());
+            ConsoleApp.AddFuntion(new Test6());
 
             ConsoleApp.Start();
         }

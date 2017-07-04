@@ -17,7 +17,7 @@ namespace Test
         {
             //0. 从解析开始
             {
-                string testHtml = "<p>段落<p>";
+                string testHtml = "<p>段落</p>";
 
                 Document document = HtmlParser.Parse(testHtml);
 
@@ -26,7 +26,7 @@ namespace Test
 
             //0.1 快捷的方法
             {
-                string testHtml = "<p>段落<p>";
+                string testHtml = "<p>段落</p>";
 
                 var q = HtmlParser.Query(testHtml);
             }

@@ -51,6 +51,7 @@
     <Compile Include="Test3.cs" />
     <Compile Include="Test4.cs" />
     <Compile Include="Test5.cs" />
+    <Compile Include="Test6.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
