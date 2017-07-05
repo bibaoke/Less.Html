@@ -63,6 +63,17 @@ namespace Less.Html
         private ElementCollection allCache;
 
         /// <summary>
+        /// 返回对文档中所有 area 和 a 元素
+        /// </summary>
+        public Element[] links
+        {
+            get
+            {
+                return this.all.Where(i => i.Name.In("area", "a") && i.attributes["href"].IsNotNull()).ToArray();
+            }
+        }
+
+        /// <summary>
         /// 所有元素
         /// </summary>
         public ElementCollection all
@@ -114,7 +125,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 返回对拥有指定 id 的第一个对象
+        /// 返回对拥有指定 id 的第一个元素
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -124,7 +135,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 返回带有指定标签名的对象集合
+        /// 返回带有指定标签名的元素
         /// </summary>
         /// <param name="tagName"></param>
         /// <returns></returns>

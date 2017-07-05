@@ -1,5 +1,8 @@
 ﻿using Less.Windows;
 using Less.Html;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Less.Windows;
+using System.Text;
 
 namespace Test
 {
@@ -21,8 +24,25 @@ namespace Test
 
                 Document document = HtmlParser.Parse(testHtml);
 
-                foreach (Element i in document.getElementsByTagName("p"))
-                    this.WriteLine(i.textContent);
+                Assert.IsTrue(document.getElementsByTagName("p")[1].textContent == "段落2");
+            }
+
+            //
+            {
+                string testHtml = @"<a href=""http://bibaoke.com"">链接</a>";
+
+                Document document = HtmlParser.Parse(testHtml);
+
+                Assert.IsTrue(document.links[0].textContent == "链接");
+            }
+
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("265.com.html").ReadString(Encoding.UTF8);
+
+                Document document = HtmlParser.Parse(testHtml);
+
+                Assert.IsTrue(testHtml == document.ToString());
             }
 
             return true;

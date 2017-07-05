@@ -210,8 +210,15 @@ namespace Less.Html
             }
 
             //添加属性
-            this.Element.attributes.setNamedItem(
-                new Attr(this.Element, match.Index, match.Index + match.Length - 1 + offset, nameBegin, nameLength, valueBegin, valueLength));
+            this.Element.attributes.Value.Add(
+                new Attr(
+                    this.Element,
+                    match.Index,
+                    match.Index + match.Length - 1 + offset,
+                    nameBegin,
+                    nameLength,
+                    valueBegin,
+                    valueLength));
         }
     }
 }
