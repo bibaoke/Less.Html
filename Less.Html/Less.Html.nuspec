@@ -11,8 +11,8 @@
     <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>修复 Element 中有同名 Attr 的 bug</releaseNotes>
+    <releaseNotes>修改信息</releaseNotes>
     <copyright>Copyright 2017 Shao Zhuang</copyright>
-    <tags>html parser css selector</tags>
+    <tags>html-parser jQuery-style css-selector</tags>
   </metadata>
 </package>
