@@ -45,6 +45,18 @@ namespace Test
                 Assert.IsTrue(testHtml == document.ToString());
             }
 
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("youpinai.com.html").ReadString(Encoding.UTF8);
+
+                var q = HtmlParser.Query(testHtml);
+
+                foreach (Element i in q("a, area"))
+                {
+                    string href = q(i).href();
+                }
+            }
+
             return true;
         }
     }

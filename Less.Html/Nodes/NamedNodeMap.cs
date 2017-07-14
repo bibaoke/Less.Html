@@ -60,7 +60,7 @@ namespace Less.Html
             {
                 foreach (T i in this.Value)
                 {
-                    if (i.nodeName.CompareIgnoreCase(name))
+                    if (i.nodeName.IsNotNull() && i.nodeName.CompareIgnoreCase(name))
                         return i;
                 }
 
