@@ -45,6 +45,7 @@
     <Compile Include="HtmlParser\Context.cs" />
     <Compile Include="HtmlParser\EndingReader.cs" />
     <Compile Include="HtmlParser\HtmlParser.cs" />
+    <Compile Include="HtmlParser\ParseException.cs" />
     <Compile Include="HtmlParser\ReaderBase.cs" />
     <Compile Include="HtmlParser\TagMark.cs" />
     <Compile Include="HtmlParser\TagReader.cs" />

@@ -24,6 +24,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
+        /// <exception cref="ParseException">html 解析错误</exception>
         public static Document Parse(string content)
         {
             //创建标签阅读器
@@ -35,6 +36,9 @@ namespace Less.Html
             //设置上下文
             reader.Context = context;
 
+            //最大阅读次数
+            int maxRead = ushort.MaxValue;
+
             //读取所有内容
             while (true)
             {
@@ -43,7 +47,16 @@ namespace Less.Html
 
                 //不返回阅读器 读取完毕 跳出
                 if (reader.IsNull())
+                {
                     break;
+                }
+                else
+                {
+                    maxRead--;
+
+                    if (maxRead == 0)
+                        throw new ParseException(content);
+                }
             }
 
             //返回文档元素
