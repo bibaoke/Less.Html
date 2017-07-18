@@ -448,7 +448,7 @@ namespace Less.Html
                 list.Add((Element)this);
 
             foreach (Node i in this.ChildNodeList)
-                list.AddRange(i.GetAllElements());
+                i.GetAllElements(list);
 
             return list;
         }
@@ -558,6 +558,33 @@ namespace Less.Html
 
                 this.parentNode.ShiftParent(offset);
             }
+        }
+
+        /// <summary>
+        /// 获取所有的节点
+        /// 把结果作为递归参数，节省栈空间
+        /// </summary>
+        /// <param name="list">节点列表</param>
+        private void GetAllNodes(List<Node> list)
+        {
+            list.Add(this);
+
+            foreach (Node i in this.ChildNodeList)
+                i.GetAllNodes(list);
+        }
+
+        /// <summary>
+        /// 获取所有的元素
+        /// 把结果作为递归参数，节省栈空间
+        /// </summary>
+        /// <param name="list">元素列表</param>
+        private void GetAllElements(List<Element> list)
+        {
+            if (this is Element)
+                list.Add((Element)this);
+
+            foreach (Node i in this.ChildNodeList)
+                i.GetAllElements(list);
         }
 
         private void SetOwnerDocument(Document document)
