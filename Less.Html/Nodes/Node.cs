@@ -444,13 +444,11 @@ namespace Less.Html
         {
             List<Element> list = new List<Element>();
 
-            foreach (Node i in this.ChildNodeList)
-            {
-                if (i is Element)
-                    list.Add((Element)i);
+            if (this is Element)
+                list.Add((Element)this);
 
+            foreach (Node i in this.ChildNodeList)
                 list.AddRange(i.GetAllElements());
-            }
 
             return list;
         }
