@@ -37,7 +37,7 @@ namespace Less.Html
             reader.Context = context;
 
             //最大阅读次数
-            int maxRead = ushort.MaxValue * 8;
+            int maxRead = ushort.MaxValue * 2;
 
             //读取所有内容
             while (true)

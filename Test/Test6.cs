@@ -1,8 +1,8 @@
 ﻿using Less.Windows;
 using Less.Html;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Less.Windows;
 using System.Text;
+using System.Linq;
 
 namespace Test
 {
@@ -61,7 +61,9 @@ namespace Test
             {
                 string testHtml = Application.SetupDir.CombinePath("auto.qq.com.html").ReadString(Encoding.UTF8);
 
-                HtmlParser.Parse(testHtml);
+                var q = HtmlParser.Query(testHtml);
+
+                q("*").ToArray();
             }
 
             return true;
