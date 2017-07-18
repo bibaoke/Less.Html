@@ -57,6 +57,13 @@ namespace Test
                 }
             }
 
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("auto.qq.com.html").ReadString(Encoding.UTF8);
+
+                HtmlParser.Parse(testHtml);
+            }
+
             return true;
         }
     }
