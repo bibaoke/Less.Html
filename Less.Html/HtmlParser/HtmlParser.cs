@@ -22,7 +22,7 @@ namespace Less.Html
         /// <summary>
         /// 解析
         /// </summary>
-        /// <param name="content"></param>
+        /// <param name="content">要解析的文档</param>
         /// <returns></returns>
         /// <exception cref="ParseException">html 解析错误</exception>
         public static Document Parse(string content)
@@ -55,7 +55,7 @@ namespace Less.Html
                     maxRead--;
 
                     if (maxRead == 0)
-                        throw new ParseException(content);
+                        throw new ParseException("文档节点过多", content);
                 }
             }
 
