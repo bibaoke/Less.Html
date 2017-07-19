@@ -14,7 +14,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="content">要查询的文档</param>
         /// <returns></returns>
-        /// <exception cref="ParserException">解析器异常</exception>
         public static Func<SelectorParam, Query> Query(string content)
         {
             return Selector.Bind(HtmlParser.Parse(content));

@@ -29,6 +29,7 @@ namespace Less.Html
         /// 获取枚举器
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public IEnumerator<Element> GetEnumerator()
         {
             return this.Select().GetEnumerator();
@@ -48,6 +49,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Element this[int index]
         {
             get
@@ -61,6 +63,7 @@ namespace Less.Html
         /// <summary>
         /// 查询到的元素数
         /// </summary>
+        /// <exception cref="ParserException">解析器异常</exception>
         public int length
         {
             get
@@ -72,6 +75,7 @@ namespace Less.Html
         /// <summary>
         /// 是否查询到元素
         /// </summary>
+        /// <exception cref="ParserException">解析器异常</exception>
         public bool hasElement
         {
             get
@@ -85,6 +89,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="classes"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query addClass(string classes)
         {
             IEnumerable<Element> elements = this.Select();
@@ -143,6 +148,7 @@ namespace Less.Html
         /// <summary>
         /// 移除所有匹配的元素
         /// </summary>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query remove()
         {
             IEnumerable<Element> elements = this.Select();
@@ -162,6 +168,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query text(string content)
         {
             IEnumerable<Element> elements = this.Select();
@@ -176,6 +183,7 @@ namespace Less.Html
         /// 返回元素集合的 textContent 
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public string text()
         {
             IEnumerable<Element> elements = this.Select();
@@ -193,6 +201,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query val(object value)
         {
             this.val(value.ToString());
@@ -205,6 +214,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query val(string value)
         {
             this.attr("value", value);
@@ -217,6 +227,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query src(string value)
         {
             return this.attr("src", value);
@@ -226,6 +237,7 @@ namespace Less.Html
         /// 获取 src 属性
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public string src()
         {
             return this.attr("src");
@@ -235,6 +247,7 @@ namespace Less.Html
         /// 获取 href 属性
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public string href()
         {
             return this.attr("href");
@@ -245,6 +258,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query href(string value)
         {
             return this.attr("href", value);
@@ -255,6 +269,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public string attr(string name)
         {
             IEnumerable<Element> elements = this.Select();
@@ -271,6 +286,7 @@ namespace Less.Html
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query attr(string name, object value)
         {
             return this.attr(name, value.ToString());
@@ -282,6 +298,7 @@ namespace Less.Html
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query attr(string name, string value)
         {
             IEnumerable<Element> elements = this.Select();
@@ -312,6 +329,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query after(params SelectorParam[] parameters)
         {
             foreach (SelectorParam i in parameters)
@@ -378,6 +396,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query before(params SelectorParam[] parameters)
         {
             foreach (SelectorParam i in parameters)
@@ -412,6 +431,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query prepend(params SelectorParam[] parameters)
         {
             foreach (SelectorParam i in parameters)
@@ -455,6 +475,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query append(params SelectorParam[] parameters)
         {
             foreach (SelectorParam i in parameters)
@@ -488,6 +509,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public Query html(SelectorParam param)
         {
             this.Operate(param,
@@ -515,6 +537,7 @@ namespace Less.Html
         /// 返回元素集合的 innerHTML
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public string html()
         {
             IEnumerable<Element> elements = this.Select();
