@@ -36,9 +36,6 @@ namespace Less.Html
             //设置上下文
             reader.Context = context;
 
-            //最大阅读次数
-            int maxRead = ushort.MaxValue * 2;
-
             //读取所有内容
             while (true)
             {
@@ -47,16 +44,7 @@ namespace Less.Html
 
                 //不返回阅读器 读取完毕 跳出
                 if (reader.IsNull())
-                {
                     break;
-                }
-                else
-                {
-                    maxRead--;
-
-                    if (maxRead == 0)
-                        throw new ParseException("文档节点过多", content);
-                }
             }
 
             //返回文档元素

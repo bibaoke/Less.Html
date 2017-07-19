@@ -431,7 +431,7 @@ namespace Less.Html
             list.Add(this);
 
             foreach (Node i in this.ChildNodeList)
-                list.AddRange(i.GetAllNodes());
+                i.GetAllNodes(list, 0);
 
             return list;
         }
@@ -448,7 +448,7 @@ namespace Less.Html
                 list.Add((Element)this);
 
             foreach (Node i in this.ChildNodeList)
-                i.GetAllElements(list);
+                i.GetAllElements(list, 0);
 
             return list;
         }
@@ -565,12 +565,17 @@ namespace Less.Html
         /// 把结果作为递归参数，节省栈空间
         /// </summary>
         /// <param name="list">节点列表</param>
-        private void GetAllNodes(List<Node> list)
+        private void GetAllNodes(List<Node> list, int level)
         {
+            level++;
+
+            if (level >= 127)
+                throw new ParseException("节点深度过大", this.ownerDocument.Content);
+
             list.Add(this);
 
             foreach (Node i in this.ChildNodeList)
-                i.GetAllNodes(list);
+                i.GetAllNodes(list, level);
         }
 
         /// <summary>
@@ -578,13 +583,18 @@ namespace Less.Html
         /// 把结果作为递归参数，节省栈空间
         /// </summary>
         /// <param name="list">元素列表</param>
-        private void GetAllElements(List<Element> list)
+        private void GetAllElements(List<Element> list, int level)
         {
+            level++;
+
+            if (level >= 127)
+                throw new ParseException("节点深度过大", this.ownerDocument.Content);
+
             if (this is Element)
                 list.Add((Element)this);
 
             foreach (Node i in this.ChildNodeList)
-                i.GetAllElements(list);
+                i.GetAllElements(list, level);
         }
 
         private void SetOwnerDocument(Document document)
