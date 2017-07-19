@@ -431,7 +431,7 @@ namespace Less.Html
             list.Add(this);
 
             foreach (Node i in this.ChildNodeList)
-                i.GetAllNodes(list, 0);
+                i.GetAllNodes(ref list, 0);
 
             return list;
         }
@@ -448,7 +448,7 @@ namespace Less.Html
                 list.Add((Element)this);
 
             foreach (Node i in this.ChildNodeList)
-                i.GetAllElements(list, 0);
+                i.GetAllElements(ref list, 0);
 
             return list;
         }
@@ -565,17 +565,18 @@ namespace Less.Html
         /// 把结果作为递归参数，节省栈空间
         /// </summary>
         /// <param name="list">节点列表</param>
-        private void GetAllNodes(List<Node> list, int level)
+        /// <param name="level">深度</param>
+        private void GetAllNodes(ref List<Node> list, int level)
         {
             level++;
 
-            if (level >= 127)
-                throw new ParseException("节点深度过大", this.ownerDocument.Content);
+            if (level >= 255)
+                throw new ParserException("节点深度过大， 最大支持 256 级节点嵌套", this.ownerDocument.Content);
 
             list.Add(this);
 
             foreach (Node i in this.ChildNodeList)
-                i.GetAllNodes(list, level);
+                i.GetAllNodes(ref list, level);
         }
 
         /// <summary>
@@ -583,18 +584,19 @@ namespace Less.Html
         /// 把结果作为递归参数，节省栈空间
         /// </summary>
         /// <param name="list">元素列表</param>
-        private void GetAllElements(List<Element> list, int level)
+        /// <param name="level">深度</param>
+        private void GetAllElements(ref List<Element> list, int level)
         {
             level++;
 
-            if (level >= 127)
-                throw new ParseException("节点深度过大", this.ownerDocument.Content);
+            if (level >= 255)
+                throw new ParserException("节点深度过大， 最大支持 256 级节点嵌套", this.ownerDocument.Content);
 
             if (this is Element)
                 list.Add((Element)this);
 
             foreach (Node i in this.ChildNodeList)
-                i.GetAllElements(list, level);
+                i.GetAllElements(ref list, level);
         }
 
         private void SetOwnerDocument(Document document)

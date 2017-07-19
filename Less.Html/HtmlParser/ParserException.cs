@@ -3,9 +3,9 @@
 namespace Less.Html
 {
     /// <summary>
-    /// html 解析错误
+    /// 解析器异常
     /// </summary>
-    public class ParseException : Exception
+    public class ParserException : Exception
     {
         /// <summary>
         /// 出错的文档内容
@@ -19,7 +19,7 @@ namespace Less.Html
         /// <summary>
         /// 初始化
         /// </summary>
-        public ParseException(string content) : this("html 解析错误", content)
+        public ParserException(string content) : this("解析器异常", content)
         {
             //
         }
@@ -27,7 +27,7 @@ namespace Less.Html
         /// <summary>
         /// 初始化
         /// </summary>
-        public ParseException(string message, string content) : base(message)
+        public ParserException(string message, string content) : base(message)
         {
             this.Content = content;
         }

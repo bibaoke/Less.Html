@@ -5,15 +5,16 @@ using System;
 namespace Less.Html
 {
     /// <summary>
-    /// Html 解析器
+    /// html 解析器
     /// </summary>
     public static class HtmlParser
     {
         /// <summary>
         /// 查询
         /// </summary>
-        /// <param name="content"></param>
+        /// <param name="content">要查询的文档</param>
         /// <returns></returns>
+        /// <exception cref="ParserException">解析器异常</exception>
         public static Func<SelectorParam, Query> Query(string content)
         {
             return Selector.Bind(HtmlParser.Parse(content));
@@ -24,7 +25,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="content">要解析的文档</param>
         /// <returns></returns>
-        /// <exception cref="ParseException">html 解析错误</exception>
         public static Document Parse(string content)
         {
             //创建标签阅读器
