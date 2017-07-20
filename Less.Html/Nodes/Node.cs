@@ -562,7 +562,7 @@ namespace Less.Html
 
         /// <summary>
         /// 获取所有的节点
-        /// 把结果作为递归参数，节省栈空间
+        /// 把结果作为递归参数，节省空间
         /// </summary>
         /// <param name="list">节点列表</param>
         /// <param name="level">深度</param>
@@ -581,7 +581,7 @@ namespace Less.Html
 
         /// <summary>
         /// 获取所有的元素
-        /// 把结果作为递归参数，节省栈空间
+        /// 把结果作为递归参数，节省空间
         /// </summary>
         /// <param name="list">元素列表</param>
         /// <param name="level">深度</param>
