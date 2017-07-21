@@ -41,8 +41,8 @@ namespace Less.Html
         /// <summary>
         /// 绑定文档
         /// </summary>
-        /// <param name="document"></param>
-        /// <returns></returns>
+        /// <param name="document">文档</param>
+        /// <returns>jQuery 风格的 css 选择器</returns>
         public static Func<SelectorParam, Query> Bind(Document document)
         {
             return selectorParam => new Query(new Selector(document, selectorParam));
