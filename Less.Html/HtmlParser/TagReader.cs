@@ -91,29 +91,33 @@ namespace Less.Html
 
                     //如果标签未结束 
                     if (space.Success)
+                    {
                         //读取属性
                         return this.Pass<AttributeReader>().Set(element);
-
-                    //如果标签已结束
-                    element.InnerBegin = this.Position;
-
-                    //且是双标签
-                    if (xdouble.Success)
-                    {
-                        //不是单标签元素
-                        if (!element.IsSingle)
-                            //开标签
-                            this.OpenTag(element);
                     }
-                    //如果是单标签
+                    //如果标签已结束
                     else
                     {
-                        //设置元素结束位置
-                        element.End = this.Position - 1;
-                    }
+                        element.InnerBegin = this.Position;
 
-                    //结束标签
-                    return this.EndTag(element.Name);
+                        //且是双标签
+                        if (xdouble.Success)
+                        {
+                            //不是单标签元素
+                            if (!element.IsSingle)
+                                //开标签
+                                this.OpenTag(element);
+                        }
+                        //如果是单标签
+                        else
+                        {
+                            //设置元素结束位置
+                            element.End = this.Position - 1;
+                        }
+
+                        //结束标签
+                        return this.EndTag(element.Name);
+                    }
                 }
 
                 //如果是闭标签
@@ -129,10 +133,10 @@ namespace Less.Html
                 if (closeSpace.Success)
                     //读取属性
                     return this.Pass<AttributeReader>().Set(name, match.Index);
-
                 //如果闭标签已结束
-                //关闭标签
-                return this.CloseTag(name, match.Index - 1);
+                else
+                    //关闭标签
+                    return this.CloseTag(name, match.Index - 1);
             }
 
             return this.Pass<EndingReader>();

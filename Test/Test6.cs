@@ -18,6 +18,12 @@ namespace Test
 
         public override bool Execute(params string[] args)
         {
+            new Test1().Execute();
+            new Test2().Execute();
+            new Test3().Execute();
+            new Test4().Execute();
+            new Test5().Execute();
+
             //
             {
                 string testHtml = "<p>段落1</p><p>段落2</p>";

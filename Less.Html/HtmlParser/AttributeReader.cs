@@ -130,10 +130,12 @@ namespace Less.Html
                         //结束标签
                         return this.EndTag(this.Element.Name);
                     }
-
                     //如果当前位置在闭标签内
-                    //关闭标签
-                    return this.CloseTag(this.CloseTagName, this.CloseTagIndex - 1);
+                    else
+                    {
+                        //关闭标签
+                        return this.CloseTag(this.CloseTagName, this.CloseTagIndex - 1);
+                    }
                 }
                 //如果是单标签结束
                 else if (single.Success)
@@ -150,10 +152,12 @@ namespace Less.Html
                         //结束
                         return this.EndTag(this.Element.Name);
                     }
-
                     //如果当前位置在闭标签内
-                    //关闭标签
-                    return this.CloseTag(this.CloseTagName, this.CloseTagIndex - 1);
+                    else
+                    {
+                        //关闭标签
+                        return this.CloseTag(this.CloseTagName, this.CloseTagIndex - 1);
+                    }
                 }
 
                 //如果标签未结束
