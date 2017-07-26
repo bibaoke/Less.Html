@@ -15,10 +15,7 @@ namespace Test
 
         public override bool Execute(params string[] args)
         {
-            Cmd.Exec(Application.SetupDir.CombinePath("Test4.exe"), (s) =>
-            {
-                Console.WriteLine(s);
-            });
+            Cmd.Exec(Application.SetupDir.CombinePath("Test4.exe"));
 
             return true;
         }
