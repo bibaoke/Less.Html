@@ -32,8 +32,8 @@
     <DocumentationFile>bin\Release\Less.Html.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Less.Common, Version=1.0.12.21986, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Less.Common.1.0.12.1\lib\net35\Less.Common.dll</HintPath>
+    <Reference Include="Less.Common, Version=1.0.12.32609, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Less.Common.1.0.12.3\lib\net35\Less.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -45,7 +45,7 @@
     <Compile Include="HtmlParser\Context.cs" />
     <Compile Include="HtmlParser\EndingReader.cs" />
     <Compile Include="HtmlParser\HtmlParser.cs" />
-    <Compile Include="HtmlParser\ParserException.cs" />
+    <Compile Include="Nodes\DocumentException.cs" />
     <Compile Include="HtmlParser\ReaderBase.cs" />
     <Compile Include="HtmlParser\TagMark.cs" />
     <Compile Include="HtmlParser\TagReader.cs" />

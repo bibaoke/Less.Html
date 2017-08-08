@@ -571,7 +571,7 @@ namespace Less.Html
             level++;
 
             if (level >= 255)
-                throw new ParserException("节点深度过大， 最大支持 256 级节点嵌套", this.ownerDocument.Content);
+                throw new DocumentException("节点深度过大， 最大支持 256 级节点嵌套", this.ownerDocument.Content);
 
             list.Add(this);
 
@@ -590,7 +590,7 @@ namespace Less.Html
             level++;
 
             if (level >= 255)
-                throw new ParserException("节点深度过大， 最大支持 256 级节点嵌套", this.ownerDocument.Content);
+                throw new DocumentException("节点深度过大， 最大支持 256 级节点嵌套", this.ownerDocument.Content);
 
             if (this is Element)
                 list.Add((Element)this);

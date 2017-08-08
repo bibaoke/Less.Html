@@ -72,6 +72,17 @@ namespace Test
                 q("*").ToArray();
             }
 
+            //
+            {
+                string testHtml = "<div></div>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                q("div").html(1);
+
+                Assert.IsTrue(q("div").html() == "1");
+            }
+
             return true;
         }
     }

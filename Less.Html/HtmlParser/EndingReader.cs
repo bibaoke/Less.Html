@@ -33,7 +33,7 @@ namespace Less.Html
             int end = this.Content.Length - 1;
 
             //截取文档最后的文本
-            if (end > this.Previous.Position)
+            if (end >= this.Previous.Position)
                 this.CurrentNode.appendChild(new Text(this.Previous.Position, end));
 
             return null;

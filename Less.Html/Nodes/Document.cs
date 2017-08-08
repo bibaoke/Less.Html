@@ -76,7 +76,7 @@ namespace Less.Html
         /// <summary>
         /// 所有元素
         /// </summary>
-        /// <exception cref="ParserException">解析器异常</exception>
+        /// <exception cref="DocumentException">文档异常</exception>
         public ElementCollection all
         {
             get
@@ -130,7 +130,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        /// <exception cref="ParserException">解析器异常</exception>
+        /// <exception cref="DocumentException">文档异常</exception>
         public Element getElementById(string id)
         {
             return this.all.Where(i => i.id.CompareIgnoreCase(id)).FirstOrDefault();
@@ -141,7 +141,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="tagName"></param>
         /// <returns></returns>
-        /// <exception cref="ParserException">解析器异常</exception>
+        /// <exception cref="DocumentException">文档异常</exception>
         public Element[] getElementsByTagName(string tagName)
         {
             return this.all.Where(i => i.Name.CompareIgnoreCase(tagName)).ToArray();
