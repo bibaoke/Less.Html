@@ -305,7 +305,7 @@ namespace Less.Html
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query attr(string name, object value)
         {
-            return this.attr(name, value.ToString());
+            return this.attr(name, value.IsNull() ? "" : value.ToString());
         }
 
         /// <summary>
@@ -534,7 +534,7 @@ namespace Less.Html
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query html(object html)
         {
-            return this.html(html.ToString());
+            return this.html(html.IsNull() ? "" : html.ToString());
         }
 
         /// <summary>
@@ -604,22 +604,25 @@ namespace Less.Html
         private void Operate(
             SelectorParam param, Action<Element, Node[]> nodesAction, Action<Element, string> stringAction, Action<Element, Query> queryAction)
         {
-            IEnumerable<Element> elements = this.Select();
+            if (param.IsNotNull())
+            {
+                IEnumerable<Element> elements = this.Select();
 
-            if (param.NodesValue.IsNotNull())
-            {
-                foreach (Element i in elements)
-                    nodesAction(i, param.NodesValue);
-            }
-            else if (param.StringValue.IsNotNull())
-            {
-                foreach (Element i in elements)
-                    stringAction(i, param.StringValue);
-            }
-            else
-            {
-                foreach (Element i in elements)
-                    queryAction(i, param.QueryValue);
+                if (param.NodesValue.IsNotNull())
+                {
+                    foreach (Element i in elements)
+                        nodesAction(i, param.NodesValue);
+                }
+                else if (param.StringValue.IsNotNull())
+                {
+                    foreach (Element i in elements)
+                        stringAction(i, param.StringValue);
+                }
+                else
+                {
+                    foreach (Element i in elements)
+                        queryAction(i, param.QueryValue);
+                }
             }
         }
     }

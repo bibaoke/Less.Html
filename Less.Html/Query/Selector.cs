@@ -63,41 +63,48 @@ namespace Less.Html
         /// <returns></returns>
         internal IEnumerable<Element> Select()
         {
-            if (this.Param.StringValue.IsNotNull())
+            if (this.Param.IsNotNull())
             {
-                Node[] nodes = this.Document.Parse(this.Param.StringValue).childNodes;
-
-                if (nodes.Any(i => i is Element))
+                if (this.Param.StringValue.IsNotNull())
                 {
-                    this.Param.NodesValue = nodes;
+                    Node[] nodes = this.Document.Parse(this.Param.StringValue).childNodes;
 
-                    this.Param.StringValue = null;
+                    if (nodes.Any(i => i is Element))
+                    {
+                        this.Param.NodesValue = nodes;
+
+                        this.Param.StringValue = null;
+                    }
                 }
-            }
 
-            IEnumerable<Element> selected;
+                IEnumerable<Element> selected;
 
-            if (this.Param.NodesValue.IsNull())
-            {
-                if (this.Param.StringValue.IsNull())
-                    selected = this.Param.QueryValue.Select();
+                if (this.Param.NodesValue.IsNull())
+                {
+                    if (this.Param.StringValue.IsNull())
+                        selected = this.Param.QueryValue.Select();
+                    else
+                        selected = this.Select(this.Document.childNodes.GetElements(), this.Param.StringValue);
+                }
                 else
-                    selected = this.Select(this.Document.childNodes.GetElements(), this.Param.StringValue);
+                {
+                    IEnumerable<Element> source = this.Param.NodesValue.GetElements();
+
+                    if (this.Param.StringValue.IsNull())
+                        selected = source;
+                    else
+                        selected = this.Select(source, this.Param.StringValue);
+                }
+
+                foreach (Func<IEnumerable<Element>, IEnumerable<Element>> i in this.ExtFilterList)
+                    selected = i(selected);
+
+                return selected;
             }
             else
             {
-                IEnumerable<Element> source = this.Param.NodesValue.GetElements();
-
-                if (this.Param.StringValue.IsNull())
-                    selected = source;
-                else
-                    selected = this.Select(source, this.Param.StringValue);
+                return new Element[] { };
             }
-
-            foreach (Func<IEnumerable<Element>, IEnumerable<Element>> i in this.ExtFilterList)
-                selected = i(selected);
-
-            return selected;
         }
 
         /// <summary>

@@ -83,6 +83,27 @@ namespace Test
                 Assert.IsTrue(q("div").html() == "1");
             }
 
+            //
+            {
+                string testHtml = "<div></div>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                q("div").html(null);
+
+                int? i = null;
+
+                q("div").html(i);
+
+                q(null).html("test");
+
+                string s = null;
+
+                q(s).html("test");
+
+                Assert.IsTrue(q("div").html() == "");
+            }
+
             return true;
         }
     }
