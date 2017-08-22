@@ -144,7 +144,9 @@ namespace Less.Html
             int end = tag.Index - 1;
 
             if (end >= this.Previous.Position)
+            {
                 this.CurrentNode.appendChild(new Text(this.Previous.Position, end));
+            }
         }
 
         /// <summary>
@@ -172,8 +174,10 @@ namespace Less.Html
 
             //如果是 script 标签
             if (name == "script")
+            {
                 //读取闭 script 标签
                 return this.Pass<CloseScriptReader>();
+            }
 
             //如果不是 script 标签
             //读取下一个标签
@@ -210,7 +214,9 @@ namespace Less.Html
                     //从栈顶部取出开标签 没有闭标签的双标签会被自动结束
                     //取出对应的开标签才跳出
                     if (this.MarkStack.Pop().Name == name)
+                    {
                         break;
+                    }
                 }
             }
 

@@ -44,7 +44,7 @@ namespace Test
 
             //
             {
-                string testHtml = Application.SetupDir.CombinePath("265.com.html").ReadString(Encoding.UTF8);
+                string testHtml = Application.SetupDir.CombinePath("testHtml/265.com.html").ReadString(Encoding.UTF8);
 
                 Document document = HtmlParser.Parse(testHtml);
 
@@ -53,7 +53,7 @@ namespace Test
 
             //
             {
-                string testHtml = Application.SetupDir.CombinePath("youpinai.com.html").ReadString(Encoding.UTF8);
+                string testHtml = Application.SetupDir.CombinePath("testHtml/youpinai.com.html").ReadString(Encoding.UTF8);
 
                 var q = HtmlParser.Query(testHtml);
 
@@ -65,7 +65,7 @@ namespace Test
 
             //
             {
-                string testHtml = Application.SetupDir.CombinePath("auto.qq.com.html").ReadString(Encoding.UTF8);
+                string testHtml = Application.SetupDir.CombinePath("testHtml/auto.qq.com.html").ReadString(Encoding.UTF8);
 
                 var q = HtmlParser.Query(testHtml);
 
@@ -106,7 +106,7 @@ namespace Test
 
             //
             {
-                string testHtml = Application.SetupDir.CombinePath("auto.qq.com.html").ReadString(Encoding.UTF8);
+                string testHtml = Application.SetupDir.CombinePath("testHtml/auto.qq.com.html").ReadString(Encoding.UTF8);
 
                 var q = HtmlParser.Query(testHtml);
 
@@ -117,6 +117,15 @@ namespace Test
                 string description = q("meta[name='description']").attr("content");
 
                 this.WriteLine(description);
+            }
+
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("testHtml/lrcmyanmar.org.html").ReadString(Encoding.UTF8);
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("title:last").html() == "lrc myanmar");
             }
 
             return true;

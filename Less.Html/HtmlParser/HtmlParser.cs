@@ -45,7 +45,9 @@ namespace Less.Html
 
                 //不返回阅读器 读取完毕 跳出
                 if (reader.IsNull())
+                {
                     break;
+                }
             }
 
             //返回文档元素

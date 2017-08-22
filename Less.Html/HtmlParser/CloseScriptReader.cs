@@ -56,12 +56,16 @@ namespace Less.Html
 
                 //如果标签未结束
                 if (space.Success)
+                {
                     //读取属性
                     return this.Pass<AttributeReader>().Set("script", match.Index);
+                }
                 //如果标签已结束
                 else
+                {
                     //关闭标签
                     return this.CloseTag("script", match.Index - 1);
+                }
             }
 
             return this.Pass<EndingReader>();

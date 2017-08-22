@@ -25,7 +25,7 @@ namespace Test4
 
             this.Load += Form1_Load;
 
-            this.webBrowser1.ScriptErrorsSuppressed = false;
+            this.webBrowser1.ScriptErrorsSuppressed = true;
 
             this.webBrowser1.DocumentCompleted += WebBrowser1_DocumentCompleted;
         }

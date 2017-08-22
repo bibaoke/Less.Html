@@ -105,8 +105,10 @@ namespace Less.Html
                         {
                             //不是单标签元素
                             if (!element.IsSingle)
+                            {
                                 //开标签
                                 this.OpenTag(element);
+                            }
                         }
                         //如果是单标签
                         else
@@ -131,12 +133,16 @@ namespace Less.Html
 
                 //如果闭标签未结束
                 if (closeSpace.Success)
+                {
                     //读取属性
                     return this.Pass<AttributeReader>().Set(name, match.Index);
+                }
                 //如果闭标签已结束
                 else
+                {
                     //关闭标签
                     return this.CloseTag(name, match.Index - 1);
+                }
             }
 
             return this.Pass<EndingReader>();

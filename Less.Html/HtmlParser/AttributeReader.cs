@@ -49,11 +49,10 @@ namespace Less.Html
         static AttributeReader()
         {
             AttributeReader.Pattern = @"
-                (?<name>\S+?)\s*=\s*(?<mark>[""'])\s*(?<value>.*?)\s*\k<mark>|
+                (?<name>\S+?)\s*=\s*(?<mark>[""'])\s*(?<value>.*?)\s*\k<mark>((?<space>\s)|(?<single>/>)|(?<double>>))|
                 (?<name>\S+?)\s*=\s*(?<value>.*?)((?<space>\s)|(?<single>/>)|(?<double>>))|
-                (?<mark>[""'])\s*(?<value>.*?)\s*\k<mark>|
-                (?<name>\S*?)((?<single>/>)|(?<double>>))|
-                (?<name>\S+?)(?<space>\s)
+                (?<mark>[""'])\s*(?<value>.*?)\s*\k<mark>((?<space>\s)|(?<single>/>)|(?<double>>))|
+                (?<name>\S+?)((?<space>\s)|(?<single>/>)|(?<double>>))
                 ".ToRegex(
                 RegexOptions.IgnorePatternWhitespace |
                 RegexOptions.Singleline |
@@ -117,12 +116,16 @@ namespace Less.Html
 
                         //如果是单标签元素
                         if (this.Element.IsSingle)
+                        {
                             //设置元素结束位置
                             this.Element.End = this.Position - 1;
+                        }
                         //如果不是单标签元素
                         else
+                        {
                             //开标签
                             this.OpenTag(this.Element);
+                        }
 
                         //设置属性
                         this.SetAttribute(match, -xdouble.Length);
@@ -163,8 +166,10 @@ namespace Less.Html
                 //如果标签未结束
                 //如果当前位置在开标签内
                 if (this.Element.IsNotNull())
+                {
                     //设置属性
                     this.SetAttribute(match, -match.Groups["space"].Length);
+                }
 
                 //继续读取下一个属性
                 return this;
@@ -185,8 +190,10 @@ namespace Less.Html
 
             //如果属性名匹配成功 但长度为 0 即没有读取到属性
             if (name.Success && name.Value.IsEmpty())
+            {
                 //返回 方法结束
                 return;
+            }
 
             //属性值
             Group value = match.Groups["value"];
