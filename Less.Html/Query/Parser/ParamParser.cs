@@ -6,7 +6,7 @@ namespace Less.Html.SelectorParamParser
     {
         internal static ElementFilter[] Parse(string param)
         {
-            ReaderBase reader = new CommonReader();
+            ReaderBase reader = new SelectorReader();
 
             Context context = new Context(param);
 
@@ -17,7 +17,9 @@ namespace Less.Html.SelectorParamParser
                 reader = reader.Read();
 
                 if (reader.IsNull())
+                {
                     break;
+                }
             }
 
             return context.FilterList.ToArray();

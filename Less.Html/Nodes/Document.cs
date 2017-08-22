@@ -137,6 +137,17 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 返回带有指定名称的元素
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        /// <exception cref="DocumentException">文档异常</exception>
+        public Element[] getElementsByName(string name)
+        {
+            return this.all.Where(i => i.Name.CompareIgnoreCase(name)).ToArray();
+        }
+
+        /// <summary>
         /// 返回带有指定标签名的元素
         /// </summary>
         /// <param name="tagName"></param>

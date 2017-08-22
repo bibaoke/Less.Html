@@ -5,7 +5,7 @@ using Less.Text;
 
 namespace Less.Html.SelectorParamParser
 {
-    internal class CommonReader : ReaderBase
+    internal class SelectorReader : ReaderBase
     {
         private static Regex Pattern
         {
@@ -13,9 +13,9 @@ namespace Less.Html.SelectorParamParser
             set;
         }
 
-        static CommonReader()
+        static SelectorReader()
         {
-            CommonReader.Pattern = @"
+            SelectorReader.Pattern = @"
                 (?<space>\s*)(?<symbol>[\.#:\[,*])|
                 (?<space>\s*)(?<name>[^\.#:\[,*\s]+)
                 ".ToRegex(
@@ -27,7 +27,7 @@ namespace Less.Html.SelectorParamParser
 
         internal override ReaderBase Read()
         {
-            Match match = CommonReader.Pattern.Match(this.Param, this.Position);
+            Match match = SelectorReader.Pattern.Match(this.Param, this.Position);
 
             if (match.Success)
             {
@@ -43,13 +43,17 @@ namespace Less.Html.SelectorParamParser
                     this.PreSpace = space.Length > 0;
 
                     if (hasCurrentSymbol)
+                    {
                         throw new SelectorParamException(symbol.Index, symbol.Value);
+                    }
 
                     switch (symbol.Value)
                     {
                         case ",":
                             if (this.CurrentFilter.IsNull())
+                            {
                                 throw new SelectorParamException(symbol.Index, symbol.Value);
+                            }
 
                             this.CurrentSymbol = null;
                             this.CurrentFilter = null;
@@ -57,11 +61,15 @@ namespace Less.Html.SelectorParamParser
                             break;
                         case "*":
                             if (this.CurrentFilter.IsNotNull() && !this.PreSpace)
+                            {
                                 throw new SelectorParamException(symbol.Index, symbol.Value);
+                            }
 
                             this.AddFilter(new FilterByAll(), false);
 
                             break;
+                        case "[":
+                            return this.Pass<AttrSelectorReader>();
                         default:
                             this.CurrentSymbol = symbol.Value;
 
@@ -75,7 +83,9 @@ namespace Less.Html.SelectorParamParser
                     if (hasCurrentSymbol)
                     {
                         if (space.Length > 0)
+                        {
                             throw new SelectorParamException(match.Index, match.Value);
+                        }
 
                         bool next = !this.PreSpace;
 
@@ -102,18 +112,10 @@ namespace Less.Html.SelectorParamParser
                     this.CurrentSymbol = null;
                 }
 
-                return this.Pass<CommonReader>();
+                return this.Pass<SelectorReader>();
             }
 
             return null;
-        }
-
-        private void AddFilter(ElementFilter filter, bool next)
-        {
-            if (next)
-                this.SetNext(filter);
-            else
-                this.SetChild(filter);
         }
     }
 }

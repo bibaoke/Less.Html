@@ -80,9 +80,13 @@ namespace Less.Html.SelectorParamParser
         internal void SetNext(ElementFilter next)
         {
             if (this.CurrentFilter.IsNull())
+            {
                 this.FilterList.Add(next);
+            }
             else
+            {
                 this.CurrentFilter.Next = next;
+            }
 
             this.CurrentFilter = next;
         }
@@ -90,9 +94,13 @@ namespace Less.Html.SelectorParamParser
         internal void SetChild(ElementFilter child)
         {
             if (this.CurrentFilter.IsNull())
+            {
                 this.FilterList.Add(child);
+            }
             else
+            {
                 this.CurrentFilter.Child = child;
+            }
 
             this.CurrentFilter = child;
         }
@@ -111,6 +119,18 @@ namespace Less.Html.SelectorParamParser
             t.Context = this.Context;
 
             return t;
+        }
+
+        protected void AddFilter(ElementFilter filter, bool next)
+        {
+            if (next)
+            {
+                this.SetNext(filter);
+            }
+            else
+            {
+                this.SetChild(filter);
+            }
         }
     }
 }

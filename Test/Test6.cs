@@ -104,6 +104,21 @@ namespace Test
                 Assert.IsTrue(q("div").html() == "");
             }
 
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("auto.qq.com.html").ReadString(Encoding.UTF8);
+
+                var q = HtmlParser.Query(testHtml);
+
+                string title = q("title:last").html();
+
+                this.WriteLine(title);
+
+                string description = q("meta[name='description']").attr("content");
+
+                this.WriteLine(description);
+            }
+
             return true;
         }
     }

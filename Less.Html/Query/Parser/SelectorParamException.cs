@@ -17,7 +17,7 @@ namespace Less.Html
         public SelectorParamException(int index, string near) :
             base(string.Format("选择器参数错误，在位置{0}，“{1}”附近", index, near))
         {
-
+            //
         }
     }
 }

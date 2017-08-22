@@ -1,7 +1,9 @@
 ﻿//bibaoke.com
 
+using Less.Text;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Less.Html
 {
@@ -31,6 +33,8 @@ namespace Less.Html
             {
                 case "first":
                     return source.Take(1);
+                case "last":
+                    return source.Reverse().Take(1);
                 default:
                     throw new SelectorParamException(this.Index, this.Condition);
             }

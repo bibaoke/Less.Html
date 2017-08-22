@@ -611,17 +611,23 @@ namespace Less.Html
                 if (param.NodesValue.IsNotNull())
                 {
                     foreach (Element i in elements)
+                    {
                         nodesAction(i, param.NodesValue);
+                    }
                 }
                 else if (param.StringValue.IsNotNull())
                 {
                     foreach (Element i in elements)
+                    {
                         stringAction(i, param.StringValue);
+                    }
                 }
                 else
                 {
                     foreach (Element i in elements)
+                    {
                         queryAction(i, param.QueryValue);
+                    }
                 }
             }
         }

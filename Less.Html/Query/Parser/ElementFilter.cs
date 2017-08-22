@@ -29,7 +29,9 @@ namespace Less.Html
             else
             {
                 if (this.Child.IsNotNull())
+                {
                     elements = this.Child.Eval(elements.GetChildElements());
+                }
             }
 
             return elements;
