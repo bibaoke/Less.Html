@@ -49,6 +49,7 @@ namespace Less.Html
         static AttributeReader()
         {
             AttributeReader.Pattern = @"
+                ((?<single>/>)|(?<double>>))|
                 (?<name>\S+?)\s*=\s*(?<mark>[""'])\s*(?<value>.*?)\s*\k<mark>((?<space>\s)|(?<single>/>)|(?<double>>))|
                 (?<name>\S+?)\s*=\s*(?<value>.*?)((?<space>\s)|(?<single>/>)|(?<double>>))|
                 (?<mark>[""'])\s*(?<value>.*?)\s*\k<mark>((?<space>\s)|(?<single>/>)|(?<double>>))|

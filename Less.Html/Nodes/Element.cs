@@ -241,7 +241,9 @@ namespace Less.Html
             this.Name = name.ToLower();
 
             if (Element.SingleElements.Contains(name))
+            {
                 this.IsSingle = true;
+            }
         }
 
         /// <summary>

@@ -128,6 +128,15 @@ namespace Test
                 Assert.IsTrue(q("title:last").html() == "lrc myanmar");
             }
 
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("testHtml/wsbuluo.com.html").ReadString(Encoding.UTF8);
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("title:last").html() == "纹身图案大全图片_纹身图案大全_纹身图片 - 纹身部落");
+            }
+
             return true;
         }
     }
