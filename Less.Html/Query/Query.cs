@@ -526,6 +526,17 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 删除子元素
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DocumentException">文档异常</exception>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        public Query empty()
+        {
+            return this.html("");
+        }
+
+        /// <summary>
         /// 设置元素集合的 innerHTML
         /// </summary>
         /// <param name="html"></param>
