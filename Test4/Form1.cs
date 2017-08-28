@@ -89,7 +89,9 @@ namespace Test4
                     if (list.Count > 0)
                     {
                         foreach (var i in list)
-                            Console.WriteLine(i.Item1.Combine(Symbol.Tab, i.Item2));
+                        {
+                            Console.WriteLine(i.Item1 + Symbol.Tab + i.Item2);
+                        }
 
                         break;
                     }

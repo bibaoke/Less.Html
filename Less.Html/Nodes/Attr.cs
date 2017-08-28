@@ -145,7 +145,7 @@ namespace Less.Html
             if (element.ownerDocument.Content[stringIndex + 1] == Symbol.Space[0])
                 postfix = "";
 
-            element.ownerDocument.Content = element.ownerDocument.Content.Insert(stringIndex, this.Content.Combine(postfix));
+            element.ownerDocument.Content = element.ownerDocument.Content.Insert(stringIndex, this.Content + postfix);
 
             int length = this.End - this.Begin + 1 + postfix.Length;
 
@@ -154,7 +154,9 @@ namespace Less.Html
             int next = index + 1;
 
             if (element.attributes.Count > next)
+            {
                 element.attributes[next].Shift(length);
+            }
 
             element.OnAttributesChange(length, inOpenTag);
 
@@ -184,7 +186,9 @@ namespace Less.Html
                     position = idx;
 
                     if (!item.InOpenTag)
+                    {
                         return false;
+                    }
 
                     return true;
                 });
@@ -201,9 +205,13 @@ namespace Less.Html
                     begin = element.End - 1;
 
                     if (element.ownerDocument.Content[begin - 1] == '/')
+                    {
                         begin--;
+                    }
                     else
+                    {
                         postfix = "";
+                    }
                 }
                 else
                 {
@@ -213,9 +221,11 @@ namespace Less.Html
                 }
 
                 if (element.ownerDocument.Content[begin - 1] == Symbol.Space[0])
+                {
                     prefix = "";
+                }
 
-                element.ownerDocument.Content = element.ownerDocument.Content.Insert(begin, prefix.Combine(this.Content, postfix));
+                element.ownerDocument.Content = element.ownerDocument.Content.Insert(begin, prefix + this.Content + postfix);
 
                 int length = prefix.Length + this.End - this.Begin + 1 + postfix.Length;
 
@@ -224,7 +234,9 @@ namespace Less.Html
                 int next = index + 1;
 
                 if (element.attributes.Count > next)
+                {
                     element.attributes[next].Shift(length);
+                }
 
                 element.OnAttributesChange(length, true);
 
