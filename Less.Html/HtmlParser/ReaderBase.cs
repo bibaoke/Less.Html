@@ -78,7 +78,7 @@ namespace Less.Html
         /// <summary>
         /// 文档内容
         /// </summary>
-        internal string Content
+        internal DynamicString Content
         {
             get
             {

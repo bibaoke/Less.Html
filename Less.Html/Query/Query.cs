@@ -321,7 +321,9 @@ namespace Less.Html
             IEnumerable<Element> elements = this.Select();
 
             foreach (Element i in elements)
+            {
                 i.setAttribute(name, value);
+            }
 
             return this;
         }
@@ -360,12 +362,16 @@ namespace Less.Html
                         if (after.IsNotNull())
                         {
                             foreach (Node j in nodes)
+                            {
                                 element.parentNode.insertBefore(j, after);
+                            }
                         }
                         else
                         {
                             foreach (Node j in nodes)
+                            {
                                 element.parentNode.appendChild(j);
+                            }
                         }
                     },
 
@@ -378,12 +384,16 @@ namespace Less.Html
                         if (after.IsNotNull())
                         {
                             foreach (Node j in nodes)
+                            {
                                 element.parentNode.insertBefore(j, after);
+                            }
                         }
                         else
                         {
                             foreach (Node j in nodes)
+                            {
                                 element.parentNode.appendChild(j);
+                            }
                         }
                     },
 
@@ -396,12 +406,16 @@ namespace Less.Html
                         if (after.IsNotNull())
                         {
                             foreach (Element j in elements)
+                            {
                                 element.parentNode.insertBefore(j, after);
+                            }
                         }
                         else
                         {
                             foreach (Element j in elements)
+                            {
                                 element.parentNode.appendChild(j);
+                            }
                         }
                     });
             }
@@ -424,13 +438,17 @@ namespace Less.Html
                     (element, nodes) =>
                     {
                         foreach (Node j in nodes)
+                        {
                             element.parentNode.insertBefore(j, element);
+                        }
                     },
 
                     (element, html) =>
                     {
                         foreach (Node j in element.ownerDocument.Parse(html).childNodes)
+                        {
                             element.parentNode.insertBefore(j, element);
+                        }
                     },
 
                     (element, query) =>
@@ -438,7 +456,9 @@ namespace Less.Html
                         IEnumerable<Element> elements = query.Select();
 
                         foreach (Element j in elements)
+                        {
                             element.parentNode.insertBefore(j, element);
+                        }
                     });
             }
 
@@ -462,9 +482,13 @@ namespace Less.Html
                         nodes.EachDesc(j =>
                         {
                             if (element.hasChildNodes())
+                            {
                                 element.insertBefore(j, element.childNodes[0]);
+                            }
                             else
+                            {
                                 element.appendChild(j);
+                            }
                         });
                     },
 
@@ -480,9 +504,13 @@ namespace Less.Html
                         foreach (Element j in elements.Reverse())
                         {
                             if (element.hasChildNodes())
+                            {
                                 element.insertBefore(j, element.childNodes[0]);
+                            }
                             else
+                            {
                                 element.appendChild(j);
+                            }
                         }
                     });
             }
@@ -505,7 +533,9 @@ namespace Less.Html
                     (element, nodes) =>
                     {
                         foreach (Node j in nodes)
+                        {
                             element.appendChild(j);
+                        }
                     },
 
                     (element, html) =>
@@ -518,7 +548,9 @@ namespace Less.Html
                         IEnumerable<Element> elements = query.Select();
 
                         foreach (Element j in elements)
+                        {
                             element.appendChild(j);
+                        }
                     });
             }
 
@@ -613,7 +645,8 @@ namespace Less.Html
         }
 
         private void Operate(
-            SelectorParam param, Action<Element, Node[]> nodesAction, Action<Element, string> stringAction, Action<Element, Query> queryAction)
+            SelectorParam param,
+            Action<Element, Node[]> nodesAction, Action<Element, string> stringAction, Action<Element, Query> queryAction)
         {
             if (param.IsNotNull())
             {

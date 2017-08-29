@@ -38,7 +38,7 @@ namespace Less.Html
         /// <summary>
         /// 文档内容
         /// </summary>
-        internal new string Content
+        internal new DynamicString Content
         {
             get;
             set;
@@ -82,7 +82,9 @@ namespace Less.Html
             get
             {
                 if (this.allCache.IsNull())
+                {
                     this.allCache = new ElementCollection(this.GetAllElements());
+                }
 
                 return this.allCache;
             }

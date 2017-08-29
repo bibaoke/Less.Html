@@ -31,7 +31,7 @@ namespace Less.Html
 
         internal Text(int begin, int end) : base(begin, end)
         {
-
+            //
         }
 
         /// <summary>

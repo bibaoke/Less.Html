@@ -47,7 +47,7 @@ namespace Less.Html
         /// <summary>
         /// 节点内容
         /// </summary>
-        protected string Content
+        protected DynamicString Content
         {
             get
             {
@@ -122,7 +122,9 @@ namespace Less.Html
                 this.childNodes.EachDesc(node => this.removeChild(node));
 
                 foreach (Node i in value)
+                {
                     this.appendChild(i);
+                }
             }
         }
 
@@ -164,7 +166,9 @@ namespace Less.Html
                         int nextIndex = myIndex + 1;
 
                         if (this.parentNode.ChildNodeList.Count > nextIndex)
+                        {
                             return this.parentNode.ChildNodeList[nextIndex];
+                        }
                     }
                 }
 
@@ -284,7 +288,7 @@ namespace Less.Html
                 newItem.parentNode = this;
 
                 //修改此文档的内容
-                this.ownerDocument.Content = this.ownerDocument.Content.Insert(existingItem.Begin, newItem.Content);
+                this.ownerDocument.Content.Insert(existingItem.Begin, newItem.Content);
 
                 //设置新的索引
                 newItem.SetIndex(existingItem.Begin - newItem.Begin);
@@ -317,7 +321,9 @@ namespace Less.Html
             this.ownerDocument.ResetAllCache();
 
             if (checking)
+            {
                 this.ownerDocument.SelfCheck();
+            }
 
             return newItem;
         }
@@ -352,7 +358,7 @@ namespace Less.Html
                 int begin = element.IsNotNull() ? element.InnerEnd + 1 : this.End + 1;
 
                 //修改此文档的内容
-                this.ownerDocument.Content = this.ownerDocument.Content.Insert(begin, node.Content);
+                this.ownerDocument.Content.Insert(begin, node.Content);
 
                 //设置新的索引
                 node.SetIndex(begin - node.Begin);
@@ -380,7 +386,9 @@ namespace Less.Html
 
             //自检
             if (checking)
+            {
                 this.ownerDocument.SelfCheck();
+            }
 
             return node;
         }
@@ -416,7 +424,9 @@ namespace Less.Html
                 this.OnSelfCheck();
 
                 foreach (Node i in this.ChildNodeList)
+                {
                     i.SelfCheck();
+                }
             }
         }
 
@@ -445,10 +455,14 @@ namespace Less.Html
             List<Element> list = new List<Element>();
 
             if (this is Element)
+            {
                 list.Add((Element)this);
+            }
 
             foreach (Node i in this.ChildNodeList)
+            {
                 i.GetAllElements(ref list, 0);
+            }
 
             return list;
         }
@@ -571,12 +585,16 @@ namespace Less.Html
             level++;
 
             if (level >= 255)
+            {
                 throw new DocumentException("节点深度过大， 最大支持 256 级节点嵌套", this.ownerDocument.Content);
+            }
 
             list.Add(this);
 
             foreach (Node i in this.ChildNodeList)
+            {
                 i.GetAllNodes(ref list, level);
+            }
         }
 
         /// <summary>
@@ -590,13 +608,19 @@ namespace Less.Html
             level++;
 
             if (level >= 255)
+            {
                 throw new DocumentException("节点深度过大， 最大支持 256 级节点嵌套", this.ownerDocument.Content);
+            }
 
             if (this is Element)
+            {
                 list.Add((Element)this);
+            }
 
             foreach (Node i in this.ChildNodeList)
+            {
                 i.GetAllElements(ref list, level);
+            }
         }
 
         private void SetOwnerDocument(Document document)
@@ -606,7 +630,9 @@ namespace Less.Html
             this.OnSetOwnerDocument(document);
 
             foreach (Node i in this.ChildNodeList)
+            {
                 i.SetOwnerDocument(document);
+            }
         }
     }
 }

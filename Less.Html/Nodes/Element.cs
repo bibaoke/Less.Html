@@ -137,7 +137,9 @@ namespace Less.Html
             get
             {
                 if (!this.IsSingle)
+                {
                     return this.ownerDocument.Content.Substring(this.InnerBegin, this.InnerEnd - this.InnerBegin + 1);
+                }
 
                 return null;
             }

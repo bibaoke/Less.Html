@@ -84,7 +84,9 @@ namespace Less.Html
             get
             {
                 if (this.NameLength > -1)
-                    return this.ownerDocument.Content.Substring(this.NameBegin, this.NameLength).ToLower();
+                {
+                    return this.ownerDocument.Content.Substring(this.NameBegin, this.NameLength).ToString().ToLower();
+                }
 
                 return null;
             }
@@ -98,7 +100,9 @@ namespace Less.Html
             get
             {
                 if (this.ValueLength > -1)
+                {
                     return HttpUtility.HtmlDecode(this.ownerDocument.Content.Substring(this.ValueBegin, this.ValueLength));
+                }
 
                 return null;
             }
@@ -142,10 +146,12 @@ namespace Less.Html
 
             string postfix = Symbol.Space;
 
-            if (element.ownerDocument.Content[stringIndex + 1] == Symbol.Space[0])
+            if (element.ownerDocument.Content.Substring(stringIndex + 1, 1) == Symbol.Space)
+            {
                 postfix = "";
+            }
 
-            element.ownerDocument.Content = element.ownerDocument.Content.Insert(stringIndex, this.Content + postfix);
+            element.ownerDocument.Content.Insert(stringIndex, this.Content + postfix);
 
             int length = this.End - this.Begin + 1 + postfix.Length;
 
@@ -204,7 +210,7 @@ namespace Less.Html
                 {
                     begin = element.End - 1;
 
-                    if (element.ownerDocument.Content[begin - 1] == '/')
+                    if (element.ownerDocument.Content.Substring(begin - 1, 1) == "/")
                     {
                         begin--;
                     }
@@ -220,12 +226,12 @@ namespace Less.Html
                     postfix = "";
                 }
 
-                if (element.ownerDocument.Content[begin - 1] == Symbol.Space[0])
+                if (element.ownerDocument.Content.Substring(begin - 1, 1) == Symbol.Space)
                 {
                     prefix = "";
                 }
 
-                element.ownerDocument.Content = element.ownerDocument.Content.Insert(begin, prefix + this.Content + postfix);
+                element.ownerDocument.Content.Insert(begin, prefix + this.Content + postfix);
 
                 int length = prefix.Length + this.End - this.Begin + 1 + postfix.Length;
 
@@ -259,7 +265,7 @@ namespace Less.Html
 
                 int length = this.End - this.Begin + 1;
 
-                int removeLength = this.ownerDocument.Content[this.End + 1] == Symbol.Space[0] ? length + 1 : length;
+                int removeLength = this.ownerDocument.Content.Substring(this.End + 1, 1) == Symbol.Space ? length + 1 : length;
 
                 this.ownerDocument.Content = this.ownerDocument.Content.Remove(this.Begin, removeLength);
 
