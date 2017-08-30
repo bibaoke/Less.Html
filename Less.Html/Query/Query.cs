@@ -162,7 +162,9 @@ namespace Less.Html
             List<Node> list = new List<Node>();
 
             foreach (Element i in elements)
+            {
                 list.Add(i.parentNode.removeChild(i));
+            }
 
             var q = this.Selector.Rebind();
 

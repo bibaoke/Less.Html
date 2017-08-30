@@ -151,7 +151,7 @@ namespace Less.Html
                 postfix = "";
             }
 
-            element.ownerDocument.Content.Insert(stringIndex, this.Content + postfix);
+            element.ownerDocument.Content = element.ownerDocument.Content.Insert(stringIndex, this.Content + postfix);
 
             int length = this.End - this.Begin + 1 + postfix.Length;
 
@@ -231,7 +231,7 @@ namespace Less.Html
                     prefix = "";
                 }
 
-                element.ownerDocument.Content.Insert(begin, prefix + this.Content + postfix);
+                element.ownerDocument.Content = element.ownerDocument.Content.Insert(begin, prefix + this.Content + postfix);
 
                 int length = prefix.Length + this.End - this.Begin + 1 + postfix.Length;
 

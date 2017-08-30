@@ -38,7 +38,7 @@ namespace Less.Html
         /// <summary>
         /// 文档内容
         /// </summary>
-        internal new DynamicString Content
+        internal new string Content
         {
             get;
             set;

@@ -47,7 +47,7 @@ namespace Less.Html
         /// <summary>
         /// 节点内容
         /// </summary>
-        protected DynamicString Content
+        protected string Content
         {
             get
             {
@@ -288,7 +288,7 @@ namespace Less.Html
                 newItem.parentNode = this;
 
                 //修改此文档的内容
-                this.ownerDocument.Content.Insert(existingItem.Begin, newItem.Content);
+                this.ownerDocument.Content = this.ownerDocument.Content.Insert(existingItem.Begin, newItem.Content);
 
                 //设置新的索引
                 newItem.SetIndex(existingItem.Begin - newItem.Begin);
@@ -358,7 +358,7 @@ namespace Less.Html
                 int begin = element.IsNotNull() ? element.InnerEnd + 1 : this.End + 1;
 
                 //修改此文档的内容
-                this.ownerDocument.Content.Insert(begin, node.Content);
+                this.ownerDocument.Content = this.ownerDocument.Content.Insert(begin, node.Content);
 
                 //设置新的索引
                 node.SetIndex(begin - node.Begin);
@@ -480,7 +480,9 @@ namespace Less.Html
             this.OnSetIndex(offset);
 
             foreach (Node i in this.ChildNodeList)
+            {
                 i.SetIndex(offset);
+            }
         }
 
         /// <summary>
