@@ -33,14 +33,29 @@ namespace Less.Html
             }
         }
 
+        internal void AddRange(IEnumerable<Element> elements)
+        {
+            this.List.AddRange(elements);
+        }
+
+        internal void InsertRange(int index, IEnumerable<Element> elements)
+        {
+            this.List.InsertRange(index, elements);
+        }
+
+        internal void RemoveRange(int index, int count)
+        {
+            this.List.RemoveRange(index, count);
+        }
+
         internal int IndexOf(Element element)
         {
             return this.List.IndexOf(element);
         }
 
-        internal ElementCollection(List<Element> list)
+        internal ElementCollection()
         {
-            this.List = list;
+            this.List = new List<Element>();
         }
 
         /// <summary>

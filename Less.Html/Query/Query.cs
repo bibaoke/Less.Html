@@ -29,7 +29,6 @@ namespace Less.Html
         /// 获取枚举器
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public IEnumerator<Element> GetEnumerator()
         {
@@ -50,7 +49,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Element this[int index]
         {
@@ -65,7 +63,6 @@ namespace Less.Html
         /// <summary>
         /// 查询到的元素数
         /// </summary>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public int length
         {
@@ -78,7 +75,6 @@ namespace Less.Html
         /// <summary>
         /// 是否查询到元素
         /// </summary>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public bool hasElement
         {
@@ -93,7 +89,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="classes"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query addClass(string classes)
         {
@@ -105,15 +100,17 @@ namespace Less.Html
             {
                 string[] oriArray = i.className.SplitByWhiteSpace();
 
-                DynamicString className = new DynamicString(i.className).Append(Symbol.Space);
+                string className = i.className + Symbol.Space;
 
                 foreach (string j in addArray)
                 {
                     if (!oriArray.Any(k => k.CompareIgnoreCase(j)))
-                        className.Append(j).Append(Symbol.Space);
+                    {
+                        className += j + Symbol.Space;
+                    }
                 }
 
-                i.className = className.ToString().TrimEnd();
+                i.className = className.TrimEnd();
             }
 
             return this;
@@ -143,7 +140,9 @@ namespace Less.Html
             List<Node> clone = new List<Node>();
 
             foreach (Element i in elements)
+            {
                 clone.Add(i.cloneNode(true));
+            }
 
             var q = this.Selector.Rebind();
 
@@ -153,7 +152,6 @@ namespace Less.Html
         /// <summary>
         /// 移除所有匹配的元素
         /// </summary>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query remove()
         {
@@ -176,14 +174,15 @@ namespace Less.Html
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query text(string content)
         {
             IEnumerable<Element> elements = this.Select();
 
             foreach (Element i in elements)
+            {
                 i.textContent = content;
+            }
 
             return this;
         }
@@ -192,16 +191,17 @@ namespace Less.Html
         /// 返回元素集合的 textContent 
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public string text()
         {
             IEnumerable<Element> elements = this.Select();
 
-            DynamicString text = new DynamicString();
+            string text = "";
 
             foreach (Element i in elements)
-                text.Append(i.textContent);
+            {
+                text += i.textContent;
+            }
 
             return text;
         }
@@ -211,7 +211,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query val(object value)
         {
@@ -225,7 +224,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query val(string value)
         {
@@ -239,7 +237,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query src(string value)
         {
@@ -250,7 +247,6 @@ namespace Less.Html
         /// 获取 src 属性
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public string src()
         {
@@ -261,7 +257,6 @@ namespace Less.Html
         /// 获取 href 属性
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public string href()
         {
@@ -273,7 +268,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query href(string value)
         {
@@ -285,14 +279,15 @@ namespace Less.Html
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public string attr(string name)
         {
             IEnumerable<Element> elements = this.Select();
 
             foreach (Element i in elements)
+            {
                 return i.getAttribute(name);
+            }
 
             return null;
         }
@@ -303,7 +298,6 @@ namespace Less.Html
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query attr(string name, object value)
         {
@@ -316,7 +310,6 @@ namespace Less.Html
         /// <param name="name"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query attr(string name, string value)
         {
@@ -350,7 +343,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query after(params SelectorParam[] parameters)
         {
@@ -430,7 +422,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query before(params SelectorParam[] parameters)
         {
@@ -472,7 +463,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query prepend(params SelectorParam[] parameters)
         {
@@ -525,7 +515,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query append(params SelectorParam[] parameters)
         {
@@ -563,7 +552,6 @@ namespace Less.Html
         /// 删除子元素
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query empty()
         {
@@ -575,7 +563,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="html"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query html(object html)
         {
@@ -587,7 +574,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query html(SelectorParam param)
         {
@@ -616,16 +602,17 @@ namespace Less.Html
         /// 返回元素集合的 innerHTML
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public string html()
         {
             IEnumerable<Element> elements = this.Select();
 
-            DynamicString html = new DynamicString();
+            string html = "";
 
             foreach (Element i in elements)
-                html.Append(i.innerHTML);
+            {
+                html += i.innerHTML;
+            }
 
             return html;
         }

@@ -113,12 +113,14 @@ namespace Less.Html
             {
                 List<Node> list = this.GetAllNodes();
 
-                DynamicString text = new DynamicString();
+                string text = "";
 
                 foreach (Node i in list)
                 {
                     if (i is Text)
-                        text.Append(i.nodeValue);
+                    {
+                        text += i.nodeValue;
+                    }
                 }
 
                 return text;

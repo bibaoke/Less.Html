@@ -161,14 +161,11 @@ namespace Less.Html
                 {
                     int myIndex = this.parentNode.ChildNodeList.IndexOf(this);
 
-                    if (myIndex >= 0)
-                    {
-                        int nextIndex = myIndex + 1;
+                    int nextIndex = myIndex + 1;
 
-                        if (this.parentNode.ChildNodeList.Count > nextIndex)
-                        {
-                            return this.parentNode.ChildNodeList[nextIndex];
-                        }
+                    if (this.parentNode.ChildNodeList.Count > nextIndex)
+                    {
+                        return this.parentNode.ChildNodeList[nextIndex];
                     }
                 }
 
@@ -233,6 +230,11 @@ namespace Less.Html
         /// <returns></returns>
         public Node removeChild(Node node)
         {
+            if (node.ownerDocument != this.ownerDocument)
+            {
+                return node;
+            }
+
             int length = node.End - node.Begin + 1;
 
             //复制节点内容
@@ -249,16 +251,21 @@ namespace Less.Html
 
             this.ChildNodeList.Remove(node);
 
+            if (node is Element)
+            {
+                Element element = (Element)node;
+
+                this.ownerDocument.all.RemoveRange(element.Index, element.GetAllElements().Count);
+            }
+
             node.SetIndex(-node.Begin);
 
+            //把移除的节点放到一个新创建的文档
             Document document = new Document(content, this.ownerDocument.Parse);
 
             node.parentNode = document;
 
             node.SetOwnerDocument(document);
-
-            //重置文档 all 属性缓存
-            this.ownerDocument.ResetAllCache();
 
             this.ownerDocument.SelfCheck();
             node.ownerDocument.SelfCheck();
@@ -274,6 +281,11 @@ namespace Less.Html
         /// <returns></returns>
         public Node insertBefore(Node newItem, Node existingItem)
         {
+            if (!this.ChildNodeList.Contains(existingItem))
+            {
+                return newItem;
+            }
+
             bool checking = false;
 
             //如果节点已经有所属文档
@@ -317,8 +329,30 @@ namespace Less.Html
             //设置所属文档
             newItem.SetOwnerDocument(this.ownerDocument);
 
-            //重置文档 all 属性缓存
-            this.ownerDocument.ResetAllCache();
+            if (newItem is Element)
+            {
+                Element element = (Element)newItem;
+
+                Element existingElement = null;
+
+                if (existingItem is Element)
+                {
+                    existingElement = (Element)existingItem;
+                }
+                else
+                {
+                    existingElement = existingItem.GetNextElement();
+                }
+
+                if (existingElement.IsNotNull())
+                {
+                    this.ownerDocument.all.InsertRange(existingElement.Index, element.GetAllElements());
+                }
+                else
+                {
+                    this.ownerDocument.all.AddRange(element.GetAllElements());
+                }
+            }
 
             if (checking)
             {
@@ -381,8 +415,21 @@ namespace Less.Html
             //添加新节点
             this.ChildNodeList.Add(node);
 
-            //重置文档 all 属性缓存
-            this.ownerDocument.ResetAllCache();
+            if (node is Element)
+            {
+                Element element = (Element)node;
+
+                Element nextElement = this.GetNextElement();
+
+                if (nextElement.IsNotNull())
+                {
+                    this.ownerDocument.all.InsertRange(nextElement.Index, element.GetAllElements());
+                }
+                else
+                {
+                    this.ownerDocument.all.AddRange(element.GetAllElements());
+                }
+            }
 
             //自检
             if (checking)
@@ -430,6 +477,26 @@ namespace Less.Html
             }
         }
 
+        internal Element GetNextElement()
+        {
+            if (this.parentNode.IsNotNull())
+            {
+                int myIndex = this.parentNode.ChildNodeList.IndexOf(this);
+
+                for (int i = myIndex + 1; i < this.parentNode.ChildNodeList.Count; i++)
+                {
+                    if (this.parentNode.ChildNodeList[i] is Element)
+                    {
+                        return (Element)this.parentNode.ChildNodeList[i];
+                    }
+                }
+
+                return this.parentNode.GetNextElement();
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// 获取所有的节点
         /// </summary>
@@ -441,7 +508,9 @@ namespace Less.Html
             list.Add(this);
 
             foreach (Node i in this.ChildNodeList)
-                i.GetAllNodes(ref list, 0);
+            {
+                i.GetAllNodes(ref list);
+            }
 
             return list;
         }
@@ -461,7 +530,7 @@ namespace Less.Html
 
             foreach (Node i in this.ChildNodeList)
             {
-                i.GetAllElements(ref list, 0);
+                i.GetAllElements(ref list);
             }
 
             return list;
@@ -581,21 +650,13 @@ namespace Less.Html
         /// 把结果作为递归参数，节省空间
         /// </summary>
         /// <param name="list">节点列表</param>
-        /// <param name="level">深度</param>
-        private void GetAllNodes(ref List<Node> list, int level)
+        private void GetAllNodes(ref List<Node> list)
         {
-            level++;
-
-            if (level >= 255)
-            {
-                throw new DocumentException("节点深度过大， 最大支持 256 级节点嵌套", this.ownerDocument.Content);
-            }
-
             list.Add(this);
 
             foreach (Node i in this.ChildNodeList)
             {
-                i.GetAllNodes(ref list, level);
+                i.GetAllNodes(ref list);
             }
         }
 
@@ -604,16 +665,8 @@ namespace Less.Html
         /// 把结果作为递归参数，节省空间
         /// </summary>
         /// <param name="list">元素列表</param>
-        /// <param name="level">深度</param>
-        private void GetAllElements(ref List<Element> list, int level)
+        private void GetAllElements(ref List<Element> list)
         {
-            level++;
-
-            if (level >= 255)
-            {
-                throw new DocumentException("节点深度过大， 最大支持 256 级节点嵌套", this.ownerDocument.Content);
-            }
-
             if (this is Element)
             {
                 list.Add((Element)this);
@@ -621,7 +674,7 @@ namespace Less.Html
 
             foreach (Node i in this.ChildNodeList)
             {
-                i.GetAllElements(ref list, level);
+                i.GetAllElements(ref list);
             }
         }
 

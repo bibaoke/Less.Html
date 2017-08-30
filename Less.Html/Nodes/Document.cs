@@ -60,8 +60,6 @@ namespace Less.Html
             }
         }
 
-        private ElementCollection allCache;
-
         /// <summary>
         /// 返回对文档中所有 area 和 a 元素
         /// </summary>
@@ -76,22 +74,16 @@ namespace Less.Html
         /// <summary>
         /// 所有元素
         /// </summary>
-        /// <exception cref="DocumentException">文档异常</exception>
         public ElementCollection all
         {
-            get
-            {
-                if (this.allCache.IsNull())
-                {
-                    this.allCache = new ElementCollection(this.GetAllElements());
-                }
-
-                return this.allCache;
-            }
+            get;
+            private set;
         }
 
         internal Document(string content, Func<string, Document> parse)
         {
+            this.all = new ElementCollection();
+
             //设置文档内容
             this.Content = content;
 
@@ -120,19 +112,10 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 重置文档 all 属性的缓存
-        /// </summary>
-        internal void ResetAllCache()
-        {
-            this.allCache = null;
-        }
-
-        /// <summary>
         /// 返回对拥有指定 id 的第一个元素
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         public Element getElementById(string id)
         {
             return this.all.Where(i => i.id.CompareIgnoreCase(id)).FirstOrDefault();
@@ -143,7 +126,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         public Element[] getElementsByName(string name)
         {
             return this.all.Where(i => i.Name.CompareIgnoreCase(name)).ToArray();
@@ -154,7 +136,6 @@ namespace Less.Html
         /// </summary>
         /// <param name="tagName"></param>
         /// <returns></returns>
-        /// <exception cref="DocumentException">文档异常</exception>
         public Element[] getElementsByTagName(string tagName)
         {
             return this.all.Where(i => i.Name.CompareIgnoreCase(tagName)).ToArray();

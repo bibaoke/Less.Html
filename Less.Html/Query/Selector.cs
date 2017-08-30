@@ -82,22 +82,32 @@ namespace Less.Html
                 if (this.Param.NodesValue.IsNull())
                 {
                     if (this.Param.StringValue.IsNull())
+                    {
                         selected = this.Param.QueryValue.Select();
+                    }
                     else
+                    {
                         selected = this.Select(this.Document.childNodes.GetElements(), this.Param.StringValue);
+                    }
                 }
                 else
                 {
                     IEnumerable<Element> source = this.Param.NodesValue.GetElements();
 
                     if (this.Param.StringValue.IsNull())
+                    {
                         selected = source;
+                    }
                     else
+                    {
                         selected = this.Select(source, this.Param.StringValue);
+                    }
                 }
 
                 foreach (Func<IEnumerable<Element>, IEnumerable<Element>> i in this.ExtFilterList)
+                {
                     selected = i(selected);
+                }
 
                 return selected;
             }
