@@ -11,7 +11,7 @@
     <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>优化 document.all 删除节点嵌套限制</releaseNotes>
+    <releaseNotes>修改闭合标签的读取</releaseNotes>
     <copyright>Copyright 2017 Shao Zhuang</copyright>
     <tags>html-parser jQuery-style css-selector</tags>
   </metadata>

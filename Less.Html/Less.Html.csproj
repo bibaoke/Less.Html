@@ -32,8 +32,8 @@
     <DocumentationFile>bin\Release\Less.Html.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Less.Common, Version=1.0.32.26987, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Less.Common.1.0.32.1\lib\net35\Less.Common.dll</HintPath>
+    <Reference Include="Less.Common, Version=1.0.33.33493, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Less.Common.1.0.33.1\lib\net35\Less.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

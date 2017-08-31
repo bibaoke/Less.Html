@@ -27,7 +27,7 @@ namespace Less.Html
             TagReader.Pattern = @"
                 (?<comment><!--.*?-->)|
                 <(?<open>[!a-zA-Z].*?)((?<space>\s)|(?<single>/>)|(?<double>>))|
-                </(?<close>.*?)((?<space>\s)|(?<single>/>)|(?<double>>))
+                </(?<close>[a-zA-Z].*?)((?<space>\s)|(?<single>/>)|(?<double>>))
                 ".ToRegex(
                 RegexOptions.IgnorePatternWhitespace |
                 RegexOptions.Singleline |
@@ -121,27 +121,30 @@ namespace Less.Html
                         return this.EndTag(element.Name);
                     }
                 }
-
                 //如果是闭标签
-                //捕获的闭标签名
-                string name = match.Groups["close"].Value.ToLower();
-                //捕获的空白结束
-                Group closeSpace = match.Groups["space"];
-
-                //加入文本节点
-                this.AddText(match);
-
-                //如果闭标签未结束
-                if (closeSpace.Success)
-                {
-                    //读取属性
-                    return this.Pass<AttributeReader>().Set(name, match.Index);
-                }
-                //如果闭标签已结束
                 else
                 {
-                    //关闭标签
-                    return this.CloseTag(name, match.Index - 1);
+                    //捕获的闭标签名
+                    string name = match.Groups["close"].Value.ToLower();
+
+                    //捕获的空白结束
+                    Group closeSpace = match.Groups["space"];
+
+                    //加入文本节点
+                    this.AddText(match);
+
+                    //如果闭标签未结束
+                    if (closeSpace.Success)
+                    {
+                        //读取属性
+                        return this.Pass<AttributeReader>().Set(name, match.Index);
+                    }
+                    //如果闭标签已结束
+                    else
+                    {
+                        //关闭标签
+                        return this.CloseTag(name, match.Index - 1);
+                    }
                 }
             }
 
