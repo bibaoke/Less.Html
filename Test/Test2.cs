@@ -65,13 +65,13 @@ namespace Test
                     i._float == "left").FirstOrDefault();
 
                 q("ul:first").append(
-                    q(string.Concat(
-                        "<li>",
+                    q(
+                        "<li>" +
                         this.RenderNode(
                             data,
                             left != null ? left.id : -1,
-                            template),
-                        "</li>")).attr("style", "float:left"));
+                            template) +
+                        "</li>").attr("style", "float:left"));
 
                 //右边节点
                 dynamic right = data.Where(
@@ -80,13 +80,13 @@ namespace Test
                     i._float == "right").FirstOrDefault();
 
                 q("ul:first").append(
-                    q(string.Concat(
-                        "<li>",
+                    q(
+                        "<li>" +
                         this.RenderNode(
                             data,
                             right != null ? right.id : -1,
-                            template),
-                        "</li>")).attr("style", "float:right"));
+                            template) +
+                        "</li>").attr("style", "float:right"));
             }
             //空节点
             else

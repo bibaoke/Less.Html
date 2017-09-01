@@ -272,7 +272,9 @@ namespace Less.Html
             if (!deep)
             {
                 foreach (Node i in element.childNodes)
+                {
                     element.removeChild(i);
+                }
             }
 
             return element;
@@ -289,7 +291,9 @@ namespace Less.Html
             }
 
             foreach (Node i in this.ChildNodeList)
+            {
                 i.SetIndex(offset);
+            }
 
             this.ShiftNext(offset);
 
@@ -351,7 +355,14 @@ namespace Less.Html
                 }
                 else
                 {
-                    this.ownerDocument.all.AddRange(element.GetAllElements());
+                    if (element.ownerDocument.IsNotNull())
+                    {
+                        this.ownerDocument.all.AddRange(element.GetAllElements());
+                    }
+                    else
+                    {
+                        this.ownerDocument.all.Add(element);
+                    }
                 }
 
                 this.AlterAllChildElementsCount(element.AllChildElementsCount);
@@ -490,7 +501,7 @@ namespace Less.Html
                 }
                 else if (testNode.parentNode.IsNotNull())
                 {
-                    testNode = testNode.parentNode;
+                    testNode = testNode.parentNode.nextSibling;
                 }
             }
 

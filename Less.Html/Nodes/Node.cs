@@ -244,11 +244,12 @@ namespace Less.Html
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentException">参数错误</exception>
         public Node removeChild(Node node)
         {
             if (!this.ChildNodeList.Contains(node))
             {
-                return node;
+                throw new ArgumentException("node 不是当前节点的子节点");
             }
 
             int length = node.End - node.Begin + 1;
@@ -295,11 +296,12 @@ namespace Less.Html
         /// <param name="newItem"></param>
         /// <param name="existingItem"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentException">参数错误</exception>
         public Node insertBefore(Node newItem, Node existingItem)
         {
             if (!this.ChildNodeList.Contains(existingItem))
             {
-                return newItem;
+                throw new ArgumentException("existingItem 不是当前节点的子节点");
             }
 
             bool checking = false;
@@ -308,6 +310,13 @@ namespace Less.Html
             if (newItem.ownerDocument.IsNotNull())
             {
                 checking = true;
+
+                //把节点添加到文档的节点列表
+                this.ownerDocument.AllNodes.InsertRange(existingItem.Index, newItem.GetAllNodes());
+
+                this.AlterAllChildNodesCount(newItem.AllChildNodesCount);
+
+                this.OnInsertBefore(newItem, existingItem);
 
                 //在原文档中删除节点
                 newItem.parentNode.removeChild(newItem);
@@ -335,6 +344,12 @@ namespace Less.Html
             }
             else
             {
+                this.ownerDocument.AllNodes.Add(newItem);
+
+                this.AlterAllChildNodesCount(newItem.AllChildNodesCount);
+
+                this.OnInsertBefore(newItem, existingItem);
+
                 //设置父节点
                 newItem.parentNode = this;
 
@@ -344,22 +359,6 @@ namespace Less.Html
 
             //设置所属文档
             newItem.SetOwnerDocument(this.ownerDocument);
-
-            //把节点添加到文档的节点列表
-            Node nextNode = existingItem.GetNextNode();
-
-            if (nextNode.IsNotNull())
-            {
-                this.ownerDocument.AllNodes.InsertRange(nextNode.Index, newItem.GetAllNodes());
-            }
-            else
-            {
-                this.ownerDocument.AllNodes.AddRange(newItem.GetAllNodes());
-            }
-
-            this.AlterAllChildNodesCount(newItem.AllChildNodesCount);
-
-            this.OnInsertBefore(newItem, existingItem);
 
             if (checking)
             {
