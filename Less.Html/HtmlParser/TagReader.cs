@@ -147,8 +147,10 @@ namespace Less.Html
                     }
                 }
             }
-
-            return this.Pass<EndingReader>();
+            else
+            {
+                return this.Pass<EndingReader>();
+            }
         }
     }
 }

@@ -16,6 +16,14 @@ namespace Less.Html
             set;
         }
 
+        internal int Count
+        {
+            get
+            {
+                return this.List.Count;
+            }
+        }
+
         /// <summary>
         /// 指定索引的元素
         /// </summary>
@@ -33,9 +41,24 @@ namespace Less.Html
             }
         }
 
+        internal void CopyTo(int index, Element[] array, int count)
+        {
+            this.List.CopyTo(index, array, 0, count);
+        }
+
+        internal void Add(Element element)
+        {
+            this.List.Add(element);
+        }
+
         internal void AddRange(IEnumerable<Element> elements)
         {
             this.List.AddRange(elements);
+        }
+
+        internal void Insert(int index, Element element)
+        {
+            this.List.Insert(index, element);
         }
 
         internal void InsertRange(int index, IEnumerable<Element> elements)

@@ -13,6 +13,12 @@ namespace Less.Html
     {
         private static HashSet<string> SingleElements;
 
+        private int AllChildElementsCount
+        {
+            get;
+            set;
+        }
+
         internal string Name
         {
             get;
@@ -111,11 +117,11 @@ namespace Less.Html
         {
             get
             {
-                List<Node> list = this.GetAllNodes();
+                Node[] nodes = this.GetAllNodes();
 
                 string text = "";
 
-                foreach (Node i in list)
+                foreach (Node i in nodes)
                 {
                     if (i is Text)
                     {
@@ -240,6 +246,8 @@ namespace Less.Html
 
         internal Element(string name)
         {
+            this.AllChildElementsCount = 1;
+
             this.attributes = new NamedNodeMap<Attr>(this);
 
             this.Name = name.ToLower();
@@ -289,13 +297,94 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 设置元素的所属文档
+        /// 获取所有的元素
         /// </summary>
-        /// <param name="document"></param>
-        protected override void OnSetOwnerDocument(Document document)
+        /// <returns></returns>
+        internal Element[] GetAllElements()
         {
-            foreach (Attr i in this.attributes)
-                i.ownerDocument = document;
+            Element[] elements = new Element[this.AllChildElementsCount];
+
+            this.ownerDocument.all.CopyTo(this.Index, elements, this.AllChildElementsCount);
+
+            return elements;
+        }
+
+        protected override int GetAppendIndex()
+        {
+            return this.InnerEnd + 1;
+        }
+
+        protected override void OnRemoveChild(Node node)
+        {
+            //移除文档 all 集合中的元素
+            if (node is Element)
+            {
+                Element element = (Element)node;
+
+                this.ownerDocument.all.RemoveRange(element.Index, element.AllChildElementsCount);
+
+                this.AlterAllChildElementsCount(-element.AllChildElementsCount);
+            }
+        }
+
+        protected override void OnInsertBefore(Node newItem, Node existingItem)
+        {
+            //把元素添加到文档的 all 集合
+            if (newItem is Element)
+            {
+                Element element = (Element)newItem;
+
+                Element nextElement = null;
+
+                if (existingItem is Element)
+                {
+                    nextElement = (Element)existingItem;
+                }
+                else
+                {
+                    nextElement = this.GetNextElement(existingItem);
+                }
+
+                if (nextElement.IsNotNull())
+                {
+                    this.ownerDocument.all.InsertRange(nextElement.Index, element.GetAllElements());
+                }
+                else
+                {
+                    this.ownerDocument.all.AddRange(element.GetAllElements());
+                }
+
+                this.AlterAllChildElementsCount(element.AllChildElementsCount);
+            }
+        }
+
+        protected override void OnAppendChild(Node node)
+        {
+            //把元素添加到文档的 all 集合
+            if (node is Element)
+            {
+                Element element = (Element)node;
+
+                Element nextElement = this.GetNextElement();
+
+                if (nextElement.IsNotNull())
+                {
+                    this.ownerDocument.all.InsertRange(nextElement.Index, element.GetAllElements());
+                }
+                else
+                {
+                    if (element.ownerDocument.IsNotNull())
+                    {
+                        this.ownerDocument.all.AddRange(element.GetAllElements());
+                    }
+                    else
+                    {
+                        this.ownerDocument.all.Add(element);
+                    }
+                }
+
+                this.AlterAllChildElementsCount(element.AllChildElementsCount);
+            }
         }
 
         /// <summary>
@@ -354,6 +443,58 @@ namespace Less.Html
                 this.InnerEnd += offset;
 
             this.ShiftAttributesInCloseTag(offset);
+        }
+
+        /// <summary>
+        /// 设置元素的所属文档
+        /// </summary>
+        /// <param name="document"></param>
+        protected override void OnSetOwnerDocument(Document document)
+        {
+            foreach (Attr i in this.attributes)
+                i.ownerDocument = document;
+        }
+
+        private void AlterAllChildElementsCount(int difference)
+        {
+            this.AllChildElementsCount += difference;
+
+            if (this.parentNode.IsNotNull())
+            {
+                if (this.parentNode is Element)
+                {
+                    ((Element)this.parentNode).AlterAllChildElementsCount(difference);
+                }
+            }
+        }
+
+        private Element GetNextElement()
+        {
+            return this.GetNextElement(this);
+        }
+
+        private Element GetNextElement(Node node)
+        {
+            Node testNode = node.nextSibling;
+
+            while (testNode.IsNotNull())
+            {
+                if (testNode is Element)
+                {
+                    return (Element)testNode;
+                }
+
+                if (testNode.nextSibling.IsNotNull())
+                {
+                    testNode = testNode.nextSibling;
+                }
+                else if (testNode.parentNode.IsNotNull())
+                {
+                    testNode = testNode.parentNode;
+                }
+            }
+
+            return null;
         }
 
         private void ShiftAttributesInCloseTag(int offset)

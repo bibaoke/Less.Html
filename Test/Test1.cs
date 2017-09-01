@@ -52,7 +52,9 @@ namespace Test
             foreach (Element i in q("td"))
             {
                 if (!q(i).find("table").hasElement)
+                {
                     Console.WriteLine(i.textContent);
+                }
             }
 
             return true;

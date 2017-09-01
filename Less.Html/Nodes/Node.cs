@@ -24,6 +24,20 @@ namespace Less.Html
             set;
         }
 
+        private int Index
+        {
+            get
+            {
+                return this.ownerDocument.AllNodes.IndexOf(this);
+            }
+        }
+
+        private int AllChildNodesCount
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// 是否开启自检程序
         /// </summary>
@@ -204,6 +218,8 @@ namespace Less.Html
 
         internal Node()
         {
+            this.AllChildNodesCount = 1;
+
             this.ChildNodeList = new List<Node>();
         }
 
@@ -230,7 +246,7 @@ namespace Less.Html
         /// <returns></returns>
         public Node removeChild(Node node)
         {
-            if (node.ownerDocument != this.ownerDocument)
+            if (!this.ChildNodeList.Contains(node))
             {
                 return node;
             }
@@ -251,12 +267,12 @@ namespace Less.Html
 
             this.ChildNodeList.Remove(node);
 
-            if (node is Element)
-            {
-                Element element = (Element)node;
+            //移除文档节点列表中的节点
+            this.ownerDocument.AllNodes.RemoveRange(node.Index, node.AllChildNodesCount);
 
-                this.ownerDocument.all.RemoveRange(element.Index, element.GetAllElements().Count);
-            }
+            this.AlterAllChildNodesCount(-node.AllChildNodesCount);
+
+            this.OnRemoveChild(node);
 
             node.SetIndex(-node.Begin);
 
@@ -329,30 +345,21 @@ namespace Less.Html
             //设置所属文档
             newItem.SetOwnerDocument(this.ownerDocument);
 
-            if (newItem is Element)
+            //把节点添加到文档的节点列表
+            Node nextNode = existingItem.GetNextNode();
+
+            if (nextNode.IsNotNull())
             {
-                Element element = (Element)newItem;
-
-                Element existingElement = null;
-
-                if (existingItem is Element)
-                {
-                    existingElement = (Element)existingItem;
-                }
-                else
-                {
-                    existingElement = existingItem.GetNextElement();
-                }
-
-                if (existingElement.IsNotNull())
-                {
-                    this.ownerDocument.all.InsertRange(existingElement.Index, element.GetAllElements());
-                }
-                else
-                {
-                    this.ownerDocument.all.AddRange(element.GetAllElements());
-                }
+                this.ownerDocument.AllNodes.InsertRange(nextNode.Index, newItem.GetAllNodes());
             }
+            else
+            {
+                this.ownerDocument.AllNodes.AddRange(newItem.GetAllNodes());
+            }
+
+            this.AlterAllChildNodesCount(newItem.AllChildNodesCount);
+
+            this.OnInsertBefore(newItem, existingItem);
 
             if (checking)
             {
@@ -378,18 +385,30 @@ namespace Less.Html
                 //如果添加的节点有所属文档，则需要自检
                 checking = true;
 
+                //把节点添加到文档的节点列表
+                Node nextNode = this.GetNextNode();
+
+                if (nextNode.IsNotNull())
+                {
+                    this.ownerDocument.AllNodes.InsertRange(nextNode.Index, node.GetAllNodes());
+                }
+                else
+                {
+                    this.ownerDocument.AllNodes.AddRange(node.GetAllNodes());
+                }
+
+                this.AlterAllChildNodesCount(node.AllChildNodesCount);
+
+                this.OnAppendChild(node);
+
                 //在原文档中删除节点
                 node.parentNode.removeChild(node);
 
                 //设置父节点
                 node.parentNode = this;
 
-                //如果父节点是元素
-                Element element = this as Element;
-
-                //插入位置 
-                //如果父节点不是元素，一定是文档
-                int begin = element.IsNotNull() ? element.InnerEnd + 1 : this.End + 1;
+                //插入位置 父节点不是元素就是文档
+                int begin = this.GetAppendIndex();
 
                 //修改此文档的内容
                 this.ownerDocument.Content = this.ownerDocument.Content.Insert(begin, node.Content);
@@ -405,6 +424,13 @@ namespace Less.Html
             }
             else
             {
+                //把节点添加到文档的节点列表
+                this.ownerDocument.AllNodes.Add(node);
+
+                this.AlterAllChildNodesCount(node.AllChildNodesCount);
+
+                this.OnAppendChild(node);
+
                 //设置父节点
                 node.parentNode = this;
             }
@@ -414,22 +440,6 @@ namespace Less.Html
 
             //添加新节点
             this.ChildNodeList.Add(node);
-
-            if (node is Element)
-            {
-                Element element = (Element)node;
-
-                Element nextElement = this.GetNextElement();
-
-                if (nextElement.IsNotNull())
-                {
-                    this.ownerDocument.all.InsertRange(nextElement.Index, element.GetAllElements());
-                }
-                else
-                {
-                    this.ownerDocument.all.AddRange(element.GetAllElements());
-                }
-            }
 
             //自检
             if (checking)
@@ -477,65 +487,6 @@ namespace Less.Html
             }
         }
 
-        internal Element GetNextElement()
-        {
-            if (this.parentNode.IsNotNull())
-            {
-                int myIndex = this.parentNode.ChildNodeList.IndexOf(this);
-
-                for (int i = myIndex + 1; i < this.parentNode.ChildNodeList.Count; i++)
-                {
-                    if (this.parentNode.ChildNodeList[i] is Element)
-                    {
-                        return (Element)this.parentNode.ChildNodeList[i];
-                    }
-                }
-
-                return this.parentNode.GetNextElement();
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// 获取所有的节点
-        /// </summary>
-        /// <returns></returns>
-        internal List<Node> GetAllNodes()
-        {
-            List<Node> list = new List<Node>();
-
-            list.Add(this);
-
-            foreach (Node i in this.ChildNodeList)
-            {
-                i.GetAllNodes(ref list);
-            }
-
-            return list;
-        }
-
-        /// <summary>
-        /// 获取所有的元素
-        /// </summary>
-        /// <returns></returns>
-        internal List<Element> GetAllElements()
-        {
-            List<Element> list = new List<Element>();
-
-            if (this is Element)
-            {
-                list.Add((Element)this);
-            }
-
-            foreach (Node i in this.ChildNodeList)
-            {
-                i.GetAllElements(ref list);
-            }
-
-            return list;
-        }
-
         /// <summary>
         /// 设置新的索引
         /// </summary>
@@ -554,12 +505,41 @@ namespace Less.Html
             }
         }
 
+        protected Node[] GetAllNodes()
+        {
+            Node[] nodes = new Node[this.AllChildNodesCount];
+
+            this.ownerDocument.AllNodes.CopyTo(this.Index, nodes, 0, this.AllChildNodesCount);
+
+            return nodes;
+        }
+
+        protected virtual int GetAppendIndex()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected virtual void OnRemoveChild(Node node)
+        {
+            //
+        }
+
+        protected virtual void OnInsertBefore(Node newItem, Node existingItem)
+        {
+            //
+        }
+
+        protected virtual void OnAppendChild(Node node)
+        {
+            //
+        }
+
         /// <summary>
         /// 自检函数
         /// </summary>
         protected virtual void OnSelfCheck()
         {
-
+            //
         }
 
         /// <summary>
@@ -568,7 +548,7 @@ namespace Less.Html
         /// <param name="offset"></param>
         protected virtual void OnSetIndex(int offset)
         {
-
+            //
         }
 
         /// <summary>
@@ -577,7 +557,7 @@ namespace Less.Html
         /// <param name="offset"></param>
         protected virtual void OnShiftNext(int offset)
         {
-
+            //
         }
 
         /// <summary>
@@ -586,7 +566,7 @@ namespace Less.Html
         /// <param name="offset"></param>
         protected virtual void OnShiftParent(int offset)
         {
-
+            //
         }
 
         /// <summary>
@@ -595,7 +575,7 @@ namespace Less.Html
         /// <param name="document"></param>
         protected virtual void OnSetOwnerDocument(Document document)
         {
-
+            //
         }
 
         /// <summary>
@@ -645,36 +625,32 @@ namespace Less.Html
             }
         }
 
-        /// <summary>
-        /// 获取所有的节点
-        /// 把结果作为递归参数，节省空间
-        /// </summary>
-        /// <param name="list">节点列表</param>
-        private void GetAllNodes(ref List<Node> list)
+        private void AlterAllChildNodesCount(int difference)
         {
-            list.Add(this);
+            this.AllChildNodesCount += difference;
 
-            foreach (Node i in this.ChildNodeList)
+            if (this.parentNode.IsNotNull())
             {
-                i.GetAllNodes(ref list);
+                this.parentNode.AlterAllChildNodesCount(difference);
             }
         }
 
-        /// <summary>
-        /// 获取所有的元素
-        /// 把结果作为递归参数，节省空间
-        /// </summary>
-        /// <param name="list">元素列表</param>
-        private void GetAllElements(ref List<Element> list)
+        private Node GetNextNode()
         {
-            if (this is Element)
+            if (this.nextSibling.IsNotNull())
             {
-                list.Add((Element)this);
+                return this.nextSibling;
             }
-
-            foreach (Node i in this.ChildNodeList)
+            else
             {
-                i.GetAllElements(ref list);
+                if (this.parentNode.IsNotNull())
+                {
+                    return this.parentNode.GetNextNode();
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 

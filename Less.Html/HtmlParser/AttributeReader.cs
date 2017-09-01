@@ -163,20 +163,24 @@ namespace Less.Html
                         return this.CloseTag(this.CloseTagName, this.CloseTagIndex - 1);
                     }
                 }
-
                 //如果标签未结束
-                //如果当前位置在开标签内
-                if (this.Element.IsNotNull())
+                else
                 {
-                    //设置属性
-                    this.SetAttribute(match, -match.Groups["space"].Length);
+                    //如果当前位置在开标签内
+                    if (this.Element.IsNotNull())
+                    {
+                        //设置属性
+                        this.SetAttribute(match, -match.Groups["space"].Length);
+                    }
+
+                    //继续读取下一个属性
+                    return this;
                 }
-
-                //继续读取下一个属性
-                return this;
             }
-
-            return this.Pass<EndingReader>();
+            else
+            {
+                return this.Pass<EndingReader>();
+            }
         }
 
         /// <summary>

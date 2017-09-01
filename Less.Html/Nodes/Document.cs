@@ -3,6 +3,7 @@
 using System.Linq;
 using Less.Text;
 using System;
+using System.Collections.Generic;
 
 namespace Less.Html
 {
@@ -49,6 +50,12 @@ namespace Less.Html
         /// </summary>
         internal Func<string, Document> Parse;
 
+        internal List<Node> AllNodes
+        {
+            get;
+            private set;
+        }
+
         /// <summary>
         /// 节点名称
         /// </summary>
@@ -82,6 +89,10 @@ namespace Less.Html
 
         internal Document(string content, Func<string, Document> parse)
         {
+            this.AllNodes = new List<Node>();
+
+            this.AllNodes.Add(this);
+
             this.all = new ElementCollection();
 
             //设置文档内容
@@ -149,6 +160,29 @@ namespace Less.Html
         public Element createElement(string name)
         {
             return new Element(name);
+        }
+
+        protected override void OnAppendChild(Node node)
+        {
+            //把元素添加到文档的 all 集合
+            if (node is Element)
+            {
+                Element element = (Element)node;
+
+                if (element.ownerDocument.IsNotNull())
+                {
+                    this.ownerDocument.all.AddRange(element.GetAllElements());
+                }
+                else
+                {
+                    this.ownerDocument.all.Add(element);
+                }
+            }
+        }
+
+        protected override int GetAppendIndex()
+        {
+            return this.End + 1;
         }
     }
 }

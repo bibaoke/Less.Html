@@ -67,8 +67,10 @@ namespace Less.Html
                     return this.CloseTag("script", match.Index - 1);
                 }
             }
-
-            return this.Pass<EndingReader>();
+            else
+            {
+                return this.Pass<EndingReader>();
+            }
         }
     }
 }
