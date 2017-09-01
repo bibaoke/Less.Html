@@ -104,6 +104,11 @@ namespace Less.Html
             this.Parse = parse;
         }
 
+        public override string ToString()
+        {
+            return this.Content;
+        }
+
         /// <summary>
         /// 克隆节点
         /// </summary>
