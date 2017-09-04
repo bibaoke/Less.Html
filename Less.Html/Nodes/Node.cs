@@ -252,6 +252,14 @@ namespace Less.Html
                 throw new ArgumentException("node 不是当前节点的子节点");
             }
 
+            //移除文档节点列表中的节点
+            this.ownerDocument.AllNodes.RemoveRange(node.Index, node.AllChildNodesCount);
+
+            this.AlterAllChildNodesCount(-node.AllChildNodesCount);
+
+            this.OnRemoveChild(node);
+
+            //节点长度
             int length = node.End - node.Begin + 1;
 
             //复制节点内容
@@ -267,13 +275,6 @@ namespace Less.Html
             node.ShiftParent(offset);
 
             this.ChildNodeList.Remove(node);
-
-            //移除文档节点列表中的节点
-            this.ownerDocument.AllNodes.RemoveRange(node.Index, node.AllChildNodesCount);
-
-            this.AlterAllChildNodesCount(-node.AllChildNodesCount);
-
-            this.OnRemoveChild(node);
 
             node.SetIndex(-node.Begin);
 
@@ -344,6 +345,7 @@ namespace Less.Html
             }
             else
             {
+                //把节点添加到文档的节点列表
                 this.ownerDocument.AllNodes.Add(newItem);
 
                 this.AlterAllChildNodesCount(newItem.AllChildNodesCount);

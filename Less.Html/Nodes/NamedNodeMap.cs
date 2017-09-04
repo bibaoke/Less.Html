@@ -132,9 +132,9 @@ namespace Less.Html
             {
                 T original = node;
 
-                item.OnChangeNamedItem(this.Reference, node);
-
                 node.OnRemoveFromNamedNodeMap();
+
+                item.OnChangeNamedItem(this.Reference, node);
 
                 item.OnAddToNamedNodeMap();
 

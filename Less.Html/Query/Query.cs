@@ -332,8 +332,19 @@ namespace Less.Html
         {
             var find = this.Copy();
 
-            find.Selector.ExtFilterList.Add(
-                selected => find.Selector.Select(this.Selector.Document, selected.GetChildElements(), param));
+            find.Selector.ExtFilterList.Add(selected =>
+            {
+                Element first = selected.FirstOrDefault();
+
+                if (first.IsNotNull())
+                {
+                    return find.Selector.Select(first.ownerDocument, selected.GetChildElements(), param);
+                }
+                else
+                {
+                    return new Element[0];
+                }
+            });
 
             return find;
         }

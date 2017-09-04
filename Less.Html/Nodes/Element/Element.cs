@@ -426,7 +426,9 @@ namespace Less.Html
         protected override void OnSelfCheck()
         {
             foreach (Attr i in this.attributes)
+            {
                 i.SelfCheck();
+            }
         }
 
         /// <summary>
@@ -443,7 +445,9 @@ namespace Less.Html
             }
 
             foreach (Attr i in this.attributes)
+            {
                 i.SetIndex(offset);
+            }
         }
 
         /// <summary>
@@ -459,11 +463,15 @@ namespace Less.Html
             }
 
             if (this.hasAttributes())
+            {
                 this.attributes[0].Shift(offset);
+            }
 
             //偏移本实例的子节点
             foreach (Node i in this.ChildNodeList)
+            {
                 i.SetIndex(offset);
+            }
         }
 
         /// <summary>
@@ -473,7 +481,9 @@ namespace Less.Html
         protected override void OnShiftParent(int offset)
         {
             if (!this.IsSingle)
+            {
                 this.InnerEnd += offset;
+            }
 
             this.ShiftAttributesInCloseTag(offset);
         }
@@ -485,7 +495,9 @@ namespace Less.Html
         protected override void OnSetOwnerDocument(Document document)
         {
             foreach (Attr i in this.attributes)
+            {
                 i.ownerDocument = document;
+            }
         }
 
         private void AlterAllChildElementsCount(int difference)

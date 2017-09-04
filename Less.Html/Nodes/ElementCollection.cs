@@ -160,8 +160,6 @@ namespace Less.Html
 
         internal void RemoveRange(int index, int count)
         {
-            this.List.RemoveRange(index, count);
-
             Element[] elements = new Element[count];
 
             this.CopyTo(index, elements, count);
@@ -170,6 +168,8 @@ namespace Less.Html
             {
                 this.RemoveIndex(i);
             }
+
+            this.List.RemoveRange(index, count);
         }
 
         internal int IndexOf(Element element)
