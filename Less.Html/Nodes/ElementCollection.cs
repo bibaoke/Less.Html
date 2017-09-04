@@ -2,6 +2,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Less.Text;
 
 namespace Less.Html
 {
@@ -11,6 +12,30 @@ namespace Less.Html
     public class ElementCollection : IEnumerable<Element>
     {
         private List<Element> List
+        {
+            get;
+            set;
+        }
+
+        private IndexOnId IndexOnId
+        {
+            get;
+            set;
+        }
+
+        private IndexOnClass IndexOnClass
+        {
+            get;
+            set;
+        }
+
+        private IndexOnTagName IndexOnTagName
+        {
+            get;
+            set;
+        }
+
+        private IndexOnName IndexOnName
         {
             get;
             set;
@@ -41,44 +66,14 @@ namespace Less.Html
             }
         }
 
-        internal void CopyTo(int index, Element[] array, int count)
-        {
-            this.List.CopyTo(index, array, 0, count);
-        }
-
-        internal void Add(Element element)
-        {
-            this.List.Add(element);
-        }
-
-        internal void AddRange(IEnumerable<Element> elements)
-        {
-            this.List.AddRange(elements);
-        }
-
-        internal void Insert(int index, Element element)
-        {
-            this.List.Insert(index, element);
-        }
-
-        internal void InsertRange(int index, IEnumerable<Element> elements)
-        {
-            this.List.InsertRange(index, elements);
-        }
-
-        internal void RemoveRange(int index, int count)
-        {
-            this.List.RemoveRange(index, count);
-        }
-
-        internal int IndexOf(Element element)
-        {
-            return this.List.IndexOf(element);
-        }
-
         internal ElementCollection()
         {
             this.List = new List<Element>();
+
+            this.IndexOnId = new IndexOnId();
+            this.IndexOnClass = new IndexOnClass();
+            this.IndexOnTagName = new IndexOnTagName();
+            this.IndexOnName = new IndexOnName();
         }
 
         /// <summary>
@@ -102,6 +97,180 @@ namespace Less.Html
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.List.GetEnumerator();
+        }
+
+        internal Element GetElementById(string id)
+        {
+            return this.IndexOnId.Get(id);
+        }
+
+        internal Element[] GetElementsByClassName(string className)
+        {
+            return this.IndexOnClass.Get(className);
+        }
+
+        internal Element[] GetElementsByTagName(string tagName)
+        {
+            return this.IndexOnTagName.Get(tagName);
+        }
+
+        internal Element[] GetElementsByName(string name)
+        {
+            return this.IndexOnName.Get(name);
+        }
+
+        internal void CopyTo(int index, Element[] array, int count)
+        {
+            this.List.CopyTo(index, array, 0, count);
+        }
+
+        internal void Add(Element element)
+        {
+            this.List.Add(element);
+
+            this.AddIndex(element);
+        }
+
+        internal void AddRange(IEnumerable<Element> elements)
+        {
+            this.List.AddRange(elements);
+
+            foreach (Element i in elements)
+            {
+                this.AddIndex(i);
+            }
+        }
+
+        internal void Insert(int index, Element element)
+        {
+            this.List.Insert(index, element);
+
+            this.AddIndex(element);
+        }
+
+        internal void InsertRange(int index, IEnumerable<Element> elements)
+        {
+            this.List.InsertRange(index, elements);
+
+            foreach (Element i in elements)
+            {
+                this.AddIndex(i);
+            }
+        }
+
+        internal void RemoveRange(int index, int count)
+        {
+            this.List.RemoveRange(index, count);
+
+            Element[] elements = new Element[count];
+
+            this.CopyTo(index, elements, count);
+
+            foreach (Element i in elements)
+            {
+                this.RemoveIndex(i);
+            }
+        }
+
+        internal int IndexOf(Element element)
+        {
+            return this.List.IndexOf(element);
+        }
+
+        internal void RemoveIndex(Attr attr)
+        {
+            switch (attr.name)
+            {
+                case "id":
+                    this.IndexOnId.Remove(attr.value);
+                    break;
+                case "class":
+                    this.RemoveIndexOnClass(attr.value);
+                    break;
+                case "name":
+                    this.IndexOnName.Remove(attr.value);
+                    break;
+            }
+        }
+
+        internal void AddIndex(Attr attr)
+        {
+            switch (attr.name)
+            {
+                case "id":
+                    this.IndexOnId.Add(attr.value, attr.Element);
+                    break;
+                case "class":
+                    this.AddIndexOnClass(attr.value, attr.Element);
+                    break;
+                case "name":
+                    this.IndexOnName.Add(attr.value, attr.Element);
+                    break;
+            }
+        }
+
+        private void RemoveIndex(Element element)
+        {
+            if (element.id.IsNotNull())
+            {
+                this.IndexOnId.Remove(element.id);
+            }
+
+            this.RemoveIndexOnClass(element.className);
+
+            string name = element.getAttribute("name");
+
+            if (name.IsNotNull())
+            {
+                this.IndexOnName.Remove(name);
+            }
+
+            this.IndexOnTagName.Remove(element.Name);
+        }
+
+        private void AddIndex(Element element)
+        {
+            if (element.id.IsNotNull())
+            {
+                this.IndexOnId.Add(element.id, element);
+            }
+
+            this.AddIndexOnClass(element.className, element);
+
+            string name = element.getAttribute("name");
+
+            if (name.IsNotNull())
+            {
+                this.IndexOnName.Add(name, element);
+            }
+
+            this.IndexOnTagName.Add(element.Name, element);
+        }
+
+        private void RemoveIndexOnClass(string className)
+        {
+            if (className.IsNotWhiteSpace())
+            {
+                string[] classes = className.SplitByWhiteSpace();
+
+                foreach (string i in classes)
+                {
+                    this.IndexOnClass.Remove(i);
+                }
+            }
+        }
+
+        private void AddIndexOnClass(string className, Element element)
+        {
+            if (className.IsNotWhiteSpace())
+            {
+                string[] classes = className.SplitByWhiteSpace();
+
+                foreach (string i in classes)
+                {
+                    this.IndexOnClass.Add(i, element);
+                }
+            }
         }
     }
 }

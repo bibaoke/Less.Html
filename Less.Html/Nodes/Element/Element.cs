@@ -166,6 +166,28 @@ namespace Less.Html
             protected set;
         }
 
+        static Element()
+        {
+            Element.SingleElements = new HashSet<string>(new string[]
+            {
+                "!doctype", "meta", "link", "img"
+            });
+        }
+
+        internal Element(string name)
+        {
+            this.AllChildElementsCount = 1;
+
+            this.attributes = new NamedNodeMap<Attr>(this);
+
+            this.Name = name.ToLower();
+
+            if (Element.SingleElements.Contains(name))
+            {
+                this.IsSingle = true;
+            }
+        }
+
         /// <summary>
         /// 元素是否拥有属性
         /// </summary>
@@ -236,28 +258,6 @@ namespace Less.Html
             return this.attributes.removeNamedItem(attr.name);
         }
 
-        static Element()
-        {
-            Element.SingleElements = new HashSet<string>(new string[]
-            {
-                "!doctype", "meta", "link", "img"
-            });
-        }
-
-        internal Element(string name)
-        {
-            this.AllChildElementsCount = 1;
-
-            this.attributes = new NamedNodeMap<Attr>(this);
-
-            this.Name = name.ToLower();
-
-            if (Element.SingleElements.Contains(name))
-            {
-                this.IsSingle = true;
-            }
-        }
-
         /// <summary>
         /// 克隆节点
         /// </summary>
@@ -280,6 +280,41 @@ namespace Less.Html
             return element;
         }
 
+        internal bool IsParent(Element element)
+        {
+            if (this.parentNode.IsNotNull())
+            {
+                if (this.parentNode is Element)
+                {
+                    Element parent = (Element)this.parentNode;
+
+                    if (parent == element)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return parent.IsParent(element);
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 获取所有的元素
+        /// </summary>
+        /// <returns></returns>
+        internal Element[] GetAllElements()
+        {
+            Element[] elements = new Element[this.AllChildElementsCount];
+
+            this.ownerDocument.all.CopyTo(this.Index, elements, this.AllChildElementsCount);
+
+            return elements;
+        }
+
         internal void OnAttributesChange(int offset, bool inOpenTag)
         {
             this.End += offset;
@@ -298,19 +333,6 @@ namespace Less.Html
             this.ShiftNext(offset);
 
             this.ShiftParent(offset);
-        }
-
-        /// <summary>
-        /// 获取所有的元素
-        /// </summary>
-        /// <returns></returns>
-        internal Element[] GetAllElements()
-        {
-            Element[] elements = new Element[this.AllChildElementsCount];
-
-            this.ownerDocument.all.CopyTo(this.Index, elements, this.AllChildElementsCount);
-
-            return elements;
         }
 
         protected override int GetAppendIndex()

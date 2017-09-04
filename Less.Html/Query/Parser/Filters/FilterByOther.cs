@@ -1,9 +1,8 @@
 ﻿//bibaoke.com
 
-using Less.Text;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
+using Less.Collection;
 
 namespace Less.Html
 {
@@ -27,14 +26,23 @@ namespace Less.Html
             this.Index = index;
         }
 
-        protected override IEnumerable<Element> EvalThis(IEnumerable<Element> source)
+        protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)
         {
             switch (this.Condition.ToLower())
             {
                 case "first":
                     return source.Take(1);
                 case "last":
-                    return source.Reverse().Take(1);
+                    Element last = source.LastOrDefault();
+
+                    if (last.IsNotNull())
+                    {
+                        return last.ConstructArray();
+                    }
+                    else
+                    {
+                        return new Element[0];
+                    }
                 default:
                     throw new SelectorParamException(this.Index, this.Condition);
             }

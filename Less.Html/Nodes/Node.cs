@@ -449,19 +449,29 @@ namespace Less.Html
             return node;
         }
 
+        internal virtual void OnAddToNamedNodeMap()
+        {
+            //
+        }
+
+        internal virtual void OnRemoveFromNamedNodeMap()
+        {
+            //
+        }
+
         internal virtual void OnChangeNamedItem(Node reference, Node replace)
         {
-
+            //
         }
 
         internal virtual void OnAddNamedItem(Node reference)
         {
-
+            //
         }
 
         internal virtual void OnRemoveNamedItem()
         {
-
+            //
         }
 
         internal void SelfCheck()

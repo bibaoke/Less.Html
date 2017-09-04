@@ -106,7 +106,7 @@ namespace Less.Html.SelectorParamParser
                     }
                     else
                     {
-                        this.AddFilter(new FilterByName(name.Value), false);
+                        this.AddFilter(new FilterByTagName(name.Value), false);
                     }
 
                     this.CurrentSymbol = null;

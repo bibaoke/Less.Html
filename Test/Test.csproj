@@ -36,8 +36,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Less.Common, Version=1.0.34.28465, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Less.Common.1.0.34.1\lib\net35\Less.Common.dll</HintPath>
+    <Reference Include="Less.Common, Version=1.0.35.26338, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Less.Common.1.0.35.1\lib\net35\Less.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />

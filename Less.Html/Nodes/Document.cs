@@ -154,7 +154,7 @@ namespace Less.Html
         /// <returns></returns>
         public Element[] getElementsByTagName(string tagName)
         {
-            return this.all.Where(i => i.Name.CompareIgnoreCase(tagName)).ToArray();
+            return this.all.GetElementsByTagName(tagName);
         }
 
         /// <summary>

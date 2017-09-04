@@ -53,9 +53,13 @@ namespace Less.Html
             get
             {
                 if (this.NameLength > -1)
+                {
                     return this.NameBegin < this.Element.InnerBegin;
+                }
                 else
+                {
                     return this.ValueBegin < this.Element.InnerBegin;
+                }
             }
         }
 
@@ -108,6 +112,39 @@ namespace Less.Html
             }
         }
 
+        private Attr()
+        {
+            //
+        }
+
+        internal Attr(string name, string value, Func<string, Document> parse)
+        {
+            Document document = new Document("{0}=\"{1}\"".FormatString(name, value), parse);
+
+            this.ownerDocument = document;
+
+            this.Begin = 0;
+            this.End = document.End;
+
+            this.NameBegin = 0;
+            this.NameLength = name.Length;
+
+            this.ValueBegin = name.Length + 2;
+            this.ValueLength = value.Length;
+        }
+
+        internal Attr(Element element, int begin, int end, int nameBegin, int nameLength, int valueBegin, int valueLength) : base(begin, end)
+        {
+            this.Element = element;
+
+            this.ownerDocument = element.ownerDocument;
+
+            this.NameBegin = nameBegin;
+            this.NameLength = nameLength;
+            this.ValueBegin = valueBegin;
+            this.ValueLength = valueLength;
+        }
+
         /// <summary>
         /// 克隆属性
         /// </summary>
@@ -131,6 +168,16 @@ namespace Less.Html
             return attr;
         }
 
+        internal override void OnAddToNamedNodeMap()
+        {
+            this.ownerDocument.all.AddIndex(this);
+        }
+
+        internal override void OnRemoveFromNamedNodeMap()
+        {
+            this.ownerDocument.all.RemoveIndex(this);
+        }
+
         internal override void OnChangeNamedItem(Node reference, Node replace)
         {
             Element element = (Element)reference;
@@ -142,7 +189,7 @@ namespace Less.Html
 
             attr.OnRemoveNamedItem();
 
-            element.attributes.Value.Insert(collectionIndex, this);
+            element.attributes.Insert(collectionIndex, this);
 
             string postfix = Symbol.Space;
 
@@ -181,7 +228,7 @@ namespace Less.Html
 
             if (this.Element.IsNotNull())
             {
-                element.attributes.Value.Add(this);
+                element.attributes.Add(this);
             }
             else
             {
@@ -199,7 +246,7 @@ namespace Less.Html
                     return true;
                 });
 
-                element.attributes.Value.Insert(position, this);
+                element.attributes.Insert(position, this);
 
                 int begin;
 
@@ -276,11 +323,13 @@ namespace Less.Html
                 int offset = -removeLength;
 
                 if (this.Element.attributes.Count > next)
+                { 
                     this.Element.attributes[next].Shift(offset);
+                }
 
                 this.Element.OnAttributesChange(offset, this.InOpenTag);
 
-                this.Element.attributes.Value.Remove(this);
+                this.Element.attributes.Remove(this);
 
                 //删除关联元素
                 this.Element = null;
@@ -296,10 +345,14 @@ namespace Less.Html
                 this.End += offset;
 
                 if (this.NameLength > -1)
+                {
                     this.NameBegin += offset;
+                }
 
                 if (this.ValueLength > -1)
+                {
                     this.ValueBegin += offset;
+                }
             }
         }
 
@@ -309,10 +362,14 @@ namespace Less.Html
             this.End += offset;
 
             if (this.NameLength > -1)
+            {
                 this.NameBegin += offset;
+            }
 
             if (this.ValueLength > -1)
+            {
                 this.ValueBegin += offset;
+            }
 
             int index = this.Element.attributes.IndexOf(this);
 
@@ -321,41 +378,10 @@ namespace Less.Html
                 int next = index + 1;
 
                 if (next < this.Element.attributes.Count)
+                {
                     this.Element.attributes[next].Shift(offset);
+                }
             }
-        }
-
-        private Attr()
-        {
-
-        }
-
-        internal Attr(string name, string value, Func<string, Document> parse)
-        {
-            Document document = new Document("{0}=\"{1}\"".FormatString(name, value), parse);
-
-            this.ownerDocument = document;
-
-            this.Begin = 0;
-            this.End = document.End;
-
-            this.NameBegin = 0;
-            this.NameLength = name.Length;
-
-            this.ValueBegin = name.Length + 2;
-            this.ValueLength = value.Length;
-        }
-
-        internal Attr(Element element, int begin, int end, int nameBegin, int nameLength, int valueBegin, int valueLength) : base(begin, end)
-        {
-            this.Element = element;
-
-            this.ownerDocument = element.ownerDocument;
-
-            this.NameBegin = nameBegin;
-            this.NameLength = nameLength;
-            this.ValueBegin = valueBegin;
-            this.ValueLength = valueLength;
         }
 
         /// <summary>
@@ -365,10 +391,14 @@ namespace Less.Html
         protected override void OnSetIndex(int offset)
         {
             if (this.NameLength > -1)
+            {
                 this.NameBegin += offset;
+            }
 
             if (this.ValueLength > -1)
+            {
                 this.ValueBegin += offset;
+            }
         }
     }
 }

@@ -26,28 +26,42 @@ namespace Less.Html
             this.Value = value;
         }
 
-        protected override IEnumerable<Element> EvalThis(IEnumerable<Element> source)
+        protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)
         {
-            return source.SelectMany(i => i.GetAllElements().Where(j =>
+            if (this.Name.CompareIgnoreCase("name"))
             {
-                if (this.Value.IsNull())
-                {
-                    return j.attributes[this.Name].IsNotNull();
-                }
-                else
-                {
-                    Attr attr = j.attributes[this.Name];
+                Element[] elements = document.all.GetElementsByName(this.Name);
 
-                    if (attr.IsNull())
+                if (elements.IsNotNull())
+                {
+                    return source.SelectMany(i => elements.Where(j => j == i || j.IsParent(i)));
+                }
+
+                return new Element[0];
+            }
+            else
+            {
+                return source.SelectMany(i => i.GetAllElements().Where(j =>
+                {
+                    if (this.Value.IsNull())
                     {
-                        return false;
+                        return j.attributes[this.Name].IsNotNull();
                     }
                     else
                     {
-                        return attr.value.CompareIgnoreCase(this.Value);
+                        Attr attr = j.attributes[this.Name];
+
+                        if (attr.IsNull())
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return attr.value.CompareIgnoreCase(this.Value);
+                        }
                     }
-                }
-            }));
+                }));
+            }
         }
     }
 }

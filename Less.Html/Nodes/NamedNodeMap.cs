@@ -13,7 +13,7 @@ namespace Less.Html
     /// <typeparam name="T"></typeparam>
     public class NamedNodeMap<T> : IEnumerable<T> where T : Node
     {
-        internal List<T> Value
+        private List<T> Value
         {
             get;
             set;
@@ -61,7 +61,9 @@ namespace Less.Html
                 foreach (T i in this.Value)
                 {
                     if (i.nodeName.IsNotNull() && i.nodeName.CompareIgnoreCase(name))
+                    {
                         return i;
+                    }
                 }
 
                 return null;
@@ -99,7 +101,11 @@ namespace Less.Html
             T node = this[name];
 
             if (node.IsNotNull())
+            {
                 node.OnRemoveNamedItem();
+
+                node.OnRemoveFromNamedNodeMap();
+            }
 
             return node;
         }
@@ -118,6 +124,8 @@ namespace Less.Html
             {
                 item.OnAddNamedItem(this.Reference);
 
+                item.OnAddToNamedNodeMap();
+
                 return null;
             }
             else
@@ -125,6 +133,10 @@ namespace Less.Html
                 T original = node;
 
                 item.OnChangeNamedItem(this.Reference, node);
+
+                node.OnRemoveFromNamedNodeMap();
+
+                item.OnAddToNamedNodeMap();
 
                 return original;
             }
@@ -142,6 +154,27 @@ namespace Less.Html
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.Value.GetEnumerator();
+        }
+
+        internal void Remove(T item)
+        {
+            this.Value.Remove(item);
+
+            item.OnRemoveFromNamedNodeMap();
+        }
+
+        internal void Insert(int index, T item)
+        {
+            this.Value.Insert(index, item);
+
+            item.OnAddToNamedNodeMap();
+        }
+
+        internal void Add(T item)
+        {
+            this.Value.Add(item);
+
+            item.OnAddToNamedNodeMap();
         }
     }
 }

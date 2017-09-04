@@ -333,7 +333,7 @@ namespace Less.Html
             var find = this.Copy();
 
             find.Selector.ExtFilterList.Add(
-                selected => find.Selector.Select(selected.GetChildElements(), param));
+                selected => find.Selector.Select(this.Selector.Document, selected.GetChildElements(), param));
 
             return find;
         }

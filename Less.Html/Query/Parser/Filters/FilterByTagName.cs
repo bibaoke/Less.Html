@@ -1,27 +1,26 @@
 ﻿//bibaoke.com
 
 using System.Linq;
-using Less.Text;
 using System.Collections.Generic;
 
 namespace Less.Html
 {
-    internal class FilterByClass : ElementFilter
+    internal class FilterByTagName : ElementFilter
     {
-        internal string Class
+        internal string Name
         {
             get;
             private set;
         }
 
-        internal FilterByClass(string className)
+        internal FilterByTagName(string name)
         {
-            this.Class = className;
+            this.Name = name;
         }
 
         protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)
         {
-            Element[] elements = document.all.GetElementsByClassName(this.Class);
+            Element[] elements = document.getElementsByTagName(this.Name);
 
             if (elements.IsNotNull())
             {

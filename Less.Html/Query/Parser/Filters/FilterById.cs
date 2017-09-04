@@ -1,8 +1,8 @@
 ﻿//bibaoke.com
 
 using System.Linq;
-using Less.Text;
 using System.Collections.Generic;
+using Less.Collection;
 
 namespace Less.Html
 {
@@ -19,9 +19,19 @@ namespace Less.Html
             this.Id = id;
         }
 
-        protected override IEnumerable<Element> EvalThis(IEnumerable<Element> source)
+        protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)
         {
-            return source.SelectMany(i => i.GetAllElements().Where(j => j.id.IsNotNull() && j.id.CompareIgnoreCase(this.Id)));
+            Element element = document.getElementById(this.Id);
+
+            if (element.IsNotNull())
+            {
+                if (source.Any(i => element == i || element.IsParent(i)))
+                {
+                    return element.ConstructArray();
+                }
+            }
+
+            return new Element[0];
         }
     }
 }

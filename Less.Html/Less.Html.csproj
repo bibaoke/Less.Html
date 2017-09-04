@@ -32,8 +32,8 @@
     <DocumentationFile>bin\Release\Less.Html.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Less.Common, Version=1.0.34.28465, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Less.Common.1.0.34.1\lib\net35\Less.Common.dll</HintPath>
+    <Reference Include="Less.Common, Version=1.0.35.26338, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Less.Common.1.0.35.1\lib\net35\Less.Common.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -51,8 +51,12 @@
     <Compile Include="Nodes\Attr.cs" />
     <Compile Include="Nodes\Comment.cs" />
     <Compile Include="Nodes\Document.cs" />
-    <Compile Include="Nodes\Element.cs" />
+    <Compile Include="Nodes\Element\Element.cs" />
     <Compile Include="Nodes\ElementCollection.cs" />
+    <Compile Include="Nodes\Element\Indexes\IndexOnClass.cs" />
+    <Compile Include="Nodes\Element\Indexes\IndexOnId.cs" />
+    <Compile Include="Nodes\Element\Indexes\IndexOnName.cs" />
+    <Compile Include="Nodes\Element\Indexes\IndexOnTagName.cs" />
     <Compile Include="Nodes\NamedNodeMap.cs" />
     <Compile Include="Nodes\Node.cs" />
     <Compile Include="Nodes\SelfCheckingException.cs" />
@@ -68,7 +72,7 @@
     <Compile Include="Query\Parser\Filters\FilterByAll.cs" />
     <Compile Include="Query\Parser\Filters\FilterByClass.cs" />
     <Compile Include="Query\Parser\Filters\FilterById.cs" />
-    <Compile Include="Query\Parser\Filters\FilterByName.cs" />
+    <Compile Include="Query\Parser\Filters\FilterByTagName.cs" />
     <Compile Include="Query\Parser\Filters\FilterByOther.cs" />
     <Compile Include="Query\Parser\ParamParser.cs" />
     <Compile Include="Query\Parser\ReaderBase.cs" />

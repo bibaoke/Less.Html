@@ -87,7 +87,7 @@ namespace Less.Html
                     }
                     else
                     {
-                        selected = this.Select(this.Document.childNodes.GetElements(), this.Param.StringValue);
+                        selected = this.Select(this.Document, this.Document.childNodes.GetElements(), this.Param.StringValue);
                     }
                 }
                 else
@@ -100,7 +100,7 @@ namespace Less.Html
                     }
                     else
                     {
-                        selected = this.Select(source, this.Param.StringValue);
+                        selected = this.Select(this.Document, source, this.Param.StringValue);
                     }
                 }
 
@@ -113,7 +113,7 @@ namespace Less.Html
             }
             else
             {
-                return new Element[] { };
+                return new Element[0];
             }
         }
 
@@ -123,9 +123,9 @@ namespace Less.Html
         /// <param name="source"></param>
         /// <param name="param"></param>
         /// <returns></returns>
-        internal IEnumerable<Element> Select(IEnumerable<Element> source, string param)
+        internal IEnumerable<Element> Select(Document document, IEnumerable<Element> source, string param)
         {
-            return ParamParser.Parse(param).SelectMany(i => i.Eval(source)).Distinct().OrderBy(i => i.Index);
+            return ParamParser.Parse(param).SelectMany(i => i.Eval(document, source)).Distinct().OrderBy(i => i.Index);
         }
     }
 }

@@ -226,7 +226,7 @@ namespace Less.Html
             }
 
             //添加属性
-            this.Element.attributes.Value.Add(
+            this.Element.attributes.Add(
                 new Attr(
                     this.Element,
                     match.Index,
