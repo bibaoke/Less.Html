@@ -30,7 +30,7 @@ namespace Less.Html
         {
             if (this.Name.CompareIgnoreCase("name"))
             {
-                Element[] elements = document.all.GetElementsByName(this.Name);
+                Element[] elements = document.all.GetElementsByName(this.Value);
 
                 if (elements.IsNotNull())
                 {

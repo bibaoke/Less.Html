@@ -121,7 +121,9 @@ namespace Less.Html
             if (!deep)
             {
                 foreach (Node i in document.ChildNodeList)
+                {
                     document.removeChild(i);
+                }
             }
 
             return document;
@@ -134,7 +136,7 @@ namespace Less.Html
         /// <returns></returns>
         public Element getElementById(string id)
         {
-            return this.all.Where(i => i.id.CompareIgnoreCase(id)).FirstOrDefault();
+            return this.all.GetElementById(id);
         }
 
         /// <summary>
@@ -144,7 +146,7 @@ namespace Less.Html
         /// <returns></returns>
         public Element[] getElementsByName(string name)
         {
-            return this.all.Where(i => i.Name.CompareIgnoreCase(name)).ToArray();
+            return this.all.GetElementsByName(name);
         }
 
         /// <summary>

@@ -137,6 +137,15 @@ namespace Test
                 Assert.IsTrue(q("title:last").html() == "纹身图案大全图片_纹身图案大全_纹身图片 - 纹身部落");
             }
 
+            //
+            {
+                string testHtml = "<head></head>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(!q("head #icon").hasElement);
+            }
+
             return true;
         }
     }
