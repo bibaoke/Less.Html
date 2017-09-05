@@ -49,7 +49,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 重新绑定同一个文档 以取得一个新的委托实例
+        /// 重新绑定同一个文档 以取得一个新的查询器
         /// </summary>
         /// <returns></returns>
         public Func<SelectorParam, Query> Rebind()
@@ -129,6 +129,7 @@ namespace Less.Html
         /// <summary>
         /// 查询元素
         /// </summary>
+        /// <param name="document"></param>
         /// <param name="source"></param>
         /// <param name="param"></param>
         /// <returns></returns>

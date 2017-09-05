@@ -516,6 +516,10 @@ namespace Less.Html
             }
         }
 
+        /// <summary>
+        /// 获取本节点和所有的后代节点
+        /// </summary>
+        /// <returns></returns>
         protected Node[] GetAllNodes()
         {
             Node[] nodes = new Node[this.AllChildNodesCount];
@@ -525,21 +529,38 @@ namespace Less.Html
             return nodes;
         }
 
+        /// <summary>
+        /// 获取节点的插入索引
+        /// </summary>
+        /// <returns></returns>
         protected virtual int GetAppendIndex()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// 在移除子节点时调用
+        /// </summary>
+        /// <param name="node"></param>
         protected virtual void OnRemoveChild(Node node)
         {
             //
         }
 
+        /// <summary>
+        /// 在插入子节点时调用
+        /// </summary>
+        /// <param name="newItem"></param>
+        /// <param name="existingItem"></param>
         protected virtual void OnInsertBefore(Node newItem, Node existingItem)
         {
             //
         }
 
+        /// <summary>
+        /// 在添加子节点时调用
+        /// </summary>
+        /// <param name="node"></param>
         protected virtual void OnAppendChild(Node node)
         {
             //
@@ -596,8 +617,9 @@ namespace Less.Html
         /// <returns></returns>
         protected string Decode(string text)
         {
-            return HttpUtility.HtmlDecode(
-                Node.Pattern.Replace(text.Trim(), Symbol.Space).Replace("&nbsp;", Symbol.Space));
+            string replaced = Node.Pattern.Replace(text.Trim(), Symbol.Space).Replace("&nbsp;", Symbol.Space);
+
+            return HttpUtility.HtmlDecode(replaced);
         }
 
         /// <summary>

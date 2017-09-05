@@ -68,7 +68,7 @@ namespace Less.Html
         /// </summary>
         protected SelectorParam()
         {
-
+            //
         }
 
         /// <summary>

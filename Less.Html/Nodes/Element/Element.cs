@@ -11,9 +11,19 @@ namespace Less.Html
     /// </summary>
     public class Element : Node
     {
-        private static HashSet<string> SingleElements;
+        private static HashSet<string> SingleElements
+        {
+            get;
+            set;
+        }
 
         private int AllChildElementsCount
+        {
+            get;
+            set;
+        }
+
+        private string OriginalName
         {
             get;
             set;
@@ -180,6 +190,7 @@ namespace Less.Html
 
             this.attributes = new NamedNodeMap<Attr>(this);
 
+            this.OriginalName = name;
             this.Name = name.ToLower();
 
             if (Element.SingleElements.Contains(name))

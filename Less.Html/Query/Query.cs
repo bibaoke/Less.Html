@@ -20,30 +20,6 @@ namespace Less.Html
             set;
         }
 
-        internal Query(Selector selector)
-        {
-            this.Selector = selector;
-        }
-
-        /// <summary>
-        /// 获取枚举器
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        public IEnumerator<Element> GetEnumerator()
-        {
-            return this.Select().GetEnumerator();
-        }
-
-        /// <summary>
-        /// 获取枚举器
-        /// </summary>
-        /// <returns></returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.Select().GetEnumerator();
-        }
-
         /// <summary>
         /// 获取指定索引的元素
         /// </summary>
@@ -82,6 +58,11 @@ namespace Less.Html
             {
                 return this.length > 0;
             }
+        }
+
+        internal Query(Selector selector)
+        {
+            this.Selector = selector;
         }
 
         /// <summary>
@@ -626,6 +607,25 @@ namespace Less.Html
             }
 
             return html;
+        }
+
+        /// <summary>
+        /// 获取枚举器
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        public IEnumerator<Element> GetEnumerator()
+        {
+            return this.Select().GetEnumerator();
+        }
+
+        /// <summary>
+        /// 获取枚举器
+        /// </summary>
+        /// <returns></returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.Select().GetEnumerator();
         }
 
         internal IEnumerable<Element> Select()

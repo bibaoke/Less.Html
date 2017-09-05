@@ -15,7 +15,7 @@ namespace Less.Html
         /// <param name="innerException"></param>
         public SelfCheckingException(Exception innerException) : base("自检错误", innerException)
         {
-
+            //
         }
     }
 }

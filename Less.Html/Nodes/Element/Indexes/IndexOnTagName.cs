@@ -36,7 +36,7 @@ namespace Less.Html
             }
             else
             {
-                return null;
+                return new Element[0];
             }
         }
 

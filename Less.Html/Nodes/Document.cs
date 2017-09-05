@@ -4,6 +4,7 @@ using System.Linq;
 using Less.Text;
 using System;
 using System.Collections.Generic;
+using Less.Collection;
 
 namespace Less.Html
 {
@@ -48,7 +49,11 @@ namespace Less.Html
         /// <summary>
         /// html 解析委托
         /// </summary>
-        internal Func<string, Document> Parse;
+        internal Func<string, Document> Parse
+        {
+            get;
+            private set;
+        }
 
         internal List<Node> AllNodes
         {
@@ -74,7 +79,9 @@ namespace Less.Html
         {
             get
             {
-                return this.all.Where(i => i.Name.In("area", "a") && i.attributes["href"].IsNotNull()).ToArray();
+                Element[] elements = this.getElementsByTagName("a").ExtArray(this.getElementsByTagName("area"));
+
+                return elements.Where(i => i.attributes["href"].IsNotNull()).ToArray();
             }
         }
 
@@ -104,6 +111,10 @@ namespace Less.Html
             this.Parse = parse;
         }
 
+        /// <summary>
+        /// 输出字符串
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return this.Content;
@@ -169,6 +180,10 @@ namespace Less.Html
             return new Element(name);
         }
 
+        /// <summary>
+        /// 添加子节点时执行
+        /// </summary>
+        /// <param name="node"></param>
         protected override void OnAppendChild(Node node)
         {
             //把元素添加到文档的 all 集合
@@ -187,6 +202,10 @@ namespace Less.Html
             }
         }
 
+        /// <summary>
+        /// 获取文档的子节点插入索引
+        /// </summary>
+        /// <returns></returns>
         protected override int GetAppendIndex()
         {
             return this.End + 1;

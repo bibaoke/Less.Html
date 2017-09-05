@@ -22,12 +22,7 @@ namespace Less.Html
         {
             Element[] elements = document.getElementsByTagName(this.Name);
 
-            if (elements.IsNotNull())
-            {
-                return source.SelectMany(i => elements.Where(j => j == i || j.IsParent(i)));
-            }
-
-            return new Element[0];
+            return source.SelectMany(i => elements.Where(j => j == i || j.IsParent(i)));
         }
     }
 }

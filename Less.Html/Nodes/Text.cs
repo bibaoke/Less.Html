@@ -25,7 +25,9 @@ namespace Less.Html
         {
             get
             {
-                return this.Decode(this.ownerDocument.Content.Substring(this.Begin, this.End - this.Begin + 1));
+                string content = this.ownerDocument.Content.Substring(this.Begin, this.End - this.Begin + 1);
+
+                return this.Decode(content);
             }
         }
 
