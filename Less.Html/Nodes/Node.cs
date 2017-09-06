@@ -32,12 +32,6 @@ namespace Less.Html
             }
         }
 
-        private int AllChildNodesCount
-        {
-            get;
-            set;
-        }
-
         /// <summary>
         /// 是否开启自检程序
         /// </summary>
@@ -50,12 +44,21 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 子节点
+        /// 本节点和所有的后代节点的总数
         /// </summary>
-        protected List<Node> ChildNodeList
+        protected int AllChildNodesCount
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// 子节点
+        /// </summary>
+        internal List<Node> ChildNodeList
+        {
+            get;
+            private set;
         }
 
         /// <summary>
@@ -110,7 +113,6 @@ namespace Less.Html
         public virtual string nodeValue
         {
             get;
-            set;
         }
 
         /// <summary>
@@ -119,7 +121,7 @@ namespace Less.Html
         public Node parentNode
         {
             get;
-            private set;
+            internal set;
         }
 
         /// <summary>
@@ -450,6 +452,8 @@ namespace Less.Html
 
             return node;
         }
+
+        internal abstract Node Clone(Node parent);
 
         internal virtual void OnAddToNamedNodeMap()
         {

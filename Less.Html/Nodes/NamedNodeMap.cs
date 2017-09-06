@@ -176,5 +176,10 @@ namespace Less.Html
 
             item.OnAddToNamedNodeMap();
         }
+
+        internal void AddItem(T item)
+        {
+            this.Value.Add(item);
+        }
     }
 }

@@ -1,6 +1,9 @@
 ﻿//bibaoke.com
 
 using System;
+using System.Collections.Generic;
+using Less.Encrypt;
+using System.Text;
 
 namespace Less.Html
 {
@@ -9,6 +12,31 @@ namespace Less.Html
     /// </summary>
     public static class HtmlParser
     {
+        private static Dictionary<string, Document> Cache
+        {
+            get;
+            set;
+        }
+
+        static HtmlParser()
+        {
+            HtmlParser.Cache = new Dictionary<string, Document>();
+        }
+
+        /// <summary>
+        /// 解析 html
+        /// 返回选择器
+        /// </summary>
+        /// <param name="content">要解析的 html</param>
+        /// <param name="cache">是否使用缓存</param>
+        /// <returns>jQuery 风格的 css 选择器</returns>
+        public static Func<SelectorParam, Query> Query(string content, bool cache)
+        {
+            Document document = HtmlParser.Parse(content, cache);
+
+            return Selector.Bind(document);
+        }
+
         /// <summary>
         /// 解析 html
         /// 返回选择器
@@ -17,7 +45,45 @@ namespace Less.Html
         /// <returns>jQuery 风格的 css 选择器</returns>
         public static Func<SelectorParam, Query> Query(string content)
         {
-            return Selector.Bind(HtmlParser.Parse(content));
+            Document document = HtmlParser.Parse(content);
+
+            return Selector.Bind(document);
+        }
+
+        /// <summary>
+        /// 解析 html
+        /// 返回文档
+        /// </summary>
+        /// <param name="content">要解析的 html</param>
+        /// <param name="cache">是否使用缓存</param>
+        /// <returns>DOM 文档</returns>
+        public static Document Parse(string content, bool cache)
+        {
+            if (cache)
+            {
+                if (HtmlParser.Cache.ContainsKey(content))
+                {
+                    Document document = HtmlParser.Cache[content];
+
+                    Document clone = (Document)document.cloneNode(true);
+
+                    return clone;
+                }
+                else
+                {
+                    Document document = HtmlParser.Parse(content);
+
+                    Document clone = (Document)document.cloneNode(true);
+
+                    HtmlParser.Cache.Add(content, clone);
+
+                    return document;
+                }
+            }
+            else
+            {
+                return HtmlParser.Parse(content);
+            }
         }
 
         /// <summary>
@@ -32,7 +98,7 @@ namespace Less.Html
             ReaderBase reader = new TagReader();
 
             //阅读器上下文
-            Context context = new Context(content, HtmlParser.Parse);
+            Context context = new Context(content, c => HtmlParser.Parse(c, true));
 
             //设置上下文
             reader.Context = context;

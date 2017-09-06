@@ -94,13 +94,13 @@ namespace Less.Html
             private set;
         }
 
-        internal Document(string content, Func<string, Document> parse)
+        private Document(string content, Func<string, Document> parse, ElementCollection all)
         {
             this.AllNodes = new List<Node>();
 
             this.AllNodes.Add(this);
 
-            this.all = new ElementCollection();
+            this.all = all;
 
             //设置文档内容
             this.Content = content;
@@ -109,6 +109,11 @@ namespace Less.Html
             this.ownerDocument = this;
 
             this.Parse = parse;
+        }
+
+        internal Document(string content, Func<string, Document> parse) : this(content, parse, new ElementCollection())
+        {
+            //
         }
 
         /// <summary>
@@ -127,17 +132,14 @@ namespace Less.Html
         /// <returns></returns>
         public override Node cloneNode(bool deep)
         {
-            Document document = this.Parse(this.Content);
-
-            if (!deep)
+            if (deep)
             {
-                foreach (Node i in document.ChildNodeList)
-                {
-                    document.removeChild(i);
-                }
+                return this.Clone(null);
             }
-
-            return document;
+            else
+            {
+                return new Document("", this.Parse);
+            }
         }
 
         /// <summary>
@@ -178,6 +180,24 @@ namespace Less.Html
         public Element createElement(string name)
         {
             return new Element(name);
+        }
+
+        internal override Node Clone(Node parent)
+        {
+            Document clone = new Document(this.Content, this.Parse, this.all.Clone());
+
+            clone.AllChildNodesCount = this.AllChildNodesCount;
+
+            clone.AllNodes.Capacity = this.AllNodes.Capacity;
+
+            clone.ChildNodeList.Capacity = this.ChildNodeList.Capacity;
+
+            foreach (Node i in this.ChildNodeList)
+            {
+                Node child = i.Clone(clone);
+            }
+
+            return clone;
         }
 
         /// <summary>

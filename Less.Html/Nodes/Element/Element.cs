@@ -1,5 +1,6 @@
 ﻿//bibaoke.com
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Web;
@@ -18,12 +19,6 @@ namespace Less.Html
         }
 
         private int AllChildElementsCount
-        {
-            get;
-            set;
-        }
-
-        private string OriginalName
         {
             get;
             set;
@@ -190,7 +185,6 @@ namespace Less.Html
 
             this.attributes = new NamedNodeMap<Attr>(this);
 
-            this.OriginalName = name;
             this.Name = name.ToLower();
 
             if (Element.SingleElements.Contains(name))
@@ -291,6 +285,48 @@ namespace Less.Html
             return element;
         }
 
+        internal override Node Clone(Node parent)
+        {
+            Element clone = new Element(this.Name);
+
+            clone.parentNode = parent;
+
+            parent.ChildNodeList.Add(clone);
+
+            parent.ownerDocument.AllNodes.Add(clone);
+
+            clone.ownerDocument = parent.ownerDocument;
+
+            clone.Begin = this.Begin;
+            clone.End = this.End;
+
+            clone.InnerBegin = this.InnerBegin;
+            clone.InnerEnd = this.InnerEnd;
+
+            clone.AllChildNodesCount = this.AllChildNodesCount;
+            clone.AllChildElementsCount = this.AllChildElementsCount;
+
+            foreach (Attr i in this.attributes)
+            {
+                Attr attr = (Attr)i.Clone(clone);
+
+                attr.Element = clone;
+
+                clone.attributes.AddItem(attr);
+            }
+
+            parent.ownerDocument.all.Add(clone);
+
+            clone.ChildNodeList.Capacity = this.ChildNodeList.Capacity;
+
+            foreach (Node i in this.ChildNodeList)
+            {
+                Node child = i.Clone(clone);
+            }
+
+            return clone;
+        }
+
         internal bool IsParent(Element element)
         {
             if (this.parentNode.IsNotNull())
@@ -346,11 +382,19 @@ namespace Less.Html
             this.ShiftParent(offset);
         }
 
+        /// <summary>
+        /// 获取子节点插入索引
+        /// </summary>
+        /// <returns></returns>
         protected override int GetAppendIndex()
         {
             return this.InnerEnd + 1;
         }
 
+        /// <summary>
+        /// 在移除子节点时执行
+        /// </summary>
+        /// <param name="node"></param>
         protected override void OnRemoveChild(Node node)
         {
             //移除文档 all 集合中的元素
@@ -364,6 +408,11 @@ namespace Less.Html
             }
         }
 
+        /// <summary>
+        /// 在插入子节点时执行
+        /// </summary>
+        /// <param name="newItem"></param>
+        /// <param name="existingItem"></param>
         protected override void OnInsertBefore(Node newItem, Node existingItem)
         {
             //把元素添加到文档的 all 集合
@@ -402,6 +451,10 @@ namespace Less.Html
             }
         }
 
+        /// <summary>
+        /// 在添加子节点时执行
+        /// </summary>
+        /// <param name="node"></param>
         protected override void OnAppendChild(Node node)
         {
             //把元素添加到文档的 all 集合

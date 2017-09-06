@@ -133,6 +133,38 @@ namespace Less.Html
             this.ValueLength = value.Length;
         }
 
+        /// <summary>
+        /// 克隆节点
+        /// </summary>
+        /// <param name="deep"></param>
+        /// <returns></returns>
+        public override Node cloneNode(bool deep)
+        {
+            Node node = this.Clone(null);
+
+            node.ownerDocument = new Document(this.Content, this.ownerDocument.Parse);
+
+            node.SetIndex(-node.Begin);
+
+            return node;
+        }
+
+        internal override Node Clone(Node parent)
+        {
+            Attr attr = new Attr();
+
+            attr.ownerDocument = parent.ownerDocument;
+
+            attr.Begin = this.Begin;
+            attr.End = this.End;
+            attr.NameBegin = this.NameBegin;
+            attr.NameLength = this.NameLength;
+            attr.ValueBegin = this.ValueBegin;
+            attr.ValueLength = this.ValueLength;
+
+            return attr;
+        }
+
         internal Attr(Element element, int begin, int end, int nameBegin, int nameLength, int valueBegin, int valueLength) : base(begin, end)
         {
             this.Element = element;
@@ -143,29 +175,6 @@ namespace Less.Html
             this.NameLength = nameLength;
             this.ValueBegin = valueBegin;
             this.ValueLength = valueLength;
-        }
-
-        /// <summary>
-        /// 克隆属性
-        /// </summary>
-        /// <param name="deep"></param>
-        /// <returns></returns>
-        public override Node cloneNode(bool deep)
-        {
-            Attr attr = new Attr();
-
-            attr.Begin = this.Begin;
-            attr.End = this.End;
-            attr.NameBegin = this.NameBegin;
-            attr.NameLength = this.NameBegin;
-            attr.ValueBegin = this.NameBegin;
-            attr.ValueLength = this.NameBegin;
-
-            attr.ownerDocument = new Document(this.Content, this.ownerDocument.Parse);
-
-            attr.SetIndex(-attr.Begin);
-
-            return attr;
         }
 
         internal override void OnAddToNamedNodeMap()

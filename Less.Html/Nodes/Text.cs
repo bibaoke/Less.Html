@@ -1,5 +1,7 @@
 ﻿//bibaoke.com
 
+using System;
+
 namespace Less.Html
 {
     /// <summary>
@@ -44,6 +46,21 @@ namespace Less.Html
         public override Node cloneNode(bool deep)
         {
             return this.ownerDocument.Parse(this.Content).firstChild;
+        }
+
+        internal override Node Clone(Node parent)
+        {
+            Text clone = new Text(this.Begin, this.End);
+
+            clone.parentNode = parent;
+
+            parent.ChildNodeList.Add(clone);
+
+            parent.ownerDocument.AllNodes.Add(clone);
+
+            clone.ownerDocument = parent.ownerDocument;
+
+            return clone;
         }
     }
 }

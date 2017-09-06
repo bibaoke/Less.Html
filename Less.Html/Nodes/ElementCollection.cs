@@ -99,6 +99,15 @@ namespace Less.Html
             return this.List.GetEnumerator();
         }
 
+        internal ElementCollection Clone()
+        {
+            ElementCollection clone = new ElementCollection();
+
+            clone.List.Capacity = this.List.Capacity;
+
+            return clone;
+        }
+
         internal Element GetElementById(string id)
         {
             return this.IndexOnId.Get(id);
