@@ -270,19 +270,24 @@ namespace Less.Html
         /// <returns></returns>
         public override Node cloneNode(bool deep)
         {
-            Document document = this.ownerDocument.Parse(this.Content);
-
-            Node element = document.firstChild;
-
-            if (!deep)
+            if (deep)
             {
-                foreach (Node i in element.childNodes)
-                {
-                    element.removeChild(i);
-                }
-            }
+                Document document = this.ownerDocument.Parse(this.Content);
 
-            return element;
+                return document.firstChild;
+            }
+            else
+            {
+                string openTag = this.ownerDocument.Content.Substring(this.Begin, this.InnerBegin - this.Begin);
+
+                string closeTag = this.ownerDocument.Content.Substring(this.InnerEnd + 1, this.End - this.InnerEnd);
+
+                string content = openTag + closeTag;
+
+                Document document = this.ownerDocument.Parse(content);
+
+                return document.firstChild;
+            }
         }
 
         internal override Node Clone(Node parent)

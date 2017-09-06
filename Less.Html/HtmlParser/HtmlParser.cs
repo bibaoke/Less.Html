@@ -75,7 +75,14 @@ namespace Less.Html
 
                     Document clone = (Document)document.cloneNode(true);
 
-                    HtmlParser.Cache.Add(content, clone);
+                    try
+                    {
+                        HtmlParser.Cache.Add(content, clone);
+                    }
+                    catch (ArgumentException)
+                    {
+                        //
+                    }
 
                     return document;
                 }

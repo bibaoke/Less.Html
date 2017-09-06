@@ -146,6 +146,15 @@ namespace Test
                 Assert.IsTrue(!q("head #icon").hasElement);
             }
 
+            //
+            {
+                string testHtml = "<html><head><title></title></head></html>";
+
+                Document document = HtmlParser.Parse(testHtml);
+
+                Assert.IsTrue(document.getElementsByTagName("head")[0].cloneNode().ToString() == "<head></head>");
+            }
+
             return true;
         }
     }
