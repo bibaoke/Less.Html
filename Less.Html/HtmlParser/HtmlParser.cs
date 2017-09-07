@@ -61,17 +61,17 @@ namespace Less.Html
         {
             if (cache)
             {
-                if (HtmlParser.Cache.ContainsKey(content))
-                {
-                    Document document = HtmlParser.Cache[content];
+                Document document;
 
+                if (HtmlParser.Cache.TryGetValue(content, out document))
+                {
                     Document clone = (Document)document.cloneNode(true);
 
                     return clone;
                 }
                 else
                 {
-                    Document document = HtmlParser.Parse(content);
+                    document = HtmlParser.Parse(content);
 
                     Document clone = (Document)document.cloneNode(true);
 

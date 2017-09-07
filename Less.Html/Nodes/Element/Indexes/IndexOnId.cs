@@ -28,9 +28,11 @@ namespace Less.Html
 
         internal Element Get(string id)
         {
-            if (this.Dictionary.ContainsKey(id))
+            Element element;
+
+            if (this.Dictionary.TryGetValue(id, out element))
             {
-                return this.Dictionary[id];
+                return element;
             }
             else
             {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Less.Html
 {
@@ -28,9 +29,11 @@ namespace Less.Html
 
         internal Element[] Get(string className)
         {
-            if (this.Dictionary.ContainsKey(className))
+            List<Element> list;
+
+            if (this.Dictionary.TryGetValue(className, out list))
             {
-                return this.Dictionary[className].ToArray();
+                return list.ToArray();
             }
             else
             {
@@ -40,13 +43,15 @@ namespace Less.Html
 
         internal void Add(string className, Element element)
         {
-            if (this.Dictionary.ContainsKey(className))
+            List<Element> list;
+
+            if (this.Dictionary.TryGetValue(className, out list))
             {
-                this.Dictionary[className].Add(element);
+                list.Add(element);
             }
             else
             {
-                List<Element> list = new List<Element>();
+                list = new List<Element>();
 
                 list.Add(element);
 

@@ -30,9 +30,11 @@ namespace Less.Html
         {
             tagName = tagName.ToLower();
 
-            if (this.Dictionary.ContainsKey(tagName))
+            List<Element> list;
+
+            if (this.Dictionary.TryGetValue(tagName, out list))
             {
-                return this.Dictionary[tagName].ToArray();
+                return list.ToArray();
             }
             else
             {
@@ -42,13 +44,15 @@ namespace Less.Html
 
         internal void Add(string tagName, Element element)
         {
-            if (this.Dictionary.ContainsKey(tagName))
+            List<Element> list;
+
+            if (this.Dictionary.TryGetValue(tagName, out list))
             {
-                this.Dictionary[tagName].Add(element);
+                list.Add(element);
             }
             else
             {
-                List<Element> list = new List<Element>();
+                list = new List<Element>();
 
                 list.Add(element);
 

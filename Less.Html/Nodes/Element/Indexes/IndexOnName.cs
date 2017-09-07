@@ -28,9 +28,11 @@ namespace Less.Html
 
         internal Element[] Get(string name)
         {
-            if (this.Dictionary.ContainsKey(name))
+            List<Element> list;
+
+            if (this.Dictionary.TryGetValue(name, out list))
             {
-                return this.Dictionary[name].ToArray();
+                return list.ToArray();
             }
             else
             {
@@ -40,13 +42,15 @@ namespace Less.Html
 
         internal void Add(string name, Element element)
         {
-            if (this.Dictionary.ContainsKey(name))
+            List<Element> list;
+
+            if (this.Dictionary.TryGetValue(name, out list))
             {
-                this.Dictionary[name].Add(element);
+                list.Add(element);
             }
             else
             {
-                List<Element> list = new List<Element>();
+                list = new List<Element>();
 
                 list.Add(element);
 
