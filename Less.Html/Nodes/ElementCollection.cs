@@ -194,10 +194,10 @@ namespace Less.Html
                     this.IndexOnId.Remove(attr.value);
                     break;
                 case "class":
-                    this.RemoveIndexOnClass(attr.value);
+                    this.RemoveIndexOnClass(attr.value, attr.Element);
                     break;
                 case "name":
-                    this.IndexOnName.Remove(attr.value);
+                    this.IndexOnName.Remove(attr.value, attr.Element);
                     break;
             }
         }
@@ -225,16 +225,16 @@ namespace Less.Html
                 this.IndexOnId.Remove(element.id);
             }
 
-            this.RemoveIndexOnClass(element.className);
+            this.RemoveIndexOnClass(element.className, element);
 
             string name = element.getAttribute("name");
 
             if (name.IsNotNull())
             {
-                this.IndexOnName.Remove(name);
+                this.IndexOnName.Remove(name, element);
             }
 
-            this.IndexOnTagName.Remove(element.Name);
+            this.IndexOnTagName.Remove(element.Name, element);
         }
 
         private void AddIndex(Element element)
@@ -256,7 +256,7 @@ namespace Less.Html
             this.IndexOnTagName.Add(element.Name, element);
         }
 
-        private void RemoveIndexOnClass(string className)
+        private void RemoveIndexOnClass(string className, Element element)
         {
             if (className.IsNotWhiteSpace())
             {
@@ -264,7 +264,7 @@ namespace Less.Html
 
                 foreach (string i in classes)
                 {
-                    this.IndexOnClass.Remove(i);
+                    this.IndexOnClass.Remove(i, element);
                 }
             }
         }

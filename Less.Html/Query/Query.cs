@@ -467,7 +467,7 @@ namespace Less.Html
                         {
                             if (element.hasChildNodes())
                             {
-                                element.insertBefore(j, element.childNodes[0]);
+                                element.insertBefore(j, element.ChildNodeList[0]);
                             }
                             else
                             {
@@ -489,7 +489,7 @@ namespace Less.Html
                         {
                             if (element.hasChildNodes())
                             {
-                                element.insertBefore(j, element.childNodes[0]);
+                                element.insertBefore(j, element.ChildNodeList[0]);
                             }
                             else
                             {

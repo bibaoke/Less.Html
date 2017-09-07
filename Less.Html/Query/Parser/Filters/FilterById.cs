@@ -3,6 +3,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using Less.Collection;
+using System;
 
 namespace Less.Html
 {
@@ -17,6 +18,20 @@ namespace Less.Html
         internal FilterById(string id)
         {
             this.Id = id;
+        }
+
+        protected override IEnumerable<Element> EvalThis(Document document)
+        {
+            Element element = document.getElementById(this.Id);
+
+            if (element.IsNotNull())
+            {
+                return element.ConstructArray();
+            }
+            else
+            {
+                return new Element[0];
+            }
         }
 
         protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)

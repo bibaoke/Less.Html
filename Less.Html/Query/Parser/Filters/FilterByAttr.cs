@@ -3,6 +3,7 @@
 using System.Linq;
 using Less.Text;
 using System.Collections.Generic;
+using System;
 
 namespace Less.Html
 {
@@ -26,37 +27,54 @@ namespace Less.Html
             this.Value = value;
         }
 
+        protected override IEnumerable<Element> EvalThis(Document document)
+        {
+            if (this.Name.CompareIgnoreCase("name"))
+            {
+                return document.getElementsByName(this.Value);
+            }
+            else
+            {
+                return this.GetElementsByAttr(document.ChildNodeList.GetElements());
+            }
+        }
+
         protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)
         {
             if (this.Name.CompareIgnoreCase("name"))
             {
-                Element[] elements = document.all.GetElementsByName(this.Value);
+                Element[] elements = document.getElementsByName(this.Value);
 
                 return source.SelectMany(i => elements.Where(j => j == i || j.IsParent(i)));
             }
             else
             {
-                return source.SelectMany(i => i.GetAllElements().Where(j =>
+                return this.GetElementsByAttr(source);
+            }
+        }
+
+        private IEnumerable<Element> GetElementsByAttr(IEnumerable<Element> source)
+        {
+            return source.SelectMany(i => i.GetAllElements().Where(j =>
+            {
+                if (this.Value.IsNull())
                 {
-                    if (this.Value.IsNull())
+                    return j.attributes[this.Name].IsNotNull();
+                }
+                else
+                {
+                    Attr attr = j.attributes[this.Name];
+
+                    if (attr.IsNull())
                     {
-                        return j.attributes[this.Name].IsNotNull();
+                        return false;
                     }
                     else
                     {
-                        Attr attr = j.attributes[this.Name];
-
-                        if (attr.IsNull())
-                        {
-                            return false;
-                        }
-                        else
-                        {
-                            return attr.value.CompareIgnoreCase(this.Value);
-                        }
+                        return attr.value.CompareIgnoreCase(this.Value);
                     }
-                }));
-            }
+                }
+            }));
         }
     }
 }

@@ -18,10 +18,26 @@ namespace Less.Html
             set;
         }
 
+        internal IEnumerable<Element> Eval(Document document)
+        {
+            IEnumerable<Element> elements = this.EvalThis(document);
+
+            return this.EvalOthers(document, elements);
+        }
+
         internal IEnumerable<Element> Eval(Document document, IEnumerable<Element> source)
         {
             IEnumerable<Element> elements = this.EvalThis(document, source);
 
+            return this.EvalOthers(document, elements);
+        }
+
+        protected abstract IEnumerable<Element> EvalThis(Document document);
+
+        protected abstract IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source);
+
+        private IEnumerable<Element> EvalOthers(Document document, IEnumerable<Element> elements)
+        {
             if (this.Next.IsNotNull())
             {
                 elements = this.Next.Eval(document, elements);
@@ -36,7 +52,5 @@ namespace Less.Html
 
             return elements;
         }
-
-        protected abstract IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source);
     }
 }

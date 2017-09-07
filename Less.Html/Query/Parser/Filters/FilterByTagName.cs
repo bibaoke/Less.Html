@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Less.Html
 {
@@ -16,6 +17,11 @@ namespace Less.Html
         internal FilterByTagName(string name)
         {
             this.Name = name;
+        }
+
+        protected override IEnumerable<Element> EvalThis(Document document)
+        {
+            return document.getElementsByTagName(this.Name);
         }
 
         protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)

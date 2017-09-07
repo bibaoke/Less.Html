@@ -1,5 +1,6 @@
 ﻿//bibaoke.com
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Less.Collection;
@@ -24,6 +25,11 @@ namespace Less.Html
         {
             this.Condition = condition;
             this.Index = index;
+        }
+
+        protected override IEnumerable<Element> EvalThis(Document document)
+        {
+            return this.EvalThis(document, document.ChildNodeList.GetElements());
         }
 
         protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)

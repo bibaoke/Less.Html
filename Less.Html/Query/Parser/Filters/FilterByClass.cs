@@ -3,6 +3,7 @@
 using System.Linq;
 using Less.Text;
 using System.Collections.Generic;
+using System;
 
 namespace Less.Html
 {
@@ -17,6 +18,11 @@ namespace Less.Html
         internal FilterByClass(string className)
         {
             this.Class = className;
+        }
+
+        protected override IEnumerable<Element> EvalThis(Document document)
+        {
+            return document.all.GetElementsByClassName(this.Class);
         }
 
         protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)

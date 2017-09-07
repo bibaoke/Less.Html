@@ -67,11 +67,11 @@ namespace Less.Html
             {
                 if (this.Param.StringValue.IsNotNull())
                 {
-                    Node[] nodes = this.Document.Parse(this.Param.StringValue).childNodes;
+                    List<Node> nodes = this.Document.Parse(this.Param.StringValue).ChildNodeList;
 
                     if (nodes.Any(i => i is Element))
                     {
-                        this.Param.NodesValue = nodes;
+                        this.Param.NodesValue = nodes.ToArray();
 
                         this.Param.StringValue = null;
                     }
@@ -87,7 +87,7 @@ namespace Less.Html
                     }
                     else
                     {
-                        selected = this.Select(this.Document, this.Document.childNodes.GetElements(), this.Param.StringValue);
+                        selected = this.Select(this.Document, this.Param.StringValue);
                     }
                 }
                 else
@@ -124,6 +124,17 @@ namespace Less.Html
             {
                 return new Element[0];
             }
+        }
+
+        /// <summary>
+        /// 查询元素
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        internal IEnumerable<Element> Select(Document document, string param)
+        {
+            return ParamParser.Parse(param).SelectMany(i => i.Eval(document)).Distinct().OrderBy(i => i.Index);
         }
 
         /// <summary>

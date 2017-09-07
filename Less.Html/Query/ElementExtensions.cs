@@ -17,7 +17,7 @@ namespace Less.Html
         /// <returns></returns>
         internal static IEnumerable<Element> GetChildElements(this IEnumerable<Element> elements)
         {
-            return elements.SelectMany(i => i.childNodes.GetElements());
+            return elements.SelectMany(i => i.ChildNodeList.GetElements());
         }
     }
 }

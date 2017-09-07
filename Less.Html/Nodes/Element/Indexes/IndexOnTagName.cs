@@ -21,9 +21,14 @@ namespace Less.Html
             this.Dictionary = new Dictionary<string, List<Element>>();
         }
 
-        internal void Remove(string tagName)
+        internal void Remove(string tagName, Element element)
         {
-            this.Dictionary.Remove(tagName);
+            List<Element> list;
+
+            if (this.Dictionary.TryGetValue(tagName, out list))
+            {
+                list.Remove(element);
+            }
         }
 
         internal Element[] Get(string tagName)
