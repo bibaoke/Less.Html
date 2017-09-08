@@ -8,7 +8,9 @@
 foreach (Element i in q("td"))
 {
     if (!q(i).find("table").hasElement)
+    {
         Console.WriteLine(i.textContent);
+    }
 }
 </pre>
 <p align="left">
@@ -28,6 +30,10 @@ foreach (Element i in q("td"))
 </p>
 <p align="left">
     项目代码：<a href="https://github.com/bibaoke/Less.Html" target="_blank">GitHub</a>&nbsp; &nbsp;&nbsp;<a href="https://code.csdn.net/closurer/less-html/tree/master" target="_blank">CSDN</a>
+</p>
+<p align="left">
+    NuGet:<br />
+    <a href="https://www.nuget.org/packages/Less.Html/" target="_blank">https://www.nuget.org/packages/Less.Html</a>
 </p>
 <p align="left">
     我当时写这个解析器是因为要做网页爬虫，核心三天写完就能用了，并用来解析了几百万个网页，可用性上是没有问题的。后来我觉得 Razor 语法还是不够好，于是我改进了这个解析器，加上了选择器和操作 html 文档的方法，制作了我自己的视图引擎 QPage。我的个人博客就是使用这个引擎写的：
@@ -110,6 +116,39 @@ foreach (Element i in q("td"))
                     第一个&lt;p&gt;元素
                 </td>
             </tr>
+            <tr>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    :<i>last</i>
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    q("p:last")
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    最后一个&lt;p&gt;元素
+                </td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    [<i>attribute</i>]
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    q("[href]")
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    所有带有href属性的元素
+                </td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    [<i>attribute=value</i>]
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    q("[href='#']")
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    所有href属性的值等于"#"的元素
+                </td>
+            </tr>
         </tbody>
     </table>
 </p>
@@ -117,7 +156,10 @@ foreach (Element i in q("td"))
     以及它们的组合使用，比如 .class element.class 或者 .class.class，暂时不支持 .class&gt;.class 这种。
 </p>
 <p align="left">
-    因为时间紧迫，加上对我来说够用了，我并没有实现所有的 css3 选择器，不过这是很容易加上去的。<span>所以我想让大家使用 Less.Html，这样我可以得到测试用例，以便更好地改进。<span style="color:#E53333;">只要你有解析 html 的任务，</span></span><span style="color:#E53333;">我可以帮忙写</span><span style="color:#E53333;">，并加入到示例列表中：</span>
+    因为时间紧迫，加上对我来说够用了，我并没有实现所有的 css3 选择器，而是根据需要逐步添加，添加了新的选择器我会更新上面的表格。
+</p>
+<p align="left">
+    下面是我写的一些使用示例：
 </p>
 <p align="left">
     <a href="http://bibaoke.com/post/75" target="_blank">示例一：获取嵌套元素中的正确内容</a> <br />
@@ -139,5 +181,5 @@ foreach (Element i in q("td"))
     <a href="https://github.com/AngleSharp/AngleSharp" target="_blank">AngleSharp</a><span style="line-height:1.6;">，我看了一下介绍，这个项目还有 GUI，应该是功能最强大的一个吧。</span>
 </p>
 <p align="left">
-    <a href="https://github.com/Ivony/Jumony" target="_blank">Jumony</a>，国产。如果我自己没有写的话，我会使用这个，因为有中文的说明。<span id="__kindeditor_bookmark_start_68__"></span>
+    <a href="https://github.com/Ivony/Jumony" target="_blank">Jumony</a>，国产。如果我自己没有写的话，我会使用这个，因为有中文的说明。
 </p>
