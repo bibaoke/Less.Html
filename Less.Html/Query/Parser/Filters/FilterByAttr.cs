@@ -31,26 +31,28 @@ namespace Less.Html
         {
             if (this.Name.CompareIgnoreCase("name"))
             {
-                return document.getElementsByName(this.Value);
+                if (this.Value.IsNotNull())
+                {
+                    return document.getElementsByName(this.Value);
+                }
             }
-            else
-            {
-                return this.GetElementsByAttr(document.ChildNodeList.GetElements());
-            }
+
+            return this.GetElementsByAttr(document.ChildNodeList.GetElements());
         }
 
         protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)
         {
             if (this.Name.CompareIgnoreCase("name"))
             {
-                Element[] elements = document.getElementsByName(this.Value);
+                if (this.Value.IsNotNull())
+                {
+                    Element[] elements = document.getElementsByName(this.Value);
 
-                return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
+                    return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
+                }
             }
-            else
-            {
-                return this.GetElementsByAttr(source);
-            }
+
+            return this.GetElementsByAttr(source);
         }
 
         private IEnumerable<Element> GetElementsByAttr(IEnumerable<Element> source)
