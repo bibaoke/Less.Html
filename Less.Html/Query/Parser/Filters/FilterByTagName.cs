@@ -28,7 +28,7 @@ namespace Less.Html
         {
             Element[] elements = document.getElementsByTagName(this.Name);
 
-            return source.SelectMany(i => elements.Where(j => j == i || j.IsParent(i)));
+            return source.SelectMany(i => elements.Where(j => i.GetAllElements().Contains(j)));
         }
     }
 }

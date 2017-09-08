@@ -18,7 +18,7 @@ namespace Less.Html
             set;
         }
 
-        private int AllChildElementsCount
+        private int AllElementsCount
         {
             get;
             set;
@@ -27,7 +27,7 @@ namespace Less.Html
         internal string Name
         {
             get;
-            set;
+            private set;
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Less.Html
         internal bool IsSingle
         {
             get;
-            set;
+            private set;
         }
 
         internal int InnerBegin
@@ -181,7 +181,7 @@ namespace Less.Html
 
         internal Element(string name)
         {
-            this.AllChildElementsCount = 1;
+            this.AllElementsCount = 1;
 
             this.attributes = new NamedNodeMap<Attr>(this);
 
@@ -308,8 +308,8 @@ namespace Less.Html
             clone.InnerBegin = this.InnerBegin;
             clone.InnerEnd = this.InnerEnd;
 
-            clone.AllChildNodesCount = this.AllChildNodesCount;
-            clone.AllChildElementsCount = this.AllChildElementsCount;
+            clone.AllNodesCount = this.AllNodesCount;
+            clone.AllElementsCount = this.AllElementsCount;
 
             foreach (Attr i in this.attributes)
             {
@@ -332,37 +332,15 @@ namespace Less.Html
             return clone;
         }
 
-        internal bool IsParent(Element element)
-        {
-            if (this.parentNode.IsNotNull())
-            {
-                if (this.parentNode is Element)
-                {
-                    Element parent = (Element)this.parentNode;
-
-                    if (parent == element)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return parent.IsParent(element);
-                    }
-                }
-            }
-
-            return false;
-        }
-
         /// <summary>
-        /// 获取所有的元素
+        /// 获取本元素和所有的后代元素
         /// </summary>
         /// <returns></returns>
         internal Element[] GetAllElements()
         {
-            Element[] elements = new Element[this.AllChildElementsCount];
+            Element[] elements = new Element[this.AllElementsCount];
 
-            this.ownerDocument.all.CopyTo(this.Index, elements, this.AllChildElementsCount);
+            this.ownerDocument.all.CopyTo(this.Index, elements, this.AllElementsCount);
 
             return elements;
         }
@@ -407,9 +385,9 @@ namespace Less.Html
             {
                 Element element = (Element)node;
 
-                this.ownerDocument.all.RemoveRange(element.Index, element.AllChildElementsCount);
+                this.ownerDocument.all.RemoveRange(element.Index, element.AllElementsCount);
 
-                this.AlterAllChildElementsCount(-element.AllChildElementsCount);
+                this.AlterAllChildElementsCount(-element.AllElementsCount);
             }
         }
 
@@ -452,7 +430,7 @@ namespace Less.Html
                     }
                 }
 
-                this.AlterAllChildElementsCount(element.AllChildElementsCount);
+                this.AlterAllChildElementsCount(element.AllElementsCount);
             }
         }
 
@@ -485,7 +463,7 @@ namespace Less.Html
                     }
                 }
 
-                this.AlterAllChildElementsCount(element.AllChildElementsCount);
+                this.AlterAllChildElementsCount(element.AllElementsCount);
             }
         }
 
@@ -571,7 +549,7 @@ namespace Less.Html
 
         private void AlterAllChildElementsCount(int difference)
         {
-            this.AllChildElementsCount += difference;
+            this.AllElementsCount += difference;
 
             if (this.parentNode.IsNotNull())
             {
@@ -584,28 +562,32 @@ namespace Less.Html
 
         private Element GetNextElement()
         {
-            return this.GetNextElement(this);
+            int index = this.Index + this.AllElementsCount;
+
+            if (this.ownerDocument.all.Count > index)
+            {
+                return this.ownerDocument.all[index];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private Element GetNextElement(Node node)
         {
-            Node testNode = node.nextSibling;
+            int index = this.Index + this.AllNodesCount;
 
-            while (testNode.IsNotNull())
+            while (this.ownerDocument.AllNodes.Count > index)
             {
-                if (testNode is Element)
+                Node test = this.ownerDocument.AllNodes[index];
+
+                if (test is Element)
                 {
-                    return (Element)testNode;
+                    return (Element)test;
                 }
 
-                if (testNode.nextSibling.IsNotNull())
-                {
-                    testNode = testNode.nextSibling;
-                }
-                else if (testNode.parentNode.IsNotNull())
-                {
-                    testNode = testNode.parentNode.nextSibling;
-                }
+                index++;
             }
 
             return null;

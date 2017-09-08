@@ -186,7 +186,7 @@ namespace Less.Html
         {
             Document clone = new Document(this.Content, this.Parse, this.all.Clone());
 
-            clone.AllChildNodesCount = this.AllChildNodesCount;
+            clone.AllNodesCount = this.AllNodesCount;
 
             clone.AllNodes.Capacity = this.AllNodes.Capacity;
 

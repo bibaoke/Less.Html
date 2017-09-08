@@ -40,7 +40,7 @@ namespace Less.Html
 
             if (element.IsNotNull())
             {
-                if (source.Any(i => element == i || element.IsParent(i)))
+                if (source.Any(i => i.GetAllElements().Contains(element)))
                 {
                     return element.ConstructArray();
                 }

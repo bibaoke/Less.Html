@@ -46,7 +46,7 @@ namespace Less.Html
         /// <summary>
         /// 本节点和所有的后代节点的总数
         /// </summary>
-        protected int AllChildNodesCount
+        protected int AllNodesCount
         {
             get;
             set;
@@ -220,7 +220,7 @@ namespace Less.Html
 
         internal Node()
         {
-            this.AllChildNodesCount = 1;
+            this.AllNodesCount = 1;
 
             this.ChildNodeList = new List<Node>();
         }
@@ -255,9 +255,9 @@ namespace Less.Html
             }
 
             //移除文档节点列表中的节点
-            this.ownerDocument.AllNodes.RemoveRange(node.Index, node.AllChildNodesCount);
+            this.ownerDocument.AllNodes.RemoveRange(node.Index, node.AllNodesCount);
 
-            this.AlterAllChildNodesCount(-node.AllChildNodesCount);
+            this.AlterAllChildNodesCount(-node.AllNodesCount);
 
             this.OnRemoveChild(node);
 
@@ -317,7 +317,7 @@ namespace Less.Html
                 //把节点添加到文档的节点列表
                 this.ownerDocument.AllNodes.InsertRange(existingItem.Index, newItem.GetAllNodes());
 
-                this.AlterAllChildNodesCount(newItem.AllChildNodesCount);
+                this.AlterAllChildNodesCount(newItem.AllNodesCount);
 
                 this.OnInsertBefore(newItem, existingItem);
 
@@ -350,7 +350,7 @@ namespace Less.Html
                 //把节点添加到文档的节点列表
                 this.ownerDocument.AllNodes.Add(newItem);
 
-                this.AlterAllChildNodesCount(newItem.AllChildNodesCount);
+                this.AlterAllChildNodesCount(newItem.AllNodesCount);
 
                 this.OnInsertBefore(newItem, existingItem);
 
@@ -400,7 +400,7 @@ namespace Less.Html
                     this.ownerDocument.AllNodes.AddRange(node.GetAllNodes());
                 }
 
-                this.AlterAllChildNodesCount(node.AllChildNodesCount);
+                this.AlterAllChildNodesCount(node.AllNodesCount);
 
                 this.OnAppendChild(node);
 
@@ -430,7 +430,7 @@ namespace Less.Html
                 //把节点添加到文档的节点列表
                 this.ownerDocument.AllNodes.Add(node);
 
-                this.AlterAllChildNodesCount(node.AllChildNodesCount);
+                this.AlterAllChildNodesCount(node.AllNodesCount);
 
                 this.OnAppendChild(node);
 
@@ -526,9 +526,9 @@ namespace Less.Html
         /// <returns></returns>
         protected Node[] GetAllNodes()
         {
-            Node[] nodes = new Node[this.AllChildNodesCount];
+            Node[] nodes = new Node[this.AllNodesCount];
 
-            this.ownerDocument.AllNodes.CopyTo(this.Index, nodes, 0, this.AllChildNodesCount);
+            this.ownerDocument.AllNodes.CopyTo(this.Index, nodes, 0, this.AllNodesCount);
 
             return nodes;
         }
@@ -664,7 +664,7 @@ namespace Less.Html
 
         private void AlterAllChildNodesCount(int difference)
         {
-            this.AllChildNodesCount += difference;
+            this.AllNodesCount += difference;
 
             if (this.parentNode.IsNotNull())
             {
@@ -674,20 +674,15 @@ namespace Less.Html
 
         private Node GetNextNode()
         {
-            if (this.nextSibling.IsNotNull())
+            int index = this.Index + this.AllNodesCount;
+
+            if (this.ownerDocument.AllNodes.Count > index)
             {
-                return this.nextSibling;
+                return this.ownerDocument.AllNodes[index];
             }
             else
             {
-                if (this.parentNode.IsNotNull())
-                {
-                    return this.parentNode.GetNextNode();
-                }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
         }
 
