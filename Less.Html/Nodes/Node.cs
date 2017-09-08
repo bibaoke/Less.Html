@@ -24,14 +24,6 @@ namespace Less.Html
             set;
         }
 
-        private int Index
-        {
-            get
-            {
-                return this.ownerDocument.AllNodes.IndexOf(this);
-            }
-        }
-
         /// <summary>
         /// 是否开启自检程序
         /// </summary>
@@ -50,6 +42,21 @@ namespace Less.Html
         {
             get;
             set;
+        }
+
+        internal int Index
+        {
+            get
+            {
+                int index = this.ownerDocument.AllNodes.IndexOf(this);
+
+                if (index < 0)
+                {
+                    throw new InvalidOperationException("在节点加入 AllNodes 列表之前无法获取索引");
+                }
+
+                return index;
+            }
         }
 
         /// <summary>

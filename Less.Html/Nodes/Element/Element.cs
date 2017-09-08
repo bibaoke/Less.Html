@@ -55,7 +55,14 @@ namespace Less.Html
         {
             get
             {
-                return this.ownerDocument.all.IndexOf(this);
+                int index = this.ownerDocument.all.IndexOf(this);
+
+                if (index < 0)
+                {
+                    throw new InvalidOperationException("在元素加入 document.all 集合之前无法获取索引");
+                }
+
+                return index;
             }
         }
 
@@ -576,7 +583,7 @@ namespace Less.Html
 
         private Element GetNextElement(Node node)
         {
-            int index = this.Index + this.AllNodesCount;
+            int index = node.Index + this.AllNodesCount;
 
             while (this.ownerDocument.AllNodes.Count > index)
             {
