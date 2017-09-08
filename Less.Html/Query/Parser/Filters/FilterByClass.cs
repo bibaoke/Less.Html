@@ -29,7 +29,7 @@ namespace Less.Html
         {
             Element[] elements = document.all.GetElementsByClassName(this.Class);
 
-            return source.SelectMany(i => elements.Where(j => i.GetAllElements().Contains(j)));
+            return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
         }
     }
 }

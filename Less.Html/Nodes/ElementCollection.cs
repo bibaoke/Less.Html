@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Less.Text;
+using Less.Collection;
 
 namespace Less.Html
 {
@@ -128,6 +129,11 @@ namespace Less.Html
             return this.IndexOnName.Get(name);
         }
 
+        internal IEnumerable<Element> GetEnumerator(int startIndex, int count)
+        {
+            return this.List.GetEnumerator(startIndex, count);
+        }
+
         internal void CopyTo(int index, Element[] array, int count)
         {
             this.List.CopyTo(index, array, 0, count);
@@ -169,9 +175,7 @@ namespace Less.Html
 
         internal void RemoveRange(int index, int count)
         {
-            Element[] elements = new Element[count];
-
-            this.CopyTo(index, elements, count);
+            IEnumerable<Element> elements = this.GetEnumerator(index, count);
 
             foreach (Element i in elements)
             {

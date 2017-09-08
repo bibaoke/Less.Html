@@ -528,6 +528,15 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 枚举本节点和所有的后代节点
+        /// </summary>
+        /// <returns></returns>
+        protected IEnumerable<Node> EnumerateAllNodes()
+        {
+            return this.ownerDocument.AllNodes.GetEnumerator(this.Index, this.AllNodesCount);
+        }
+
+        /// <summary>
         /// 获取本节点和所有的后代节点
         /// </summary>
         /// <returns></returns>

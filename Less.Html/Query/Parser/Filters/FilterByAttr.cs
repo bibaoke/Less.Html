@@ -45,7 +45,7 @@ namespace Less.Html
             {
                 Element[] elements = document.getElementsByName(this.Value);
 
-                return source.SelectMany(i => elements.Where(j => i.GetAllElements().Contains(j)));
+                return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
             }
             else
             {
@@ -55,7 +55,7 @@ namespace Less.Html
 
         private IEnumerable<Element> GetElementsByAttr(IEnumerable<Element> source)
         {
-            return source.SelectMany(i => i.GetAllElements().Where(j =>
+            return source.SelectMany(i => i.EnumerateAllElements().Where(j =>
             {
                 if (this.Value.IsNull())
                 {

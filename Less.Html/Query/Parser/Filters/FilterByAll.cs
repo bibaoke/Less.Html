@@ -14,7 +14,7 @@ namespace Less.Html
 
         protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)
         {
-            return source.SelectMany(i => i.GetAllElements());
+            return source.SelectMany(i => i.EnumerateAllElements());
         }
     }
 }

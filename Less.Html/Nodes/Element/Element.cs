@@ -51,7 +51,7 @@ namespace Less.Html
             set;
         }
 
-        internal int Index
+        internal new int Index
         {
             get
             {
@@ -129,7 +129,7 @@ namespace Less.Html
         {
             get
             {
-                Node[] nodes = this.GetAllNodes();
+                IEnumerable<Node> nodes = this.EnumerateAllNodes();
 
                 string text = "";
 
@@ -337,6 +337,15 @@ namespace Less.Html
             }
 
             return clone;
+        }
+
+        /// <summary>
+        /// 枚举本元素和所有的后代元素
+        /// </summary>
+        /// <returns></returns>
+        internal IEnumerable<Element> EnumerateAllElements()
+        {
+            return this.ownerDocument.all.GetEnumerator(this.Index, this.AllElementsCount);
         }
 
         /// <summary>
