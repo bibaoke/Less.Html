@@ -27,9 +27,19 @@ namespace Less.Html
 
         protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)
         {
-            Element[] elements = document.all.GetElementsByClassName(this.Class);
+            if (document.IsNotNull())
+            {
+                Element[] elements = document.all.GetElementsByClassName(this.Class);
 
-            return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
+                return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
+            }
+            else
+            {
+                return source.SelectMany(i => i.EnumerateAllElements().Where(
+                    j =>
+                    j.className.IsNotNull() &&
+                    j.className.SplitByWhiteSpace().Any(k => k.CompareIgnoreCase(this.Class))));
+            }
         }
     }
 }

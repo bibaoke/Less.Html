@@ -315,16 +315,7 @@ namespace Less.Html
 
             find.Selector.ExtFilterList.Add(selected =>
             {
-                Element first = selected.FirstOrDefault();
-
-                if (first.IsNotNull())
-                {
-                    return find.Selector.Select(first.ownerDocument, selected.GetChildElements(), param);
-                }
-                else
-                {
-                    return new Element[0];
-                }
+                return find.Selector.Select(null, selected.GetChildElements(), param);
             });
 
             return find;

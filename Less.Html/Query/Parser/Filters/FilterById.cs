@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Less.Collection;
 using System;
+using Less.Text;
 
 namespace Less.Html
 {
@@ -36,17 +37,26 @@ namespace Less.Html
 
         protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)
         {
-            Element element = document.getElementById(this.Id);
-
-            if (element.IsNotNull())
+            if (document.IsNotNull())
             {
-                if (source.Any(i => i.EnumerateAllElements().Contains(element)))
-                {
-                    return element.ConstructArray();
-                }
-            }
+                Element element = document.getElementById(this.Id);
 
-            return new Element[0];
+                if (element.IsNotNull())
+                {
+                    if (source.Any(i => i.EnumerateAllElements().Contains(element)))
+                    {
+                        return element.ConstructArray();
+                    }
+                }
+
+                return new Element[0];
+            }
+            else
+            {
+                return source.SelectMany(i => i.EnumerateAllElements().Where(
+                    j =>
+                    j.id.IsNotNull() && j.id.CompareIgnoreCase(this.Id)));
+            }
         }
     }
 }

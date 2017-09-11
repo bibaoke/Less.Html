@@ -42,13 +42,16 @@ namespace Less.Html
 
         protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)
         {
-            if (this.Name.CompareIgnoreCase("name"))
+            if (document.IsNotNull())
             {
-                if (this.Value.IsNotNull())
+                if (this.Name.CompareIgnoreCase("name"))
                 {
-                    Element[] elements = document.getElementsByName(this.Value);
+                    if (this.Value.IsNotNull())
+                    {
+                        Element[] elements = document.getElementsByName(this.Value);
 
-                    return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
+                        return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
+                    }
                 }
             }
 

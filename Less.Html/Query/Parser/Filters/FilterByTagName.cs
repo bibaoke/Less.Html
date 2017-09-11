@@ -3,6 +3,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using Less.Text;
 
 namespace Less.Html
 {
@@ -26,9 +27,18 @@ namespace Less.Html
 
         protected override IEnumerable<Element> EvalThis(Document document, IEnumerable<Element> source)
         {
-            Element[] elements = document.getElementsByTagName(this.Name);
+            if (document.IsNotNull())
+            {
+                Element[] elements = document.getElementsByTagName(this.Name);
 
-            return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
+                return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
+            }
+            else
+            {
+                return source.SelectMany(i => i.EnumerateAllElements().Where(
+                    j =>
+                    j.nodeName.CompareIgnoreCase(this.Name)));
+            }
         }
     }
 }

@@ -391,6 +391,16 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 在移除子节点之后调用 此时子节点会属于一个新的文档
+        /// </summary>
+        /// <param name="document">移除节点的所属文档</param>
+        /// <param name="nodes">已经移除的节点</param>
+        protected override void OnRemovedChild(Document document, Node[] nodes)
+        {
+            document.all.AddRange(nodes.GetElements());
+        }
+
+        /// <summary>
         /// 在移除子节点时执行
         /// </summary>
         /// <param name="node"></param>

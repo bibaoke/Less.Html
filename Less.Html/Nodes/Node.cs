@@ -261,6 +261,8 @@ namespace Less.Html
                 throw new ArgumentException("node 不是当前节点的子节点");
             }
 
+            Node[] removeNodes = node.GetAllNodes();
+
             //移除文档节点列表中的节点
             this.ownerDocument.AllNodes.RemoveRange(node.Index, node.AllNodesCount);
 
@@ -293,6 +295,12 @@ namespace Less.Html
             node.parentNode = document;
 
             node.SetOwnerDocument(document);
+
+            document.AllNodes.AddRange(removeNodes);
+
+            document.AllNodesCount += node.AllNodesCount;
+
+            this.OnRemovedChild(document, removeNodes);
 
             this.ownerDocument.SelfCheck();
             node.ownerDocument.SelfCheck();
@@ -556,6 +564,16 @@ namespace Less.Html
         protected virtual int GetAppendIndex()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 在移除子节点之后调用 此时子节点会属于一个新的文档
+        /// </summary>
+        /// <param name="document">移除节点的所属文档</param>
+        /// <param name="nodes">已经移除的节点</param>
+        protected virtual void OnRemovedChild(Document document, Node[] nodes)
+        {
+            //
         }
 
         /// <summary>

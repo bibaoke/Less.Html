@@ -100,16 +100,7 @@ namespace Less.Html
                     }
                     else
                     {
-                        Element first = source.FirstOrDefault();
-
-                        if (first.IsNotNull())
-                        {
-                            selected = this.Select(first.ownerDocument, source, this.Param.StringValue);
-                        }
-                        else
-                        {
-                            selected = new Element[0];
-                        }
+                        selected = this.Select(null, source, this.Param.StringValue);
                     }
                 }
 
