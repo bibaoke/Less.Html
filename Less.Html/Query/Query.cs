@@ -315,7 +315,11 @@ namespace Less.Html
 
             find.Selector.ExtFilterList.Add(selected =>
             {
-                return find.Selector.Select(null, selected.GetChildElements(), param);
+                IEnumerable<Element> source = selected.GetChildElements();
+
+                Document document = source.GetOwnerDocument();
+
+                return find.Selector.Select(document, source, param);
             });
 
             return find;

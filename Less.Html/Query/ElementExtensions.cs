@@ -10,6 +10,28 @@ namespace Less.Html
     /// </summary>
     internal static class ElementExtensions
     {
+        internal static Document GetOwnerDocument(this IEnumerable<Element> elements)
+        {
+            Document ownerDocument = null;
+
+            foreach (Element i in elements)
+            {
+                if (ownerDocument.IsNull())
+                {
+                    ownerDocument = i.ownerDocument;
+                }
+                else
+                {
+                    if (ownerDocument != i.ownerDocument)
+                    {
+                        return null;
+                    }
+                }
+            }
+
+            return ownerDocument;
+        }
+
         /// <summary>
         /// 获取子元素
         /// </summary>

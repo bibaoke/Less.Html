@@ -1,7 +1,5 @@
 ﻿//bibaoke.com
 
-using System;
-
 namespace Less.Html
 {
     /// <summary>
@@ -35,7 +33,9 @@ namespace Less.Html
         {
             get
             {
-                return this.ownerDocument.Content.Substring(this.Begin, this.End - this.Begin + 1);
+                int length = this.End - this.Begin + 1;
+                
+                return this.ownerDocument.Content.Substring(this.Begin, length);
             }
         }
 

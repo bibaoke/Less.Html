@@ -100,7 +100,9 @@ namespace Less.Html
                     }
                     else
                     {
-                        selected = this.Select(null, source, this.Param.StringValue);
+                        Document document = source.GetOwnerDocument();
+
+                        selected = this.Select(document, source, this.Param.StringValue);
                     }
                 }
 

@@ -89,7 +89,9 @@ namespace Less.Html
             {
                 if (this.NameLength > -1)
                 {
-                    return this.ownerDocument.Content.Substring(this.NameBegin, this.NameLength).ToString().ToLower();
+                    string content = this.ownerDocument.Content.Substring(this.NameBegin, this.NameLength);
+
+                    return content.ToLower();
                 }
 
                 return null;
@@ -105,7 +107,9 @@ namespace Less.Html
             {
                 if (this.ValueLength > -1)
                 {
-                    return HttpUtility.HtmlDecode(this.ownerDocument.Content.Substring(this.ValueBegin, this.ValueLength));
+                    string content = this.ownerDocument.Content.Substring(this.ValueBegin, this.ValueLength);
+
+                    return HttpUtility.HtmlDecode(content);
                 }
 
                 return null;

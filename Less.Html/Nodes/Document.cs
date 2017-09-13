@@ -13,6 +13,12 @@ namespace Less.Html
     /// </summary>
     public class Document : Node
     {
+        private string ContentCache
+        {
+            get;
+            set;
+        }
+
         internal override int Begin
         {
             get

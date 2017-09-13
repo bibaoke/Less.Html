@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Web;
 
 namespace Less.Html
@@ -158,7 +157,9 @@ namespace Less.Html
             {
                 if (!this.IsSingle)
                 {
-                    return this.ownerDocument.Content.Substring(this.InnerBegin, this.InnerEnd - this.InnerBegin + 1);
+                    int length = this.InnerEnd - this.InnerBegin + 1;
+
+                    return this.ownerDocument.Content.Substring(this.InnerBegin, length);
                 }
 
                 return null;
