@@ -2,7 +2,6 @@
 
 using System.Text.RegularExpressions;
 using Less.Text;
-using System.Linq;
 
 namespace Less.Html.SelectorParamParser
 {

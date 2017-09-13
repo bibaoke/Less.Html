@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Web;
+using Less.Text;
 
 namespace Less.Html
 {
@@ -159,7 +160,7 @@ namespace Less.Html
                 {
                     int length = this.InnerEnd - this.InnerBegin + 1;
 
-                    return this.ownerDocument.Content.Substring(this.InnerBegin, length);
+                    return this.ownerDocument.Content.SubstringUnsafe(this.InnerBegin, length);
                 }
 
                 return null;

@@ -76,8 +76,8 @@ namespace Less.Html
             get
             {
                 int length = this.End - this.Begin + 1;
-                
-                return this.ownerDocument.Content.Substring(this.Begin, length);
+
+                return this.ownerDocument.Content.SubstringUnsafe(this.Begin, length);
             }
         }
 
