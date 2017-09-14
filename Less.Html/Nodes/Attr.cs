@@ -206,7 +206,7 @@ namespace Less.Html
 
             string postfix = Symbol.Space;
 
-            if (element.ownerDocument.Content.Substring(stringIndex + 1, 1) == Symbol.Space)
+            if (element.ownerDocument.Content[stringIndex + 1] == Symbol.Space[0])
             {
                 postfix = "";
             }
@@ -270,7 +270,7 @@ namespace Less.Html
                 {
                     begin = element.End - 1;
 
-                    if (element.ownerDocument.Content.Substring(begin - 1, 1) == "/")
+                    if (element.ownerDocument.Content[begin - 1] == '/')
                     {
                         begin--;
                     }
@@ -286,7 +286,7 @@ namespace Less.Html
                     postfix = "";
                 }
 
-                if (element.ownerDocument.Content.Substring(begin - 1, 1) == Symbol.Space)
+                if (element.ownerDocument.Content[begin - 1] == Symbol.Space[0])
                 {
                     prefix = "";
                 }
@@ -325,7 +325,7 @@ namespace Less.Html
 
                 int length = this.End - this.Begin + 1;
 
-                int removeLength = this.ownerDocument.Content.Substring(this.End + 1, 1) == Symbol.Space ? length + 1 : length;
+                int removeLength = this.ownerDocument.Content[this.End + 1] == Symbol.Space[0] ? length + 1 : length;
 
                 this.ownerDocument.Content = this.ownerDocument.Content.Remove(this.Begin, removeLength);
 

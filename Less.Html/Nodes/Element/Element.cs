@@ -287,9 +287,9 @@ namespace Less.Html
             }
             else
             {
-                string openTag = this.ownerDocument.Content.Substring(this.Begin, this.InnerBegin - this.Begin);
+                string openTag = this.ownerDocument.Content.SubstringUnsafe(this.Begin, this.InnerBegin - this.Begin);
 
-                string closeTag = this.ownerDocument.Content.Substring(this.InnerEnd + 1, this.End - this.InnerEnd);
+                string closeTag = this.ownerDocument.Content.SubstringUnsafe(this.InnerEnd + 1, this.End - this.InnerEnd);
 
                 string content = openTag + closeTag;
 
