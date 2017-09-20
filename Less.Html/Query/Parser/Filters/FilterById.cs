@@ -3,8 +3,6 @@
 using System.Linq;
 using System.Collections.Generic;
 using Less.Collection;
-using System;
-using Less.Text;
 
 namespace Less.Html
 {
@@ -43,7 +41,7 @@ namespace Less.Html
 
                 if (element.IsNotNull())
                 {
-                    if (source.Any(i => i.EnumerateAllElements().Contains(element)))
+                    if (source.Any(i => i.Contains(element)))
                     {
                         return element.ConstructArray();
                     }
@@ -55,7 +53,7 @@ namespace Less.Html
             {
                 return source.SelectMany(i => i.EnumerateAllElements().Where(
                     j =>
-                    j.id.IsNotNull() && j.id.CompareIgnoreCase(this.Id)));
+                    j.id.IsNotNull() && j.id == this.Id));
             }
         }
     }

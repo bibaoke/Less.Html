@@ -46,17 +46,14 @@ namespace Less.Html
 
         internal int Index
         {
-            get
-            {
-                int index = this.ownerDocument.AllNodes.IndexOf(this);
+            get;
+            set;
+        }
 
-                if (index < 0)
-                {
-                    throw new InvalidOperationException("在节点加入 AllNodes 列表之前无法获取索引");
-                }
-
-                return index;
-            }
+        internal int ChildIndex
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -184,9 +181,7 @@ namespace Less.Html
             {
                 if (this.parentNode.IsNotNull())
                 {
-                    int myIndex = this.parentNode.ChildNodeList.IndexOf(this);
-
-                    int nextIndex = myIndex + 1;
+                    int nextIndex = this.ChildIndex + 1;
 
                     if (this.parentNode.ChildNodeList.Count > nextIndex)
                     {
@@ -201,6 +196,23 @@ namespace Less.Html
         static Node()
         {
             Node.Pattern = @"\s+".ToRegex(RegexOptions.Compiled);
+        }
+
+        internal Node(int begin, int end) : this()
+        {
+            this.Begin = begin;
+            this.End = end;
+        }
+
+        internal Node()
+        {
+            this.Index = -1;
+
+            this.ChildIndex = -1;
+
+            this.AllNodesCount = 1;
+
+            this.ChildNodeList = new List<Node>();
         }
 
         /// <summary>
@@ -219,19 +231,6 @@ namespace Less.Html
         public override string ToString()
         {
             return this.Content;
-        }
-
-        internal Node(int begin, int end) : this()
-        {
-            this.Begin = begin;
-            this.End = end;
-        }
-
-        internal Node()
-        {
-            this.AllNodesCount = 1;
-
-            this.ChildNodeList = new List<Node>();
         }
 
         /// <summary>
@@ -258,15 +257,17 @@ namespace Less.Html
         /// <exception cref="ArgumentException">参数错误</exception>
         public Node removeChild(Node node)
         {
-            if (!this.ChildNodeList.Contains(node))
-            {
-                throw new ArgumentException("node 不是当前节点的子节点");
-            }
+            this.CheckChildNode(node, "node 不是当前节点的子节点");
 
             Node[] removeNodes = node.GetAllNodes();
 
             //移除文档节点列表中的节点
             this.ownerDocument.AllNodes.RemoveRange(node.Index, node.AllNodesCount);
+
+            foreach (Node i in this.ownerDocument.AllNodes.GetEnumerator(node.Index))
+            {
+                i.Index = i.Index - node.AllNodesCount;
+            }
 
             this.AlterAllChildNodesCount(-node.AllNodesCount);
 
@@ -287,7 +288,12 @@ namespace Less.Html
 
             node.ShiftParent(offset);
 
-            this.ChildNodeList.Remove(node);
+            this.ChildNodeList.RemoveAt(node.ChildIndex);
+
+            foreach (Node i in this.ChildNodeList.GetEnumerator(node.ChildIndex))
+            {
+                i.ChildIndex = i.ChildIndex - 1;
+            }
 
             node.SetIndex(-node.Begin);
 
@@ -297,6 +303,11 @@ namespace Less.Html
             node.parentNode = document;
 
             node.SetOwnerDocument(document);
+
+            removeNodes.Each((index, item) =>
+            {
+                item.Index = index + 1;
+            });
 
             document.AllNodes.AddRange(removeNodes);
 
@@ -319,10 +330,7 @@ namespace Less.Html
         /// <exception cref="ArgumentException">参数错误</exception>
         public Node insertBefore(Node newItem, Node existingItem)
         {
-            if (!this.ChildNodeList.Contains(existingItem))
-            {
-                throw new ArgumentException("existingItem 不是当前节点的子节点");
-            }
+            this.CheckChildNode(existingItem, "existingItem 不是当前节点的子节点");
 
             bool checking = false;
 
@@ -331,8 +339,10 @@ namespace Less.Html
             {
                 checking = true;
 
+                Node[] nodes = newItem.GetAllNodes();
+
                 //把节点添加到文档的节点列表
-                this.ownerDocument.AllNodes.InsertRange(existingItem.Index, newItem.GetAllNodes());
+                this.ownerDocument.AllNodes.InsertRange(existingItem.Index, nodes);
 
                 this.AlterAllChildNodesCount(newItem.AllNodesCount);
 
@@ -340,6 +350,17 @@ namespace Less.Html
 
                 //在原文档中删除节点
                 newItem.parentNode.removeChild(newItem);
+
+                //重新编排节点索引
+                nodes.Each((index, item) =>
+                {
+                    item.Index = existingItem.Index + index;
+                });
+
+                foreach (Node i in this.ownerDocument.AllNodes.GetEnumerator(existingItem.Index + nodes.Length))
+                {
+                    i.Index += nodes.Length;
+                }
 
                 //设置父节点
                 newItem.parentNode = this;
@@ -354,7 +375,15 @@ namespace Less.Html
                 int offset = newItem.End - newItem.Begin + 1;
 
                 //添加新节点
-                this.ChildNodeList.Insert(this.ChildNodeList.IndexOf(existingItem), newItem);
+                this.ChildNodeList.Insert(existingItem.ChildIndex, newItem);
+
+                //重新编排节点的子节点索引
+                newItem.ChildIndex = existingItem.ChildIndex;
+
+                foreach (Node i in this.ChildNodeList.GetEnumerator(existingItem.ChildIndex + 1))
+                {
+                    i.ChildIndex += 1;
+                }
 
                 //偏移下一个节点的索引
                 newItem.ShiftNext(offset);
@@ -364,6 +393,8 @@ namespace Less.Html
             }
             else
             {
+                newItem.Index = this.ownerDocument.AllNodes.Count;
+
                 //把节点添加到文档的节点列表
                 this.ownerDocument.AllNodes.Add(newItem);
 
@@ -375,7 +406,15 @@ namespace Less.Html
                 newItem.parentNode = this;
 
                 //添加新节点
-                this.ChildNodeList.Insert(this.ChildNodeList.IndexOf(existingItem), newItem);
+                this.ChildNodeList.Insert(existingItem.ChildIndex, newItem);
+
+                //重新编排节点的子节点索引
+                newItem.ChildIndex = existingItem.ChildIndex;
+
+                foreach (Node i in this.ChildNodeList.GetEnumerator(existingItem.ChildIndex + 1))
+                {
+                    i.ChildIndex += 1;
+                }
             }
 
             //设置所属文档
@@ -408,13 +447,15 @@ namespace Less.Html
                 //把节点添加到文档的节点列表
                 Node nextNode = this.GetNextNode();
 
+                Node[] nodes = node.GetAllNodes();
+
                 if (nextNode.IsNotNull())
                 {
-                    this.ownerDocument.AllNodes.InsertRange(nextNode.Index, node.GetAllNodes());
+                    this.ownerDocument.AllNodes.InsertRange(nextNode.Index, nodes);
                 }
                 else
                 {
-                    this.ownerDocument.AllNodes.AddRange(node.GetAllNodes());
+                    this.ownerDocument.AllNodes.AddRange(nodes);
                 }
 
                 this.AlterAllChildNodesCount(node.AllNodesCount);
@@ -423,6 +464,27 @@ namespace Less.Html
 
                 //在原文档中删除节点
                 node.parentNode.removeChild(node);
+
+                //重新编排节点索引
+                if (nextNode.IsNotNull())
+                {
+                    nodes.Each((index, item) =>
+                    {
+                        item.Index = nextNode.Index + index;
+                    });
+
+                    foreach (Node i in this.ownerDocument.AllNodes.GetEnumerator(nextNode.Index + nodes.Length))
+                    {
+                        i.Index += nodes.Length;
+                    }
+                }
+                else
+                {
+                    nodes.Each((index, item) =>
+                    {
+                        item.Index = this.ownerDocument.AllNodes.Count + index - nodes.Length;
+                    });
+                }
 
                 //设置父节点
                 node.parentNode = this;
@@ -445,6 +507,8 @@ namespace Less.Html
             else
             {
                 //把节点添加到文档的节点列表
+                node.Index = this.ownerDocument.AllNodes.Count;
+
                 this.ownerDocument.AllNodes.Add(node);
 
                 this.AlterAllChildNodesCount(node.AllNodesCount);
@@ -459,6 +523,8 @@ namespace Less.Html
             node.SetOwnerDocument(this.ownerDocument);
 
             //添加新节点
+            node.ChildIndex = this.ChildNodeList.Count;
+
             this.ChildNodeList.Add(node);
 
             //自检
@@ -508,6 +574,13 @@ namespace Less.Html
                 catch (Exception ex)
                 {
                     throw new SelfCheckingException(ex);
+                }
+
+                int collectionIndex = this.ownerDocument.AllNodes.IndexOf(this);
+
+                if (this.Index != collectionIndex)
+                {
+                    throw new SelfCheckingException();
                 }
 
                 this.OnSelfCheck();
@@ -611,7 +684,7 @@ namespace Less.Html
         /// </summary>
         protected virtual void OnSelfCheck()
         {
-            //
+
         }
 
         /// <summary>
@@ -695,6 +768,24 @@ namespace Less.Html
                 this.parentNode.ShiftNext(offset);
 
                 this.parentNode.ShiftParent(offset);
+            }
+        }
+
+        private void CheckChildNode(Node node, string exceptionMessage)
+        {
+            if (this.ownerDocument != node.ownerDocument)
+            {
+                throw new ArgumentException(exceptionMessage);
+            }
+
+            if (this.ChildNodeList.Count <= node.ChildIndex)
+            {
+                throw new ArgumentException(exceptionMessage);
+            }
+
+            if (this.ChildNodeList[node.ChildIndex] != node)
+            {
+                throw new ArgumentException(exceptionMessage);
             }
         }
 

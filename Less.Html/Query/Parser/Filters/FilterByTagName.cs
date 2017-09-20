@@ -2,7 +2,6 @@
 
 using System.Linq;
 using System.Collections.Generic;
-using System;
 using Less.Text;
 
 namespace Less.Html
@@ -31,7 +30,7 @@ namespace Less.Html
             {
                 Element[] elements = document.getElementsByTagName(this.Name);
 
-                return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
+                return source.SelectMany(i => elements.Where(j => i.Contains(j)));
             }
             else
             {

@@ -129,6 +129,11 @@ namespace Less.Html
             return this.IndexOnName.Get(name);
         }
 
+        internal IEnumerable<Element> GetEnumerator(int startIndex)
+        {
+            return this.List.GetEnumerator(startIndex);
+        }
+
         internal IEnumerable<Element> GetEnumerator(int startIndex, int count)
         {
             return this.List.GetEnumerator(startIndex, count);

@@ -3,7 +3,6 @@
 using System.Linq;
 using Less.Text;
 using System.Collections.Generic;
-using System;
 
 namespace Less.Html
 {
@@ -50,7 +49,7 @@ namespace Less.Html
                     {
                         Element[] elements = document.getElementsByName(this.Value);
 
-                        return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
+                        return source.SelectMany(i => elements.Where(j => i.Contains(j)));
                     }
                 }
             }
@@ -76,7 +75,7 @@ namespace Less.Html
                     }
                     else
                     {
-                        return attr.value.CompareIgnoreCase(this.Value);
+                        return attr.value == this.Value;
                     }
                 }
             }));

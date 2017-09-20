@@ -13,12 +13,6 @@ namespace Less.Html
     /// </summary>
     public class Document : Node
     {
-        private string ContentCache
-        {
-            get;
-            set;
-        }
-
         internal override int Begin
         {
             get
@@ -103,6 +97,8 @@ namespace Less.Html
         private Document(string content, Func<string, Document> parse, ElementCollection all)
         {
             this.AllNodes = new List<Node>();
+
+            this.Index = 0;
 
             this.AllNodes.Add(this);
 
@@ -219,10 +215,19 @@ namespace Less.Html
 
                 if (element.ownerDocument.IsNotNull())
                 {
-                    this.ownerDocument.all.AddRange(element.GetAllElements());
+                    Element[] elements = element.GetAllElements();
+
+                    elements.Each((index, item) =>
+                    {
+                        item.Index = this.ownerDocument.all.Count + index;
+                    });
+
+                    this.ownerDocument.all.AddRange(elements);
                 }
                 else
                 {
+                    element.Index = this.ownerDocument.all.Count;
+
                     this.ownerDocument.all.Add(element);
                 }
             }

@@ -3,7 +3,6 @@
 using System.Linq;
 using Less.Text;
 using System.Collections.Generic;
-using System;
 
 namespace Less.Html
 {
@@ -31,14 +30,14 @@ namespace Less.Html
             {
                 Element[] elements = document.all.GetElementsByClassName(this.Class);
 
-                return source.SelectMany(i => elements.Where(j => i.EnumerateAllElements().Contains(j)));
+                return source.SelectMany(i => elements.Where(j => i.Contains(j)));
             }
             else
             {
                 return source.SelectMany(i => i.EnumerateAllElements().Where(
                     j =>
                     j.className.IsNotNull() &&
-                    j.className.SplitByWhiteSpace().Any(k => k.CompareIgnoreCase(this.Class))));
+                    j.className.SplitByWhiteSpace().Any(k => k == this.Class)));
             }
         }
     }

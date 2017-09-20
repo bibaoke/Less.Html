@@ -81,7 +81,7 @@ namespace Less.Html
                     this.AddText(match);
 
                     //创建元素实例
-                    Element element = this.Document.createElement(open.Value.ToLower());
+                    Element element = this.Document.createElement(open.Value);
 
                     //设置元素起始位置
                     element.Begin = match.Index;
@@ -125,7 +125,7 @@ namespace Less.Html
                 else
                 {
                     //捕获的闭标签名
-                    string name = match.Groups["close"].Value.ToLower();
+                    string name = match.Groups["close"].Value;
 
                     //捕获的空白结束
                     Group closeSpace = match.Groups["space"];

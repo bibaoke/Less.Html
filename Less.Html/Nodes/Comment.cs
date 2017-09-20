@@ -62,7 +62,11 @@ namespace Less.Html
 
             clone.parentNode = parent;
 
+            clone.ChildIndex = this.ChildIndex;
+
             parent.ChildNodeList.Add(clone);
+
+            clone.Index = this.Index;
 
             parent.ownerDocument.AllNodes.Add(clone);
 

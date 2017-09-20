@@ -89,9 +89,7 @@ namespace Less.Html
             {
                 if (this.NameLength > -1)
                 {
-                    string content = this.ownerDocument.Content.SubstringUnsafe(this.NameBegin, this.NameLength);
-
-                    return content.ToLower();
+                    return this.ownerDocument.Content.SubstringUnsafe(this.NameBegin, this.NameLength);
                 }
 
                 return null;
@@ -197,12 +195,11 @@ namespace Less.Html
             Attr attr = (Attr)replace;
 
             int stringIndex = attr.Begin;
-            int collectionIndex = element.attributes.IndexOf(attr);
             bool inOpenTag = attr.InOpenTag;
 
             attr.OnRemoveNamedItem();
 
-            element.attributes.Insert(collectionIndex, this);
+            element.attributes.Insert(attr.ChildIndex, this);
 
             string postfix = Symbol.Space;
 
@@ -215,9 +212,7 @@ namespace Less.Html
 
             int length = this.End - this.Begin + 1 + postfix.Length;
 
-            int index = element.attributes.IndexOf(this);
-
-            int next = index + 1;
+            int next = this.ChildIndex + 1;
 
             if (element.attributes.Count > next)
             {
@@ -295,9 +290,7 @@ namespace Less.Html
 
                 int length = prefix.Length + this.End - this.Begin + 1 + postfix.Length;
 
-                int index = element.attributes.IndexOf(this);
-
-                int next = index + 1;
+                int next = this.ChildIndex + 1;
 
                 if (element.attributes.Count > next)
                 {
@@ -329,9 +322,7 @@ namespace Less.Html
 
                 this.ownerDocument.Content = this.ownerDocument.Content.Remove(this.Begin, removeLength);
 
-                int index = this.Element.attributes.IndexOf(this);
-
-                int next = index + 1;
+                int next = this.ChildIndex + 1;
 
                 int offset = -removeLength;
 
@@ -384,11 +375,9 @@ namespace Less.Html
                 this.ValueBegin += offset;
             }
 
-            int index = this.Element.attributes.IndexOf(this);
-
-            if (index >= 0)
+            if (this.ChildIndex > -1)
             {
-                int next = index + 1;
+                int next = this.ChildIndex + 1;
 
                 if (next < this.Element.attributes.Count)
                 {

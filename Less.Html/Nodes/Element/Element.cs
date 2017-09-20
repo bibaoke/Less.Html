@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Web;
 using Less.Text;
+using Less.Collection;
 
 namespace Less.Html
 {
@@ -53,17 +54,8 @@ namespace Less.Html
 
         internal new int Index
         {
-            get
-            {
-                int index = this.ownerDocument.all.IndexOf(this);
-
-                if (index < 0)
-                {
-                    throw new InvalidOperationException("在元素加入 document.all 集合之前无法获取索引");
-                }
-
-                return index;
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -185,16 +177,18 @@ namespace Less.Html
             Element.SingleElements = new HashSet<string>(new string[]
             {
                 "!doctype", "meta", "link", "img"
-            });
+            }, StringComparer.OrdinalIgnoreCase);
         }
 
         internal Element(string name)
         {
+            this.Index = -1;
+
             this.AllElementsCount = 1;
 
             this.attributes = new NamedNodeMap<Attr>(this);
 
-            this.Name = name.ToLower();
+            this.Name = name;
 
             if (Element.SingleElements.Contains(name))
             {
@@ -305,7 +299,11 @@ namespace Less.Html
 
             clone.parentNode = parent;
 
+            clone.ChildIndex = this.ChildIndex;
+
             parent.ChildNodeList.Add(clone);
+
+            ((Node)clone).Index = base.Index;
 
             parent.ownerDocument.AllNodes.Add(clone);
 
@@ -329,6 +327,8 @@ namespace Less.Html
                 clone.attributes.AddItem(attr);
             }
 
+            clone.Index = this.Index;
+
             parent.ownerDocument.all.Add(clone);
 
             clone.ChildNodeList.Capacity = this.ChildNodeList.Capacity;
@@ -339,6 +339,18 @@ namespace Less.Html
             }
 
             return clone;
+        }
+
+        internal bool Contains(Element element)
+        {
+            if (this.ownerDocument == element.ownerDocument)
+            {
+                return element.Index >= this.Index && element.Index < this.Index + this.AllElementsCount;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -399,7 +411,14 @@ namespace Less.Html
         /// <param name="nodes">已经移除的节点</param>
         protected override void OnRemovedChild(Document document, Node[] nodes)
         {
-            document.all.AddRange(nodes.GetElements());
+            IEnumerable<Element> elements = nodes.GetElements();
+
+            elements.Each((index, item) =>
+            {
+                item.Index = document.all.Count + index;
+            });
+
+            document.all.AddRange(elements);
         }
 
         /// <summary>
@@ -414,6 +433,11 @@ namespace Less.Html
                 Element element = (Element)node;
 
                 this.ownerDocument.all.RemoveRange(element.Index, element.AllElementsCount);
+
+                foreach (Element i in this.ownerDocument.all.GetEnumerator(element.Index))
+                {
+                    i.Index = i.Index - element.AllElementsCount;
+                };
 
                 this.AlterAllChildElementsCount(-element.AllElementsCount);
             }
@@ -444,16 +468,37 @@ namespace Less.Html
 
                 if (nextElement.IsNotNull())
                 {
-                    this.ownerDocument.all.InsertRange(nextElement.Index, element.GetAllElements());
+                    Element[] elements = element.GetAllElements();
+
+                    this.ownerDocument.all.InsertRange(nextElement.Index, elements);
+
+                    elements.Each((index, item) =>
+                    {
+                        item.Index = nextElement.Index + index;
+                    });
+
+                    foreach (Element i in this.ownerDocument.all.GetEnumerator(nextElement.Index + elements.Length))
+                    {
+                        i.Index += elements.Length;
+                    };
                 }
                 else
                 {
                     if (element.ownerDocument.IsNotNull())
                     {
-                        this.ownerDocument.all.AddRange(element.GetAllElements());
+                        Element[] elements = element.GetAllElements();
+
+                        elements.Each((index, item) =>
+                        {
+                            item.Index = this.ownerDocument.all.Count + index;
+                        });
+
+                        this.ownerDocument.all.AddRange(elements);
                     }
                     else
                     {
+                        element.Index = this.ownerDocument.all.Count;
+
                         this.ownerDocument.all.Add(element);
                     }
                 }
@@ -477,16 +522,37 @@ namespace Less.Html
 
                 if (nextElement.IsNotNull())
                 {
-                    this.ownerDocument.all.InsertRange(nextElement.Index, element.GetAllElements());
+                    Element[] elements = element.GetAllElements();
+
+                    this.ownerDocument.all.InsertRange(nextElement.Index, elements);
+
+                    elements.Each((index, item) =>
+                    {
+                        item.Index = nextElement.Index + index;
+                    });
+
+                    foreach (Element i in this.ownerDocument.all.GetEnumerator(nextElement.Index + elements.Length))
+                    {
+                        i.Index += elements.Length;
+                    };
                 }
                 else
                 {
                     if (element.ownerDocument.IsNotNull())
                     {
-                        this.ownerDocument.all.AddRange(element.GetAllElements());
+                        Element[] elements = element.GetAllElements();
+
+                        elements.Each((index, item) =>
+                        {
+                            item.Index = this.ownerDocument.all.Count + index;
+                        });
+
+                        this.ownerDocument.all.AddRange(elements);
                     }
                     else
                     {
+                        element.Index = this.ownerDocument.all.Count;
+
                         this.ownerDocument.all.Add(element);
                     }
                 }
@@ -500,6 +566,13 @@ namespace Less.Html
         /// </summary>
         protected override void OnSelfCheck()
         {
+            int collectionIndex = this.ownerDocument.all.IndexOf(this);
+
+            if (this.Index != collectionIndex)
+            {
+                throw new SelfCheckingException();
+            }
+
             foreach (Attr i in this.attributes)
             {
                 i.SelfCheck();

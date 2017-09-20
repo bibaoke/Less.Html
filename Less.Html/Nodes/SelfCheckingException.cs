@@ -12,6 +12,14 @@ namespace Less.Html
         /// <summary>
         /// 初始化
         /// </summary>
+        public SelfCheckingException() : base("自检错误")
+        {
+            //
+        }
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
         /// <param name="innerException"></param>
         public SelfCheckingException(Exception innerException) : base("自检错误", innerException)
         {

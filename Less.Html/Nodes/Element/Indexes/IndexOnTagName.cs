@@ -1,6 +1,7 @@
 ﻿//bibaoke.com
 
 using System.Collections.Generic;
+using System;
 
 namespace Less.Html
 {
@@ -20,7 +21,7 @@ namespace Less.Html
         /// </summary>
         internal IndexOnTagName()
         {
-            this.Dictionary = new Dictionary<string, List<Element>>();
+            this.Dictionary = new Dictionary<string, List<Element>>(StringComparer.OrdinalIgnoreCase);
         }
 
         internal void Remove(string tagName, Element element)
@@ -35,8 +36,6 @@ namespace Less.Html
 
         internal Element[] Get(string tagName)
         {
-            tagName = tagName.ToLower();
-
             List<Element> list;
 
             if (this.Dictionary.TryGetValue(tagName, out list))

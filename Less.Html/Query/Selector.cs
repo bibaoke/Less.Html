@@ -139,7 +139,16 @@ namespace Less.Html
         /// <returns></returns>
         internal IEnumerable<Element> Select(Document document, IEnumerable<Element> source, string param)
         {
-            return ParamParser.Parse(param).SelectMany(i => i.Eval(document, source)).Distinct().OrderBy(i => i.Index);
+            ElementFilter[] filters = ParamParser.Parse(param);
+
+            if (filters.Length > 1)
+            {
+                return filters.SelectMany(i => i.Eval(document, source)).Distinct().OrderBy(i => i.Index);
+            }
+            else
+            {
+                return filters[0].Eval(document, source).ToArray();
+            }
         }
     }
 }

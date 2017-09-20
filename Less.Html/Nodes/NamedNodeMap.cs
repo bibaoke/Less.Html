@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Less.Text;
+using Less.Collection;
 
 namespace Less.Html
 {
@@ -31,11 +32,6 @@ namespace Less.Html
             {
                 return this.Value.Count;
             }
-        }
-
-        internal int IndexOf(T item)
-        {
-            return this.Value.IndexOf(item);
         }
 
         /// <summary>
@@ -158,7 +154,12 @@ namespace Less.Html
 
         internal void Remove(T item)
         {
-            this.Value.Remove(item);
+            this.Value.RemoveAt(item.ChildIndex);
+
+            foreach (Node i in this.Value.GetEnumerator(item.ChildIndex))
+            {
+                i.ChildIndex = i.ChildIndex - 1;
+            }
 
             item.OnRemoveFromNamedNodeMap();
         }
@@ -167,11 +168,20 @@ namespace Less.Html
         {
             this.Value.Insert(index, item);
 
+            item.ChildIndex = index;
+
+            foreach (Node i in this.Value.GetEnumerator(index + 1))
+            {
+                i.ChildIndex += 1;
+            }
+
             item.OnAddToNamedNodeMap();
         }
 
         internal void Add(T item)
         {
+            item.ChildIndex = this.Value.Count;
+
             this.Value.Add(item);
 
             item.OnAddToNamedNodeMap();
@@ -179,6 +189,8 @@ namespace Less.Html
 
         internal void AddItem(T item)
         {
+            item.ChildIndex = this.Value.Count;
+
             this.Value.Add(item);
         }
     }

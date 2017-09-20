@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Linq;
+using Less.Text;
 
 namespace Less.Html
 {
@@ -173,7 +174,7 @@ namespace Less.Html
             this.Previous = new TagMark(name, this.Position);
 
             //如果是 script 标签
-            if (name == "script")
+            if (name.CompareIgnoreCase("script"))
             {
                 //读取闭 script 标签
                 return this.Pass<CloseScriptReader>();
@@ -196,7 +197,7 @@ namespace Less.Html
 
             //标记栈中有对应的开标签
             //完成此双标签的读取
-            if (this.MarkStack.Any(i => i.Name == name))
+            if (this.MarkStack.Any(i => i.Name.CompareIgnoreCase(name)))
             {
                 //从栈顶部开始找对应的开标签标记
                 while (true)
@@ -213,7 +214,7 @@ namespace Less.Html
 
                     //从栈顶部取出开标签 没有闭标签的双标签会被自动结束
                     //取出对应的开标签才跳出
-                    if (this.MarkStack.Pop().Name == name)
+                    if (this.MarkStack.Pop().Name.CompareIgnoreCase(name))
                     {
                         break;
                     }
