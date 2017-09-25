@@ -158,11 +158,13 @@ namespace Less.Html
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query text(object content)
         {
+            string text = content.ToString();
+
             IEnumerable<Element> elements = this.Select();
 
             foreach (Element i in elements)
             {
-                i.textContent = content.ToString();
+                i.textContent = text;
             }
 
             return this;
@@ -176,6 +178,11 @@ namespace Less.Html
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query text(string content)
         {
+            if (content.IsNull())
+            {
+                content = "";
+            }
+
             IEnumerable<Element> elements = this.Select();
 
             foreach (Element i in elements)
@@ -571,7 +578,14 @@ namespace Less.Html
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query html(object html)
         {
-            return this.html(html.IsNull() ? "" : html.ToString());
+            if (html.IsNull())
+            {
+                return this.html("");
+            }
+            else
+            {
+                return this.html(html.ToString());
+            }
         }
 
         /// <summary>
