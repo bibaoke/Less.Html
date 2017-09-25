@@ -155,6 +155,16 @@ namespace Test
                 Assert.IsTrue(document.getElementsByTagName("head")[0].cloneNode().ToString() == "<head></head>");
             }
 
+            //
+            {
+                string testHtml = "deadspin-quote-carrot-aligned-w-bgr-2<\\/title><path d=\"M10,…";
+
+                Document document = HtmlParser.Parse(testHtml);
+
+                Assert.IsTrue(document.childNodes.Length == 1);
+                Assert.IsTrue(document.childNodes[0].nodeValue == "deadspin-quote-carrot-aligned-w-bgr-2<\\/title>");
+            }
+
             return true;
         }
     }

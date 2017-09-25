@@ -180,7 +180,11 @@ namespace Less.Html
                 return this.Pass<CloseScriptReader>();
             }
 
-            //如果不是 script 标签
+            if (name.CompareIgnoreCase("style"))
+            {
+                return this.Pass<CloseStyleReader>();
+            }
+
             //读取下一个标签
             return this.Pass<TagReader>();
         }

@@ -26,10 +26,10 @@ foreach (Element i in q("td"))
     其中一个是我的基础类库，也是开源的。
 </p>
 <p align="left">
-    示例一代码：<a href="https://github.com/bibaoke/Less.Html/blob/master/Test/Test1.cs" target="_blank">GitHub</a>&nbsp; &nbsp;&nbsp;<a href="https://code.csdn.net/closurer/less-html/tree/master/Test/Test1.cs" target="_blank">CSDN</a>
+    示例一代码：<a href="https://github.com/bibaoke/Less.Html/blob/master/Test/Test1.cs" target="_blank">GitHub</a>&nbsp; &nbsp;&nbsp;<a href="https://gitee.com/bibaoke/Less.Html/blob/master/Test/Test1.cs" target="_blank">码云</a>
 </p>
 <p align="left">
-    项目代码：<a href="https://github.com/bibaoke/Less.Html" target="_blank">GitHub</a>&nbsp; &nbsp;&nbsp;<a href="https://code.csdn.net/closurer/less-html/tree/master" target="_blank">CSDN</a>
+    项目代码：<a href="https://github.com/bibaoke/Less.Html" target="_blank">GitHub</a>&nbsp; &nbsp;&nbsp;<a href="https://gitee.com/bibaoke/Less.Html" target="_blank">码云</a>
 </p>
 <p align="left">
     NuGet:<br />
@@ -48,7 +48,7 @@ foreach (Element i in q("td"))
     Less.Html 只支持了几种基本的选择器语法：
 </p>
 <p align="left">
-    <table style="margin:15px 0px 0px;padding:0px;border:1px solid #AAAAAA;border-collapse:collapse;width:90%;color:#000000;font-family:PingFangSC-Regular, Verdana, Arial, 微软雅黑, 宋体;font-size:16px;font-style:normal;font-weight:normal;text-align:left;background-color:#FDFCF8;" cellpadding="5">
+    <table style="margin:15px 0px 0px;padding:0px;border:1px solid #AAAAAA;border-collapse:collapse;width:90%;color:#000000;font-family:PingFangSC-Regular, Verdana, Arial, 微软雅黑, 宋体;font-size:15px;font-style:normal;font-weight:normal;text-align:left;background-color:#FDFCF8;" cellpadding="5">
         <tbody>
             <tr>
                 <th style="border:1px solid #3F3F3F;vertical-align:baseline;background-color:#3F3F3F;text-align:left;color:#FFFFFF;">

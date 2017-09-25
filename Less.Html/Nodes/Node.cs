@@ -536,6 +536,17 @@ namespace Less.Html
             return node;
         }
 
+        internal void DiscardNode(Node node)
+        {
+            this.ownerDocument.AllNodes.RemoveAt(node.Index);
+
+            this.AlterAllChildNodesCount(-node.AllNodesCount);
+
+            this.ChildNodeList.RemoveAt(node.ChildIndex);
+
+            this.OnRemoveChild(node);
+        }
+
         internal abstract Node Clone(Node parent);
 
         internal virtual void OnAddToNamedNodeMap()
@@ -773,17 +784,7 @@ namespace Less.Html
 
         private void CheckChildNode(Node node, string exceptionMessage)
         {
-            if (this.ownerDocument != node.ownerDocument)
-            {
-                throw new ArgumentException(exceptionMessage);
-            }
-
-            if (this.ChildNodeList.Count <= node.ChildIndex)
-            {
-                throw new ArgumentException(exceptionMessage);
-            }
-
-            if (this.ChildNodeList[node.ChildIndex] != node)
+            if (node.parentNode != this)
             {
                 throw new ArgumentException(exceptionMessage);
             }

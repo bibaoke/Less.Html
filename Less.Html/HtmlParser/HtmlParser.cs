@@ -105,7 +105,7 @@ namespace Less.Html
             ReaderBase reader = new TagReader();
 
             //阅读器上下文
-            Context context = new Context(content, c => HtmlParser.Parse(c, true));
+            Context context = new Context(content, c => HtmlParser.Parse(c));
 
             //设置上下文
             reader.Context = context;

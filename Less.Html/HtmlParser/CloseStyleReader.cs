@@ -6,9 +6,9 @@ using Less.Text;
 namespace Less.Html
 {
     /// <summary>
-    /// script 闭标签阅读器
+    /// style 闭标签阅读器
     /// </summary>
-    internal class CloseScriptReader : ReaderBase
+    internal class CloseStyleReader : ReaderBase
     {
         /// <summary>
         /// 正则表达式
@@ -22,10 +22,10 @@ namespace Less.Html
         /// <summary>
         /// 初始化
         /// </summary>
-        static CloseScriptReader()
+        static CloseStyleReader()
         {
-            CloseScriptReader.Pattern = @"
-                </(?<script>script)((?<space>\s)|(?<single>/>)|(?<double>>))
+            CloseStyleReader.Pattern = @"
+                </(?<style>style)((?<space>\s)|(?<single>/>)|(?<double>>))
                 ".ToRegex(
                 RegexOptions.IgnorePatternWhitespace |
                 RegexOptions.IgnoreCase |
@@ -39,8 +39,7 @@ namespace Less.Html
         /// <returns></returns>
         internal override ReaderBase Read()
         {
-            //匹配 script 闭标签
-            Match match = CloseScriptReader.Pattern.Match(this.Content, this.Position);
+            Match match = CloseStyleReader.Pattern.Match(this.Content, this.Position);
 
             //如果匹配成功
             if (match.Success)
@@ -58,13 +57,13 @@ namespace Less.Html
                 if (space.Success)
                 {
                     //读取属性
-                    return this.Pass<AttributeReader>().Set("script", match.Index);
+                    return this.Pass<AttributeReader>().Set("style", match.Index);
                 }
                 //如果标签已结束
                 else
                 {
                     //关闭标签
-                    return this.CloseTag("script", match.Index - 1);
+                    return this.CloseTag("style", match.Index - 1);
                 }
             }
             else

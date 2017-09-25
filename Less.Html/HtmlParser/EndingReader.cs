@@ -35,6 +35,18 @@ namespace Less.Html
             //截取文档最后的文本
             if (end >= this.Previous.Position)
             {
+                if (this.Document.all.Count > 0)
+                {
+                    Element last = this.Document.all[this.Document.all.Count - 1];
+
+                    if (last.End == 0)
+                    {
+                        this.CurrentNode.DiscardNode(last);
+
+                        return null;
+                    }
+                }
+
                 this.CurrentNode.appendChild(new Text(this.Previous.Position, end));
             }
 

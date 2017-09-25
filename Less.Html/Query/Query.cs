@@ -156,6 +156,24 @@ namespace Less.Html
         /// <param name="content"></param>
         /// <returns></returns>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        public Query text(object content)
+        {
+            IEnumerable<Element> elements = this.Select();
+
+            foreach (Element i in elements)
+            {
+                i.textContent = content.ToString();
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// 设置元素集合的 textContent
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query text(string content)
         {
             IEnumerable<Element> elements = this.Select();
