@@ -79,9 +79,22 @@ namespace Less.Html
 
             foreach (Element i in elements)
             {
-                string[] oriArray = i.className.SplitByWhiteSpace();
+                string[] oriArray;
 
-                string className = i.className + Symbol.Space;
+                string className;
+
+                if (i.className.IsNull())
+                {
+                    oriArray = new string[0];
+
+                    className = "";
+                }
+                else
+                {
+                    oriArray = i.className.SplitByWhiteSpace();
+
+                    className = i.className + Symbol.Space;
+                }
 
                 foreach (string j in addArray)
                 {
@@ -278,6 +291,24 @@ namespace Less.Html
         public Query href(string value)
         {
             return this.attr("href", value);
+        }
+
+        /// <summary>
+        /// 移除属性
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        public Query removeAttr(string name)
+        {
+            IEnumerable<Element> elements = this.Select();
+
+            foreach (Element i in elements)
+            {
+                i.removeAttribute(name);
+            }
+
+            return this;
         }
 
         /// <summary>

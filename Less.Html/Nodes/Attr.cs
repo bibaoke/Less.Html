@@ -303,7 +303,7 @@ namespace Less.Html
 
                 this.ownerDocument = element.ownerDocument;
 
-                this.SetIndex(begin);
+                this.SetIndex(prefix.Length + begin);
 
                 this.ownerDocument.SelfCheck();
             }
