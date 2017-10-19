@@ -176,7 +176,7 @@ namespace Less.Html
         {
             Element.SingleElements = new HashSet<string>(new string[]
             {
-                "!doctype", "meta", "link", "img"
+                "!doctype", "meta", "link", "img", "input"
             }, StringComparer.OrdinalIgnoreCase);
         }
 
