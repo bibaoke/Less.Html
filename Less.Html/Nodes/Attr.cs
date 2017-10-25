@@ -52,13 +52,20 @@ namespace Less.Html
         {
             get
             {
-                if (this.NameLength > -1)
+                if (this.Element.IsSingle)
                 {
-                    return this.NameBegin < this.Element.InnerBegin;
+                    return true;
                 }
                 else
                 {
-                    return this.ValueBegin < this.Element.InnerBegin;
+                    if (this.NameLength > -1)
+                    {
+                        return this.NameBegin < this.Element.InnerBegin;
+                    }
+                    else
+                    {
+                        return this.ValueBegin < this.Element.InnerBegin;
+                    }
                 }
             }
         }
@@ -242,16 +249,12 @@ namespace Less.Html
             {
                 int position = 0;
 
+                //查找属性的集合插入位置
                 element.attributes.Each((idx, item) =>
                 {
-                    position = idx;
+                    position = idx + 1;
 
-                    if (!item.InOpenTag)
-                    {
-                        return false;
-                    }
-
-                    return true;
+                    return item.InOpenTag;
                 });
 
                 element.attributes.Insert(position, this);

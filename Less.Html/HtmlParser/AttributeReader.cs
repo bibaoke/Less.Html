@@ -193,8 +193,8 @@ namespace Less.Html
             //属性名
             Group name = match.Groups["name"];
 
-            //如果属性名匹配成功 但长度为 0 即没有读取到属性
-            if (name.Success && name.Value.IsEmpty())
+            //如果属性名匹配失败
+            if (!name.Success)
             {
                 //返回 方法结束
                 return;
