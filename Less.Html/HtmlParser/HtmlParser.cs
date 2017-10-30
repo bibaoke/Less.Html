@@ -30,7 +30,7 @@ namespace Less.Html
         /// <param name="content">要解析的 html</param>
         /// <param name="cache">是否使用缓存</param>
         /// <returns>jQuery 风格的 css 选择器</returns>
-        public static Func<SelectorParam, Query> Query(string content, bool cache)
+        public static Qfun Query(string content, bool cache)
         {
             Document document = HtmlParser.Parse(content, cache);
 
@@ -43,7 +43,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="content">要解析的 html</param>
         /// <returns>jQuery 风格的 css 选择器</returns>
-        public static Func<SelectorParam, Query> Query(string content)
+        public static Qfun Query(string content)
         {
             Document document = HtmlParser.Parse(content);
 

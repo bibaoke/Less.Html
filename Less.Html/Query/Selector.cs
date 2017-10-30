@@ -8,6 +8,13 @@ using System.Linq;
 namespace Less.Html
 {
     /// <summary>
+    /// 选择器委托
+    /// </summary>
+    /// <param name="param"></param>
+    /// <returns></returns>
+    public delegate Query Qfun(SelectorParam param);
+
+    /// <summary>
     /// 选择器
     /// </summary>
     public class Selector
@@ -43,7 +50,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="document">文档</param>
         /// <returns>jQuery 风格的 css 选择器</returns>
-        public static Func<SelectorParam, Query> Bind(Document document)
+        public static Qfun Bind(Document document)
         {
             return selectorParam => new Query(new Selector(document, selectorParam));
         }
@@ -52,7 +59,7 @@ namespace Less.Html
         /// 重新绑定同一个文档 以取得一个新的查询器
         /// </summary>
         /// <returns></returns>
-        public Func<SelectorParam, Query> Rebind()
+        public Qfun Rebind()
         {
             return Selector.Bind(this.Document);
         }
