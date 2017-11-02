@@ -50,8 +50,14 @@ namespace Less.Html
         /// </summary>
         /// <param name="document">文档</param>
         /// <returns>jQuery 风格的 css 选择器</returns>
+        /// <exception cref="ArgumentNullException">document 不能为 null</exception>
         public static Qfun Bind(Document document)
         {
+            if (document.IsNull())
+            {
+                throw new ArgumentNullException("document", "document 不能为 null");
+            }
+
             return selectorParam => new Query(new Selector(document, selectorParam));
         }
 

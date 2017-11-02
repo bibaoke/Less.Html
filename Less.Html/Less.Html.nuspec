@@ -11,7 +11,7 @@
     <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>修改 HtmlParser.Query 方法的返回值为 Qfun 类型</releaseNotes>
+    <releaseNotes>添加 css 方法</releaseNotes>
     <copyright>Copyright 2017 Shao Zhuang</copyright>
     <tags>html-parser jQuery-style css-selector</tags>
   </metadata>

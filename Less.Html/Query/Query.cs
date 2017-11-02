@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Less.Text;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace Less.Html
 {
@@ -14,6 +15,12 @@ namespace Less.Html
     /// </summary>
     public class Query : IEnumerable<Element>
     {
+        private static Regex StylePattern
+        {
+            get;
+            set;
+        }
+
         private Selector Selector
         {
             get;
@@ -60,13 +67,56 @@ namespace Less.Html
             }
         }
 
+        static Query()
+        {
+            Query.StylePattern =
+                @"(?<name>\S+?)\s*:\s*(?<value>\S+?)\s*(;|$)".ToRegex(
+                    RegexOptions.ExplicitCapture |
+                    RegexOptions.Compiled);
+        }
+
         internal Query(Selector selector)
         {
             this.Selector = selector;
         }
 
         /// <summary>
-        /// 向被选元素添加一个或多个类
+        /// 获取元素的样式
+        /// </summary>
+        /// <param name="name">样式名称</param>
+        /// <returns></returns>
+        public string css(string name)
+        {
+            name = name.Trim();
+
+            string style = this.attr("style");
+
+            int index = 0;
+
+            while (true)
+            {
+                Match match = Query.StylePattern.Match(style, index);
+
+                if (match.Success)
+                {
+                    if (match.GetValue("name").CompareIgnoreCase(name))
+                    {
+                        return match.GetValue("value");
+                    }
+
+                    index = match.Index + match.Length;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// 向元素添加一个或多个类
         /// </summary>
         /// <param name="classes"></param>
         /// <returns></returns>
@@ -111,7 +161,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 返回被选元素的直接父元素
+        /// 返回元素的直接父元素
         /// </summary>
         /// <returns></returns>
         public Query parent()
@@ -124,7 +174,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 创建匹配元素集合的副本
+        /// 创建元素的副本
         /// </summary>
         /// <returns></returns>
         public Query clone()
@@ -144,7 +194,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 移除所有匹配的元素
+        /// 移除元素
         /// </summary>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query remove()
@@ -164,7 +214,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 设置元素集合的 textContent
+        /// 设置元素的 textContent
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
@@ -184,7 +234,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 设置元素集合的 textContent
+        /// 设置元素的 textContent
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
@@ -207,7 +257,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 返回元素集合的 textContent 
+        /// 返回元素的 textContent 
         /// </summary>
         /// <returns></returns>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
@@ -226,7 +276,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 设置 value 属性
+        /// 设置元素的 value 属性
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -239,7 +289,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 设置 value 属性
+        /// 设置元素的 value 属性
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -252,7 +302,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 设置 src 属性
+        /// 设置元素的 src 属性
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -263,7 +313,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 获取 src 属性
+        /// 获取元素的 src 属性
         /// </summary>
         /// <returns></returns>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
@@ -273,7 +323,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 获取 href 属性
+        /// 获取元素的 href 属性
         /// </summary>
         /// <returns></returns>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
@@ -283,7 +333,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 设置 href 属性
+        /// 设置元素的 href 属性
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -294,9 +344,9 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 移除属性
+        /// 移除元素的属性
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">属性名</param>
         /// <returns></returns>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query removeAttr(string name)
@@ -312,9 +362,9 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 获取属性
+        /// 获取元素的属性
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">属性名</param>
         /// <returns></returns>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public string attr(string name)
@@ -330,10 +380,10 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 设置属性
+        /// 设置元素的属性
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="name">属性名</param>
+        /// <param name="value">属性值</param>
         /// <returns></returns>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query attr(string name, object value)
@@ -342,10 +392,10 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 设置属性
+        /// 设置元素的属性
         /// </summary>
-        /// <param name="name"></param>
-        /// <param name="value"></param>
+        /// <param name="name">属性名</param>
+        /// <param name="value">属性值</param>
         /// <returns></returns>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query attr(string name, string value)
@@ -361,11 +411,11 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 根据参数查找元素
+        /// 根据表达式查找元素
         /// </summary>
-        /// <param name="param"></param>
+        /// <param name="expression"></param>
         /// <returns></returns>
-        public Query find(string param)
+        public Query find(string expression)
         {
             var find = this.Copy();
 
@@ -375,14 +425,14 @@ namespace Less.Html
 
                 Document document = source.GetOwnerDocument();
 
-                return find.Selector.Select(document, source, param);
+                return find.Selector.Select(document, source, expression);
             });
 
             return find;
         }
 
         /// <summary>
-        /// 在匹配的元素之后插入内容
+        /// 在元素之后插入内容
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
@@ -461,7 +511,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 在每个匹配的元素之前插入内容
+        /// 在元素之前插入内容
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
@@ -502,7 +552,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 在被选元素的开头插入内容
+        /// 在元素的开头插入内容
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
@@ -554,7 +604,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 在被选元素的结尾插入内容
+        /// 在元素的结尾插入内容
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
@@ -592,7 +642,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 删除子元素
+        /// 删除元素的子元素
         /// </summary>
         /// <returns></returns>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
@@ -602,7 +652,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 设置元素集合的 innerHTML
+        /// 设置元素的 innerHTML
         /// </summary>
         /// <param name="html"></param>
         /// <returns></returns>
@@ -620,7 +670,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 设置元素集合的 innerHTML
+        /// 设置元素的 innerHTML
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
@@ -649,7 +699,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 返回元素集合的 innerHTML
+        /// 返回元素的 innerHTML
         /// </summary>
         /// <returns></returns>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>

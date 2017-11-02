@@ -165,6 +165,15 @@ namespace Test
                 Assert.IsTrue(document.childNodes[0].nodeValue == "deadspin-quote-carrot-aligned-w-bgr-2<\\/title>");
             }
 
+            //
+            {
+                string testHtml = "<div style='height:100px; width:100px'></div>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("div").css("width") == "100px");
+            }
+
             return true;
         }
     }
