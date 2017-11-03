@@ -16,17 +16,22 @@ namespace Less.Html
         internal override ReaderBase Read()
         {
             //处理没有关闭的标签
+            //当前要处理的标签
+            Node node = this.CurrentNode;
+
+            //根据标记栈确定没有关闭标签的个数
             this.MarkStack.Count.Each(() =>
             {
-                Element element = (Element)this.CurrentNode;
+                //节点一定是元素
+                Element element = (Element)node;
 
                 //设置元素结束位置
                 element.End = this.Position - 1;
 
                 element.InnerEnd = element.End;
 
-                //设置当前节点为上一级节点
-                this.CurrentNode = this.CurrentNode.parentNode;
+                //设置当前处理的标签为上一级节点
+                node = this.CurrentNode.parentNode;
             });
 
             //文档结束索引

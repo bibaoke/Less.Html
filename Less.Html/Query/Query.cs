@@ -87,9 +87,14 @@ namespace Less.Html
         /// <returns></returns>
         public string css(string name)
         {
-            name = name.Trim();
-
             string style = this.attr("style");
+
+            if (style.IsNull())
+            {
+                return null;
+            }
+
+            name = name.Trim();
 
             int index = 0;
 

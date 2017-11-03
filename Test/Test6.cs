@@ -174,6 +174,15 @@ namespace Test
                 Assert.IsTrue(q("div").css("width") == "100px");
             }
 
+            //
+            {
+                string testHtml = "<td class='ip'><div style=' display:inline-bloc";
+
+                var q = HtmlParser.Query(testHtml);
+
+                string text = q("td").text();
+            }
+
             return true;
         }
     }
