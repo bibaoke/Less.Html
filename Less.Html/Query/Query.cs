@@ -226,7 +226,7 @@ namespace Less.Html
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query text(object content)
         {
-            string text = content.ToString();
+            string text = content.IsNull("").ToString();
 
             IEnumerable<Element> elements = this.Select();
 
