@@ -86,21 +86,48 @@ namespace Less.Html
                     //设置元素起始位置
                     element.Begin = match.Index;
 
-                    //加入节点
-                    this.CurrentNode.appendChild(element);
-
                     //如果标签未结束 
                     if (space.Success)
                     {
+                        //option 是一个特殊的双标签元素 当多个 option 并列的时候 可以采用单标签元素的写法
+                        if (element.Name.CompareIgnoreCase("option"))
+                        {
+                            if (this.MarkStackExists(element.Name))
+                            {
+                                int end = this.Previous.Position - 1;
+
+                                this.CloseTag(element.Name, end, end);
+                            }
+                        }
+
+                        //加入节点
+                        this.CurrentNode.appendChild(element);
+
                         //读取属性
                         return this.Pass<AttributeReader>().Set(element);
                     }
                     //如果标签已结束
                     else
                     {
+                        TagReader reader = null;
+
+                        //option 是一个特殊的双标签元素 当多个 option 并列的时候 可以采用单标签元素的写法
+                        if (element.Name.CompareIgnoreCase("option"))
+                        {
+                            if (this.MarkStackExists(element.Name))
+                            {
+                                int end = this.Previous.Position - 1;
+
+                                reader = this.CloseTag(element.Name, end, end);
+                            }
+                        }
+
+                        //加入节点
+                        this.CurrentNode.appendChild(element);
+
                         element.InnerBegin = this.Position;
 
-                        //且是双标签
+                        //如果是双标签
                         if (xdouble.Success)
                         {
                             //不是单标签元素
@@ -117,8 +144,15 @@ namespace Less.Html
                             element.End = this.Position - 1;
                         }
 
-                        //结束标签
-                        return this.EndTag(element.Name);
+                        if (reader.IsNull())
+                        {
+                            //结束标签
+                            return this.EndTag(element.Name);
+                        }
+                        else
+                        {
+                            return reader;
+                        }
                     }
                 }
                 //如果是闭标签

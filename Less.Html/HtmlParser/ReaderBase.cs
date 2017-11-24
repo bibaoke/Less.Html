@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Linq;
 using Less.Text;
+using Less.Collection;
 
 namespace Less.Html
 {
@@ -150,10 +151,6 @@ namespace Less.Html
             }
         }
 
-        /// <summary>
-        /// 开标签
-        /// </summary>
-        /// <param name="element">元素</param>
         protected void OpenTag(Element element)
         {
             //设置当前节点
@@ -163,23 +160,18 @@ namespace Less.Html
             this.Push(element.Name, this.Position);
         }
 
-        /// <summary>
-        /// 结束标签
-        /// </summary>
-        /// <param name="name">标签名 小写</param>
-        /// <returns></returns>
         protected ReaderBase EndTag(string name)
         {
             //设置上一个标签
             this.Previous = new TagMark(name, this.Position);
 
-            //如果是 script 标签
+            //script 标签的 innerHTML 都作为纯文本处理
             if (name.CompareIgnoreCase("script"))
             {
-                //读取闭 script 标签
                 return this.Pass<CloseScriptReader>();
             }
 
+            //style 标签的 innerHTML 都作为纯文本处理
             if (name.CompareIgnoreCase("style"))
             {
                 return this.Pass<CloseStyleReader>();
@@ -189,19 +181,19 @@ namespace Less.Html
             return this.Pass<TagReader>();
         }
 
-        /// <summary>
-        /// 关闭标签
-        /// </summary>
-        /// <param name="name">标签名 小写</param>
-        /// <param name="innerEnd"></param>
         protected TagReader CloseTag(string name, int innerEnd)
+        {
+            return this.CloseTag(name, innerEnd, this.Position - 1);
+        }
+
+        protected TagReader CloseTag(string name, int innerEnd, int end)
         {
             //设置上一个标签
             this.Previous = new TagMark(name, this.Position);
 
             //标记栈中有对应的开标签
             //完成此双标签的读取
-            if (this.MarkStack.Any(i => i.Name.CompareIgnoreCase(name)))
+            if (this.MarkStackExists(name))
             {
                 //从栈顶部开始找对应的开标签标记
                 while (true)
@@ -209,7 +201,7 @@ namespace Less.Html
                     Element element = (Element)this.CurrentNode;
 
                     //设置元素结束位置
-                    element.End = this.Position - 1;
+                    element.End = end;
 
                     element.InnerEnd = innerEnd;
 
@@ -227,6 +219,27 @@ namespace Less.Html
 
             //读取下一个标签
             return this.Pass<TagReader>();
+        }
+
+        protected bool MarkStackExists(string name)
+        {
+            bool exists = false;
+
+            this.MarkStack.ToArray().EachDesc(item =>
+            {
+                if (item.Name.CompareIgnoreCase(name))
+                {
+                    exists = true;
+
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            });
+
+            return exists;
         }
     }
 }

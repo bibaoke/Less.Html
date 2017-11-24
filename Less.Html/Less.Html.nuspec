@@ -11,7 +11,7 @@
     <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>修复 text 方法的参数空引用问题</releaseNotes>
+    <releaseNotes>添加对 option 元素的特殊处理</releaseNotes>
     <copyright>Copyright 2017 Shao Zhuang</copyright>
     <tags>html-parser jQuery-style css-selector</tags>
   </metadata>

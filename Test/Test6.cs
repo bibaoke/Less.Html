@@ -183,6 +183,15 @@ namespace Test
                 string text = q("td").text();
             }
 
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("testHtml/www.darc.de.html").ReadString(Encoding.UTF8);
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("[value='Spall']").html() == "");
+            }
+
             return true;
         }
     }
