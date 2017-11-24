@@ -89,8 +89,8 @@ namespace Less.Html
                     //如果标签未结束 
                     if (space.Success)
                     {
-                        //option 是一个特殊的双标签元素 当多个 option 并列的时候 可以采用单标签元素的写法
-                        if (element.Name.CompareIgnoreCase("option"))
+                        //枚举型的元素可以采用单标签元素的写法
+                        if (element.IsEnum)
                         {
                             if (this.MarkStackExists(element.Name))
                             {
@@ -111,8 +111,8 @@ namespace Less.Html
                     {
                         TagReader reader = null;
 
-                        //option 是一个特殊的双标签元素 当多个 option 并列的时候 可以采用单标签元素的写法
-                        if (element.Name.CompareIgnoreCase("option"))
+                        //枚举型的元素可以采用单标签元素的写法
+                        if (element.IsEnum)
                         {
                             if (this.MarkStackExists(element.Name))
                             {
@@ -140,8 +140,9 @@ namespace Less.Html
                         //如果是单标签
                         else
                         {
-                            //设置元素结束位置
-                            element.End = this.Position - 1;
+                            element.InnerEnd = this.Position - 1;
+
+                            element.End = element.InnerEnd;
                         }
 
                         if (reader.IsNull())

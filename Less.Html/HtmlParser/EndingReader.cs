@@ -31,7 +31,7 @@ namespace Less.Html
                 element.InnerEnd = element.End;
 
                 //设置当前处理的标签为上一级节点
-                node = this.CurrentNode.parentNode;
+                node = node.parentNode;
             });
 
             //文档结束索引

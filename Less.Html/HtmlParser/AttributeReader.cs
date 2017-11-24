@@ -118,8 +118,9 @@ namespace Less.Html
                         //如果是单标签元素
                         if (this.Element.IsSingle)
                         {
-                            //设置元素结束位置
-                            this.Element.End = this.Position - 1;
+                            this.Element.InnerEnd = this.Position - 1;
+
+                            this.Element.End = this.Element.InnerEnd;
                         }
                         //如果不是单标签元素
                         else

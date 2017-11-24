@@ -192,6 +192,15 @@ namespace Test
                 Assert.IsTrue(q("[value='Spall']").html() == "");
             }
 
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("testHtml/killedbypolice.net.html").ReadString(Encoding.UTF8);
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("center")[2].textContent == "St.");
+            }
+
             return true;
         }
     }

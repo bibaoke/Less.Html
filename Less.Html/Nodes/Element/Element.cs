@@ -13,6 +13,12 @@ namespace Less.Html
     /// </summary>
     public class Element : Node
     {
+        private static HashSet<string> EnumElements
+        {
+            get;
+            set;
+        }
+
         private static HashSet<string> SingleElements
         {
             get;
@@ -26,6 +32,15 @@ namespace Less.Html
         }
 
         internal string Name
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 是否枚举型元素
+        /// </summary>
+        internal bool IsEnum
         {
             get;
             private set;
@@ -174,6 +189,11 @@ namespace Less.Html
 
         static Element()
         {
+            Element.EnumElements = new HashSet<string>(new string[]
+            {
+                "option", "tr", "td", "li"
+            }, StringComparer.OrdinalIgnoreCase);
+
             Element.SingleElements = new HashSet<string>(new string[]
             {
                 "!doctype", "meta", "link", "img", "input", "br"
@@ -189,6 +209,11 @@ namespace Less.Html
             this.attributes = new NamedNodeMap<Attr>(this);
 
             this.Name = name;
+
+            if (Element.EnumElements.Contains(name))
+            {
+                this.IsEnum = true;
+            }
 
             if (Element.SingleElements.Contains(name))
             {
