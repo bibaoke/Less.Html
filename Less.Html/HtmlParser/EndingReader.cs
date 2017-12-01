@@ -26,7 +26,14 @@ namespace Less.Html
                 Element element = (Element)node;
 
                 //设置元素结束位置
-                element.End = this.Position - 1;
+                if (element.hasChildNodes())
+                {
+                    element.End = element.firstChild.Begin - 1;
+                }
+                else
+                {
+                    element.End = this.Position - 1;
+                }
 
                 element.InnerEnd = element.End;
 
@@ -52,7 +59,7 @@ namespace Less.Html
                     }
                 }
 
-                this.CurrentNode.appendChild(new Text(this.Previous.Position, end));
+                node.appendChild(new Text(this.Previous.Position, end));
             }
 
             return null;

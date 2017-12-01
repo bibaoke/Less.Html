@@ -180,7 +180,7 @@ namespace Test
 
                 var q = HtmlParser.Query(testHtml);
 
-                string text = q("td").text();
+                Assert.IsTrue(q("td").text() == "");
             }
 
             //
