@@ -38,7 +38,7 @@ namespace Less.Html
         /// <summary>
         /// 本节点和所有的后代节点的总数
         /// </summary>
-        protected int AllNodesCount
+        internal int AllNodesCount
         {
             get;
             set;
@@ -341,12 +341,12 @@ namespace Less.Html
 
                 Node[] nodes = newItem.GetAllNodes();
 
+                this.OnInsertBefore(newItem, existingItem);
+
                 //把节点添加到文档的节点列表
                 this.ownerDocument.AllNodes.InsertRange(existingItem.Index, nodes);
 
                 this.AlterAllChildNodesCount(newItem.AllNodesCount);
-
-                this.OnInsertBefore(newItem, existingItem);
 
                 //在原文档中删除节点
                 newItem.parentNode.removeChild(newItem);

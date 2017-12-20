@@ -702,11 +702,11 @@ namespace Less.Html
 
         private Element GetNextElement(Node node)
         {
-            int index = node.Index + this.AllNodesCount;
+            int index = node.Index + node.AllNodesCount;
 
-            while (this.ownerDocument.AllNodes.Count > index)
+            while (node.ownerDocument.AllNodes.Count > index)
             {
-                Node test = this.ownerDocument.AllNodes[index];
+                Node test = node.ownerDocument.AllNodes[index];
 
                 if (test is Element)
                 {
