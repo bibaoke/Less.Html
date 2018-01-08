@@ -195,7 +195,7 @@ namespace Less.Html
 
         static Node()
         {
-            Node.Pattern = @"\s+".ToRegex(RegexOptions.Compiled);
+            Node.Pattern = @"\s+|&nbsp;|&nbsp".ToRegex(RegexOptions.Compiled);
         }
 
         internal Node(int begin, int end) : this()
@@ -741,9 +741,9 @@ namespace Less.Html
         /// <returns></returns>
         protected string Decode(string text)
         {
-            string replaced = Node.Pattern.Replace(text.Trim(), Symbol.Space).Replace("&nbsp;", Symbol.Space);
+            string replaced = Node.Pattern.Replace(text.Trim(), Symbol.Space);
 
-            return HttpUtility.HtmlDecode(replaced);
+            return replaced.HtmlDecode();
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using Less.Html;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
 using System.Linq;
+using Less.Text;
 
 namespace Test
 {
@@ -199,6 +200,24 @@ namespace Test
                 var q = HtmlParser.Query(testHtml);
 
                 Assert.IsTrue(q("center")[2].textContent == "St.");
+            }
+
+            //
+            {
+                string testHtml = "<span>0                                &nbsp;-&nbsp;1</span>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("span").text() == "0  - 1");
+            }
+
+            //
+            {
+                string testHtml = "<span>0                                &nbsp-&nbsp1</span>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("span").text() == "0  - 1");
             }
 
             return true;

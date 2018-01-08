@@ -114,7 +114,7 @@ namespace Less.Html
                 {
                     string content = this.ownerDocument.Content.SubstringUnsafe(this.ValueBegin, this.ValueLength);
 
-                    return HttpUtility.HtmlDecode(content);
+                    return content.HtmlDecode();
                 }
 
                 return null;
