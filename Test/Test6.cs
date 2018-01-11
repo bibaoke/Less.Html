@@ -220,6 +220,17 @@ namespace Test
                 Assert.IsTrue(q("span").text() == "0  - 1");
             }
 
+            //
+            {
+                string testHtml = "<div style='width:100px; height:100px; display:none'></div>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("div").css("display") == "none");
+
+                Assert.IsTrue(q("div").css("display", "block").css("display") == "block");
+            }
+
             return true;
         }
     }

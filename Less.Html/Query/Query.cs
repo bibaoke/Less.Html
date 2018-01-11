@@ -15,12 +15,6 @@ namespace Less.Html
     /// </summary>
     public class Query : IEnumerable<Element>
     {
-        private static Regex StylePattern
-        {
-            get;
-            set;
-        }
-
         private Selector Selector
         {
             get;
@@ -67,17 +61,61 @@ namespace Less.Html
             }
         }
 
-        static Query()
-        {
-            Query.StylePattern =
-                @"(?<name>\S+?)\s*:\s*(?<value>\S+?)\s*(;|$)".ToRegex(
-                    RegexOptions.ExplicitCapture |
-                    RegexOptions.Compiled);
-        }
-
         internal Query(Selector selector)
         {
             this.Selector = selector;
+        }
+
+        /// <summary>
+        /// 设置元素的样式
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        /// <exception cref="ArgumentNullException">name 不能为 null value 不能为 null</exception>
+        public Query css(string name, string value)
+        {
+            if (name.IsNull())
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            if (value.IsNull())
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            string style = this.attr("style");
+
+            if (style.IsNull())
+            {
+                return this.attr("style", name + ":" + value);
+            }
+            else
+            {
+                Dictionary<string, string> dic = this.GetDic(style);
+
+                List<string> list = new List<string>();
+
+                name = name.Trim();
+
+                foreach (KeyValuePair<string, string> i in dic)
+                {
+                    if (i.Key.CompareIgnoreCase(name))
+                    {
+                        list.Add(name + ":" + value.Trim());
+                    }
+                    else
+                    {
+                        list.Add(i.Key + ":" + i.Value);
+                    }
+                }
+
+                this.attr("style", list.Join("; "));
+
+                return this;
+            }
         }
 
         /// <summary>
@@ -85,39 +123,36 @@ namespace Less.Html
         /// </summary>
         /// <param name="name">样式名称</param>
         /// <returns></returns>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        /// <exception cref="ArgumentNullException">name 不能为 null</exception>
         public string css(string name)
         {
+            if (name.IsNull())
+            {
+                throw new ArgumentNullException("name");
+            }
+
             string style = this.attr("style");
 
             if (style.IsNull())
             {
                 return null;
             }
-
-            name = name.Trim();
-
-            int index = 0;
-
-            while (true)
+            else
             {
-                Match match = Query.StylePattern.Match(style, index);
+                Dictionary<string, string> dic = this.GetDic(style);
 
-                if (match.Success)
+                string value;
+
+                if (dic.TryGetValue(name.Trim(), out value))
                 {
-                    if (match.GetValue("name").CompareIgnoreCase(name))
-                    {
-                        return match.GetValue("value");
-                    }
-
-                    index = match.Index + match.Length;
+                    return value;
                 }
                 else
                 {
-                    break;
+                    return null;
                 }
             }
-
-            return null;
         }
 
         /// <summary>
@@ -126,6 +161,7 @@ namespace Less.Html
         /// <param name="classes"></param>
         /// <returns></returns>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        /// <exception cref="ArgumentNullException">classes 不能为 null</exception>
         public Query addClass(string classes)
         {
             IEnumerable<Element> elements = this.Select();
@@ -134,17 +170,11 @@ namespace Less.Html
 
             foreach (Element i in elements)
             {
-                string[] oriArray;
+                string[] oriArray = new string[0];
 
-                string className;
+                string className = "";
 
-                if (i.className.IsNull())
-                {
-                    oriArray = new string[0];
-
-                    className = "";
-                }
-                else
+                if (i.className.IsNotNull())
                 {
                     oriArray = i.className.SplitByWhiteSpace();
 
@@ -219,6 +249,32 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 返回元素的 textContent 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        public string text()
+        {
+            IEnumerable<Element> elements = this.Select();
+
+            if (elements.IsEmpty())
+            {
+                return null;
+            }
+            else
+            {
+                string text = "";
+
+                foreach (Element i in elements)
+                {
+                    text += i.textContent;
+                }
+
+                return text;
+            }
+        }
+
+        /// <summary>
         /// 设置元素的 textContent
         /// </summary>
         /// <param name="content"></param>
@@ -262,22 +318,12 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 返回元素的 textContent 
+        /// 获取元素的 value 属性
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        public string text()
+        public string val()
         {
-            IEnumerable<Element> elements = this.Select();
-
-            string text = "";
-
-            foreach (Element i in elements)
-            {
-                text += i.textContent;
-            }
-
-            return text;
+            return this.attr("value");
         }
 
         /// <summary>
@@ -307,6 +353,16 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 获取元素的 src 属性
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        public string src()
+        {
+            return this.attr("src");
+        }
+
+        /// <summary>
         /// 设置元素的 src 属性
         /// </summary>
         /// <param name="value"></param>
@@ -315,16 +371,6 @@ namespace Less.Html
         public Query src(string value)
         {
             return this.attr("src", value);
-        }
-
-        /// <summary>
-        /// 获取元素的 src 属性
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        public string src()
-        {
-            return this.attr("src");
         }
 
         /// <summary>
@@ -657,6 +703,32 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 返回元素的 innerHTML
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        public string html()
+        {
+            IEnumerable<Element> elements = this.Select();
+
+            if (elements.IsEmpty())
+            {
+                return null;
+            }
+            else
+            {
+                string html = "";
+
+                foreach (Element i in elements)
+                {
+                    html += i.innerHTML;
+                }
+
+                return html;
+            }
+        }
+
+        /// <summary>
         /// 设置元素的 innerHTML
         /// </summary>
         /// <param name="html"></param>
@@ -704,25 +776,6 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 返回元素的 innerHTML
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        public string html()
-        {
-            IEnumerable<Element> elements = this.Select();
-
-            string html = "";
-
-            foreach (Element i in elements)
-            {
-                html += i.innerHTML;
-            }
-
-            return html;
-        }
-
-        /// <summary>
         /// 获取枚举器
         /// </summary>
         /// <returns></returns>
@@ -744,6 +797,36 @@ namespace Less.Html
         internal IEnumerable<Element> Select()
         {
             return this.Selector.Select();
+        }
+
+        private Dictionary<string, string> GetDic(string style)
+        {
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+
+            string[] styleArray = style.Split(';');
+
+            foreach (string i in styleArray)
+            {
+                int index = i.IndexOf(':');
+
+                if (index > 0)
+                {
+                    if (index < i.Length)
+                    {
+                        string sName = i.Substring(0, index).Trim();
+                        string sValue = i.Substring(index + 1).Trim();
+
+                        if (sName.IsNotEmpty() && sValue.IsNotEmpty())
+                        {
+                            dic.Remove(sName);
+
+                            dic.Add(sName, sValue);
+                        }
+                    }
+                }
+            }
+
+            return dic;
         }
 
         private Query Copy()
