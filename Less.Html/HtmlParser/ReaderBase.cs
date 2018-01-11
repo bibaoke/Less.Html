@@ -221,6 +221,21 @@ namespace Less.Html
             return this.Pass<TagReader>();
         }
 
+        protected bool MarkStackLast(string name)
+        {
+            if (this.MarkStack.Count > 0)
+            {
+                TagMark mark = this.MarkStack.Peek();
+
+                if (mark.Name.CompareIgnoreCase(name))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         protected bool MarkStackExists(string name)
         {
             bool exists = false;

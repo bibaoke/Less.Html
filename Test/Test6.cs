@@ -231,6 +231,21 @@ namespace Test
                 Assert.IsTrue(q("div").css("display", "block").css("display") == "block");
             }
 
+            //
+            {
+                string testHtml = "<select></select>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                var option = q("<option></option>");
+
+                Assert.IsTrue(q("select").append(option).html() == "<option></option>");
+
+                Assert.IsTrue(q("select").append(option).html() == "<option></option>");
+
+                Assert.IsTrue(q("select").append(option.clone()).html() == "<option></option>".Repeat(2));
+            }
+
             return true;
         }
     }

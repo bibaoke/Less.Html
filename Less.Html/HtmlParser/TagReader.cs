@@ -89,10 +89,21 @@ namespace Less.Html
                     //如果标签未结束 
                     if (space.Success)
                     {
-                        //枚举型的元素可以采用单标签元素的写法
-                        if (element.IsEnum)
+                        //对表格型元素的处理
+                        if (element.IsTable)
                         {
                             if (this.MarkStackExists(element.Name))
+                            {
+                                int end = this.Previous.Position - 1;
+
+                                this.CloseTag(element.Name, end, end);
+                            }
+                        }
+
+                        //对枚举型元素的处理
+                        if (element.IsEnum)
+                        {
+                            if (this.MarkStackLast(element.Name))
                             {
                                 int end = this.Previous.Position - 1;
 
@@ -111,10 +122,21 @@ namespace Less.Html
                     {
                         TagReader reader = null;
 
-                        //枚举型的元素可以采用单标签元素的写法
-                        if (element.IsEnum)
+                        //对表格型元素的处理
+                        if (element.IsTable)
                         {
                             if (this.MarkStackExists(element.Name))
+                            {
+                                int end = this.Previous.Position - 1;
+
+                                reader = this.CloseTag(element.Name, end, end);
+                            }
+                        }
+
+                        //对枚举型元素的处理
+                        if (element.IsEnum)
+                        {
+                            if (this.MarkStackLast(element.Name))
                             {
                                 int end = this.Previous.Position - 1;
 

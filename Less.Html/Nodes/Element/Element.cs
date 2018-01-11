@@ -13,6 +13,12 @@ namespace Less.Html
     /// </summary>
     public class Element : Node
     {
+        private static HashSet<string> TableElements
+        {
+            get;
+            set;
+        }
+
         private static HashSet<string> EnumElements
         {
             get;
@@ -32,6 +38,15 @@ namespace Less.Html
         }
 
         internal string Name
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 是否表格型元素
+        /// </summary>
+        internal bool IsTable
         {
             get;
             private set;
@@ -189,9 +204,14 @@ namespace Less.Html
 
         static Element()
         {
+            Element.TableElements = new HashSet<string>(new string[]
+            {
+                "tr", "td"
+            }, StringComparer.OrdinalIgnoreCase);
+
             Element.EnumElements = new HashSet<string>(new string[]
             {
-                "option", "tr", "td", "li"
+                "option", "li"
             }, StringComparer.OrdinalIgnoreCase);
 
             Element.SingleElements = new HashSet<string>(new string[]
@@ -209,6 +229,11 @@ namespace Less.Html
             this.attributes = new NamedNodeMap<Attr>(this);
 
             this.Name = name;
+
+            if (Element.TableElements.Contains(name))
+            {
+                this.IsTable = true;
+            }
 
             if (Element.EnumElements.Contains(name))
             {
