@@ -246,6 +246,15 @@ namespace Test
                 Assert.IsTrue(q("select").append(option.clone()).html() == "<option></option>".Repeat(2));
             }
 
+            //
+            {
+                string testHtml = "<div></div>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("div").append(q("<input type='hidden' />").val(1)).html() == "<input type='hidden' value=\"1\" />");
+            }
+
             return true;
         }
     }

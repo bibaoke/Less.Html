@@ -266,7 +266,7 @@ namespace Less.Html
 
                 if (element.IsSingle)
                 {
-                    begin = element.End - 1;
+                    begin = element.End;
 
                     if (element.ownerDocument.Content[begin - 1] == '/')
                     {
