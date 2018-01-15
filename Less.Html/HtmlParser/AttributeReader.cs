@@ -148,8 +148,9 @@ namespace Less.Html
                     //如果当前位置在开标签内
                     if (this.Element.IsNotNull())
                     {
-                        //设置元素结束位置
-                        this.Element.End = this.Position - 1;
+                        this.Element.InnerEnd = this.Position - 1;
+
+                        this.Element.End = this.Element.InnerEnd;
 
                         //设置属性
                         this.SetAttribute(match, -single.Length);

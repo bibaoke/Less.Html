@@ -255,6 +255,32 @@ namespace Test
                 Assert.IsTrue(q("div").append(q("<input type='hidden' />").val(1)).html() == "<input type='hidden' value=\"1\" />");
             }
 
+            //
+            {
+                string testHtml = "<input></input>";
+
+                Document document = HtmlParser.Parse(testHtml);
+
+                var q = Selector.Bind(document);
+
+                q("input").text("1");
+
+                Assert.IsTrue(document.ToString() == "<input>1</input>");
+            }
+
+            //
+            {
+                string testHtml = "<input />";
+
+                Document document = HtmlParser.Parse(testHtml);
+
+                var q = Selector.Bind(document);
+
+                q("input").text("1");
+
+                Assert.IsTrue(document.ToString() == "<input />1");
+            }
+
             return true;
         }
     }

@@ -152,8 +152,15 @@ namespace Less.Html
                         //如果是双标签
                         if (xdouble.Success)
                         {
+                            //单标签元素
+                            if (element.IsSingle)
+                            {
+                                element.InnerEnd = this.Position - 1;
+
+                                element.End = element.InnerEnd;
+                            }
                             //不是单标签元素
-                            if (!element.IsSingle)
+                            else
                             {
                                 //开标签
                                 this.OpenTag(element);
