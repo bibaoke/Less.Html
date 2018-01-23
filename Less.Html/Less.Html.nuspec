@@ -11,7 +11,7 @@
     <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>修改对单标签元素的处理</releaseNotes>
+    <releaseNotes>修改 removeChild 方法</releaseNotes>
     <copyright>Copyright 2017 Shao Zhuang</copyright>
     <tags>html-parser jQuery-style css-selector</tags>
   </metadata>

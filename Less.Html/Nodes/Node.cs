@@ -288,7 +288,11 @@ namespace Less.Html
 
             node.ShiftParent(offset);
 
-            this.ChildNodeList.RemoveAt(node.ChildIndex);
+            //针对 node.ChildIndex 为默认值 0 的判断处理
+            if (this.ChildNodeList.Count > 0)
+            {
+                this.ChildNodeList.RemoveAt(node.ChildIndex);
+            }
 
             foreach (Node i in this.ChildNodeList.GetEnumerator(node.ChildIndex))
             {

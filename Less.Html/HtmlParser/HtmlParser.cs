@@ -57,6 +57,7 @@ namespace Less.Html
         /// <param name="content">要解析的 html</param>
         /// <param name="cache">是否使用缓存</param>
         /// <returns>DOM 文档</returns>
+        /// <exception cref="ArgumentNullException">content 不能为 null</exception>
         public static Document Parse(string content, bool cache)
         {
             if (cache)

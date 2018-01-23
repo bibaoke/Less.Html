@@ -281,6 +281,30 @@ namespace Test
                 Assert.IsTrue(document.ToString() == "<input />1");
             }
 
+            //
+            {
+                string testHtml = "<input>";
+
+                Document document = HtmlParser.Parse(testHtml);
+
+                var q = Selector.Bind(document);
+
+                q("input").text("1");
+
+                Assert.IsTrue(document.ToString() == "<input>1");
+            }
+
+            //
+            {
+                string testHtml = "<ol><li></li></ol>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                var li = q("li").remove();
+
+                q("ol").append(li);
+            }
+
             return true;
         }
     }
