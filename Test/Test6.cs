@@ -305,6 +305,21 @@ namespace Test
                 q("ol").append(li);
             }
 
+            //
+            {
+                string testHtml = "<ol><li></li><li></li></ol>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                var li = q("li:first").remove();
+
+                Assert.IsTrue(q("ol")[0].childNodes.Length == 1);
+
+                q("ol").append(li);
+
+                Assert.IsTrue(q("ol")[0].childNodes.Length == 2);
+            }
+
             return true;
         }
     }
