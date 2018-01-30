@@ -320,6 +320,19 @@ namespace Test
                 Assert.IsTrue(q("ol")[0].childNodes.Length == 2);
             }
 
+            //
+            {
+                string testHtml = "<ol><li>0</li><li>1</li><li>2</li><li>3</li><li>4</li></ol>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("li:eq(2)").text() == "2");
+
+                Assert.IsTrue(q("li:gt(2)").text() == "34");
+
+                Assert.IsTrue(q("li:lt(2)").text() == "01");
+            }
+
             return true;
         }
     }
