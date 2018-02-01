@@ -335,13 +335,22 @@ namespace Test
 
             //
             {
-                string testHtml = "<input type='checkbox' title='test'>";
+                string testHtml = "<input type='checkbox' title='test' />";
 
                 var q = HtmlParser.Query(testHtml);
 
                 Assert.IsTrue(q("input").attr("title", "测试").attr("title") == "测试");
 
                 Assert.IsTrue(q(":checkbox").title() == "测试");
+            }
+
+            //
+            {
+                string testHtml = "<div><input type='checkbox' title='test' /></div>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q(":checkbox").title() == "test");
             }
 
             return true;

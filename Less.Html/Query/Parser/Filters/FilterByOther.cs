@@ -87,7 +87,10 @@ namespace Less.Html
             }
             else if (this.Condition.CompareIgnoreCase("checkbox"))
             {
-                return source.Where(i => i.Name.CompareIgnoreCase("input") && i.getAttribute("type").CompareIgnoreCase("checkbox"));
+                return source.SelectMany(i => i.EnumerateAllElements().Where(
+                    j =>
+                    j.Name.CompareIgnoreCase("input") &&
+                    j.getAttribute("type").CompareIgnoreCase("checkbox")));
             }
             else
             {
