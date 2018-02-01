@@ -160,8 +160,6 @@ namespace Less.Html
             {
                 i.ChildIndex = i.ChildIndex - 1;
             }
-
-            item.OnRemoveFromNamedNodeMap();
         }
 
         internal void Insert(int index, T item)

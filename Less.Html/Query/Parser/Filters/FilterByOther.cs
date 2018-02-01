@@ -85,6 +85,10 @@ namespace Less.Html
                     return new Element[0];
                 }
             }
+            else if (this.Condition.CompareIgnoreCase("checkbox"))
+            {
+                return source.Where(i => i.Name.CompareIgnoreCase("input") && i.getAttribute("type").CompareIgnoreCase("checkbox"));
+            }
             else
             {
                 Match eq = FilterByOther.EqPattern.Match(this.Condition);

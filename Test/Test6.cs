@@ -333,6 +333,17 @@ namespace Test
                 Assert.IsTrue(q("li:lt(2)").text() == "01");
             }
 
+            //
+            {
+                string testHtml = "<input type='checkbox' title='test'>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("input").attr("title", "测试").attr("title") == "测试");
+
+                Assert.IsTrue(q(":checkbox").title() == "测试");
+            }
+
             return true;
         }
     }

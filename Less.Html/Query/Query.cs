@@ -353,6 +353,25 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 获取元素的 title 属性
+        /// </summary>
+        /// <returns></returns>
+        public string title()
+        {
+            return this.attr("title");
+        }
+
+        /// <summary>
+        /// 设置元素的 title 属性
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public Query title(string value)
+        {
+            return this.attr("title", value);
+        }
+
+        /// <summary>
         /// 获取元素的 src 属性
         /// </summary>
         /// <returns></returns>
