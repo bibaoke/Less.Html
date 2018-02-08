@@ -78,7 +78,7 @@ namespace Less.Html
 
                 if (last.IsNotNull())
                 {
-                    return last.ConstructArray();
+                    return last.EnumerateAllElements().Last().ConstructArray();
                 }
                 else
                 {
@@ -102,7 +102,7 @@ namespace Less.Html
 
                     if (index.IsNotNull())
                     {
-                        return source.Skip(index.Value).Take(1);
+                        return source.SelectMany(i => i.EnumerateAllElements()).Skip(index.Value).Take(1);
                     }
                     else
                     {
@@ -119,7 +119,7 @@ namespace Less.Html
 
                         if (index.IsNotNull())
                         {
-                            return source.Skip(index.Value + 1);
+                            return source.SelectMany(i => i.EnumerateAllElements()).Skip(index.Value + 1);
                         }
                         else
                         {
@@ -136,7 +136,7 @@ namespace Less.Html
 
                             if (index.IsNotNull())
                             {
-                                return source.Take(index.Value);
+                                return source.SelectMany(i => i.EnumerateAllElements()).Take(index.Value);
                             }
                             else
                             {

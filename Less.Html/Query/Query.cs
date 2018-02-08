@@ -249,6 +249,39 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 获取元素的 id 属性
+        /// </summary>
+        /// <returns></returns>
+        public string id()
+        {
+            return this.attr("id");
+        }
+
+        /// <summary>
+        /// 设置元素的 id 属性
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public Query id(object value)
+        {
+            this.id(value.ToString());
+
+            return this;
+        }
+
+        /// <summary>
+        /// 设置元素的 id 属性
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public Query id(string value)
+        {
+            this.attr("id", value);
+
+            return this;
+        }
+
+        /// <summary>
         /// 返回元素的 textContent 
         /// </summary>
         /// <returns></returns>
