@@ -6,14 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Less.Text;
 using System.Collections;
-using System.Text.RegularExpressions;
 
 namespace Less.Html
 {
     /// <summary>
     /// 查询器
     /// </summary>
-    public class Query : IEnumerable<Element>
+    public partial class Query : IEnumerable<Element>
     {
         private Selector Selector
         {
@@ -249,108 +248,6 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 获取元素的 id 属性
-        /// </summary>
-        /// <returns></returns>
-        public string id()
-        {
-            return this.attr("id");
-        }
-
-        /// <summary>
-        /// 设置元素的 id 属性
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public Query id(object value)
-        {
-            this.id(value.ToString());
-
-            return this;
-        }
-
-        /// <summary>
-        /// 设置元素的 id 属性
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public Query id(string value)
-        {
-            this.attr("id", value);
-
-            return this;
-        }
-
-        /// <summary>
-        /// 返回元素的 textContent 
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        public string text()
-        {
-            IEnumerable<Element> elements = this.Select();
-
-            if (elements.IsEmpty())
-            {
-                return null;
-            }
-            else
-            {
-                string text = "";
-
-                foreach (Element i in elements)
-                {
-                    text += i.textContent;
-                }
-
-                return text;
-            }
-        }
-
-        /// <summary>
-        /// 设置元素的 textContent
-        /// </summary>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        public Query text(object content)
-        {
-            string text = content.IsNull("").ToString();
-
-            IEnumerable<Element> elements = this.Select();
-
-            foreach (Element i in elements)
-            {
-                i.textContent = text;
-            }
-
-            return this;
-        }
-
-        /// <summary>
-        /// 设置元素的 textContent
-        /// </summary>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        public Query text(string content)
-        {
-            if (content.IsNull())
-            {
-                content = "";
-            }
-
-            IEnumerable<Element> elements = this.Select();
-
-            foreach (Element i in elements)
-            {
-                i.textContent = content;
-            }
-
-            return this;
-        }
-
-        /// <summary>
         /// 获取元素的 value 属性
         /// </summary>
         /// <returns></returns>
@@ -383,67 +280,6 @@ namespace Less.Html
             this.attr("value", value);
 
             return this;
-        }
-
-        /// <summary>
-        /// 获取元素的 title 属性
-        /// </summary>
-        /// <returns></returns>
-        public string title()
-        {
-            return this.attr("title");
-        }
-
-        /// <summary>
-        /// 设置元素的 title 属性
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public Query title(string value)
-        {
-            return this.attr("title", value);
-        }
-
-        /// <summary>
-        /// 获取元素的 src 属性
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        public string src()
-        {
-            return this.attr("src");
-        }
-
-        /// <summary>
-        /// 设置元素的 src 属性
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        public Query src(string value)
-        {
-            return this.attr("src", value);
-        }
-
-        /// <summary>
-        /// 获取元素的 href 属性
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        public string href()
-        {
-            return this.attr("href");
-        }
-
-        /// <summary>
-        /// 设置元素的 href 属性
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        public Query href(string value)
-        {
-            return this.attr("href", value);
         }
 
         /// <summary>
@@ -752,6 +588,75 @@ namespace Less.Html
         public Query empty()
         {
             return this.html("");
+        }
+
+        /// <summary>
+        /// 返回元素的 textContent 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        public string text()
+        {
+            IEnumerable<Element> elements = this.Select();
+
+            if (elements.IsEmpty())
+            {
+                return null;
+            }
+            else
+            {
+                string text = "";
+
+                foreach (Element i in elements)
+                {
+                    text += i.textContent;
+                }
+
+                return text;
+            }
+        }
+
+        /// <summary>
+        /// 设置元素的 textContent
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        public Query text(object content)
+        {
+            string text = content.IsNull("").ToString();
+
+            IEnumerable<Element> elements = this.Select();
+
+            foreach (Element i in elements)
+            {
+                i.textContent = text;
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// 设置元素的 textContent
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        public Query text(string content)
+        {
+            if (content.IsNull())
+            {
+                content = "";
+            }
+
+            IEnumerable<Element> elements = this.Select();
+
+            foreach (Element i in elements)
+            {
+                i.textContent = content;
+            }
+
+            return this;
         }
 
         /// <summary>
