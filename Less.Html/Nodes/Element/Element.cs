@@ -451,7 +451,14 @@ namespace Less.Html
         /// <returns></returns>
         protected override int GetAppendIndex()
         {
-            return this.InnerEnd + 1;
+            if (this.IsSingle)
+            {
+                return this.End + 1;
+            }
+            else
+            {
+                return this.InnerEnd + 1;
+            }
         }
 
         /// <summary>
