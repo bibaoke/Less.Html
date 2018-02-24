@@ -39,13 +39,16 @@ foreach (Element i in q("td"))
     我当时写这个解析器是因为要做网页爬虫，核心三天写完就能用了，并用来解析了几百万个网页，可用性上是没有问题的。后来我觉得 Razor 语法还是不够好，于是我改进了这个解析器，加上了选择器和操作 html 文档的方法，制作了我自己的视图引擎 QPage。我的个人博客就是使用这个引擎写的：
 </p>
 <p align="left">
-    <img alt="" src="http://bibaoke.com/img/fXRNW1C8B06PSAO73f0Sig?auth=post" />
+    <a href="https://www.nuget.org/packages/QPage/" target="_blank">https://www.nuget.org/packages/QPage/</a>
+</p>
+<p align="left">
+    QPage 在添加文档之后，也会开源。
 </p>
 <p align="left">
     后来我在网上知道了 csQuery、Jumony 这些解析器的作者，都会把自己的解析器做成视图引擎，我开始觉得在服务器端解析文档，而不是拼接文档，应该是未来的趋势。
 </p>
 <p align="left">
-    Less.Html 只支持了几种基本的选择器语法：
+    以下是 Less.Html 支持的选择器：
 </p>
 <p align="left">
     <table style="margin:15px 0px 0px;padding:0px;border:1px solid #AAAAAA;border-collapse:collapse;width:90%;color:#000000;font-family:PingFangSC-Regular, Verdana, Arial, 微软雅黑, 宋体;font-size:15px;font-style:normal;font-weight:normal;text-align:left;background-color:#FDFCF8;" cellpadding="5">
@@ -102,7 +105,7 @@ foreach (Element i in q("td"))
                     q("p")
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    所有&lt;p&gt;元素
+                    所有 &lt;p&gt; 元素
                 </td>
             </tr>
             <tr>
@@ -113,7 +116,7 @@ foreach (Element i in q("td"))
                     q("p:first")
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    第一个&lt;p&gt;元素
+                    第一个 &lt;p&gt; 元素
                 </td>
             </tr>
             <tr>
@@ -124,7 +127,7 @@ foreach (Element i in q("td"))
                     q("p:last")
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    最后一个&lt;p&gt;元素
+                    最后一个 &lt;p&gt; 元素
                 </td>
             </tr>
             <tr>
@@ -135,7 +138,7 @@ foreach (Element i in q("td"))
                     q("[href]")
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    所有带有href属性的元素
+                    所有带有 href 属性的元素
                 </td>
             </tr>
             <tr>
@@ -146,7 +149,51 @@ foreach (Element i in q("td"))
                     q("[href='#']")
                 </td>
                 <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
-                    所有href属性的值等于"#"的元素
+                    所有 href 属性的值等于 "#" 的元素
+                </td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    :checkbox
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    q(":checkbox")
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    所有 type="checkbox" 的 &lt;input&gt; 元素
+                </td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    :eq(index)
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    q("ul li:eq(3)")
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    列表中的第四个元素（index 从 0 开始）
+                </td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    :gt(no)
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    q("ul li:gt(3)")
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    列出 index 大于 3 的元素
+                </td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    :lt(no)
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    q("ul li:lt(3)")
+                </td>
+                <td style="border:1px solid #AAAAAA;vertical-align:text-top;">
+                    列出 index 小于 3 的元素
                 </td>
             </tr>
         </tbody>
