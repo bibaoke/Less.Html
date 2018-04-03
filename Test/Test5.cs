@@ -37,9 +37,11 @@ namespace Test
 
                 Document document = HtmlParser.Parse(testHtml);
 
-                string html = document.getElementsByTagName("p")[0].innerHTML;
+                var p = document.getElementsByTagName("p")[0];
 
-                string cls = document.getElementsByTagName("p")[0].getAttribute("class");
+                string html = p.innerHTML;
+
+                string cls = p.getAttribute("class");
             }
 
             //1.1 jQuery 方法
@@ -51,6 +53,34 @@ namespace Test
                 string html = q("p").html();
 
                 string cls = q("p").attr("class");
+            }
+
+            //2. 修改文档的内容
+            {
+                string testHtml = "<p class='description'>段落</p>";
+
+                Document document = HtmlParser.Parse(testHtml);
+
+                var p = document.getElementsByTagName("p")[0];
+
+                p.removeAttribute("class");
+
+                p.setAttribute("style", "color:red");
+
+                p.textContent = "修改的文本";
+            }
+
+            //2.1 jQuery 方法
+            {
+                string testHtml = "<p class='description'>段落</p>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                q("p").removeAttr("class");
+
+                q("p").attr("style", "color:red");
+
+                q("p").text("修改的文本");
             }
 
             return true;
