@@ -353,6 +353,17 @@ namespace Test
                 Assert.IsTrue(q(":checkbox").title() == "test");
             }
 
+            //
+            {
+                string testHtml = "<div><input class='class1 class2 class3' type='checkbox' title='test' /></div>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q(":checkbox").removeClass("class2").attr("class") == "class1 class3");
+
+                Assert.IsTrue(q(":checkbox").removeClass("class2 class1").attr("class") == "class3");
+            }
+
             return true;
         }
     }

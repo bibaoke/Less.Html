@@ -155,6 +155,44 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 从元素移除一个或多个类
+        /// </summary>
+        /// <param name="classes"></param>
+        /// <returns></returns>
+        /// <exception cref="SelectorParamException">选择器参数错误</exception>
+        /// <exception cref="ArgumentNullException">classes 不能为 null</exception>
+        public Query removeClass(string classes)
+        {
+            IEnumerable<Element> elements = this.Select();
+
+            string[] removeArray = classes.SplitByWhiteSpace();
+
+            foreach (Element i in elements)
+            {
+                string[] oriArray = new string[0];
+
+                string name = "";
+
+                if (i.className.IsNotNull())
+                {
+                    oriArray = i.className.SplitByWhiteSpace();
+
+                    foreach (string j in oriArray)
+                    {
+                        if (!removeArray.Any(k => k.CompareIgnoreCase(j)))
+                        {
+                            name += j + Symbol.Space;
+                        }
+                    }
+                }
+
+                i.className = name.TrimEnd();
+            }
+
+            return this;
+        }
+
+        /// <summary>
         /// 向元素添加一个或多个类
         /// </summary>
         /// <param name="classes"></param>
