@@ -27,6 +27,17 @@ namespace Test
 
             //
             {
+                string testHtml = "<head><base href='http://bibaoke.com/blog/'><script type='text/javascript' src='/js/jquery-1.7.2.min.js'></script></head>";
+
+                Document document = HtmlParser.Parse(testHtml);
+
+                var q = Selector.Bind(document);
+
+                Assert.IsTrue(q("base").href() == "http://bibaoke.com/blog/");
+            }
+
+            //
+            {
                 string testHtml = "<p>段落1</p><p>段落2</p>";
 
                 Document document = HtmlParser.Parse(testHtml);
