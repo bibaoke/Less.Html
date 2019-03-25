@@ -27,6 +27,19 @@ namespace Test
 
             //
             {
+                string testHtml = "<head><ud /></head>";
+
+                Document document = HtmlParser.Parse(testHtml);
+
+                var q = Selector.Bind(document);
+
+                Assert.IsTrue(q("ud").html() == "");
+
+                Assert.IsTrue(q("ud")[0].innerHTML == "");
+            }
+
+            //
+            {
                 string testHtml = "<head><base href='http://bibaoke.com/blog/'><script type='text/javascript' src='/js/jquery-1.7.2.min.js'></script></head>";
 
                 Document document = HtmlParser.Parse(testHtml);

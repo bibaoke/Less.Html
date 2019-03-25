@@ -148,11 +148,9 @@ namespace Less.Html
                     //如果当前位置在开标签内
                     if (this.Element.IsNotNull())
                     {
-                        this.Element.InnerBegin = this.Element.Begin;
+                        this.Element.IsSingle = true;
 
-                        this.Element.InnerEnd = this.Position - 1;
-
-                        this.Element.End = this.Element.InnerEnd;
+                        this.Element.End = this.Position - 1;
 
                         //设置属性
                         this.SetAttribute(match, -single.Length);

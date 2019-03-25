@@ -67,7 +67,7 @@ namespace Less.Html
         internal bool IsSingle
         {
             get;
-            private set;
+            set;
         }
 
         internal int InnerBegin
@@ -185,7 +185,7 @@ namespace Less.Html
                     return this.ownerDocument.Content.SubstringUnsafe(this.InnerBegin, length);
                 }
 
-                return null;
+                return "";
             }
             set
             {
