@@ -27,6 +27,17 @@ namespace Test
 
             //
             {
+                string testHtml = @"<meta name=""description"" content =""测试
+<meta name=""apple-itunes-app"" content=""app-id=527806786"" />";
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("meta[name='description']").attr("content") == @"测试
+<meta name=");
+            }
+
+            //
+            {
                 string testHtml = "<head><ud /></head>";
 
                 Document document = HtmlParser.Parse(testHtml);
