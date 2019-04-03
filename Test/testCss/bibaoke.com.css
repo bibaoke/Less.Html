@@ -1,0 +1,131 @@
+﻿
+body, ul, ol, dl, dd, input, textarea, select
+{
+    margin: 0    ;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p
+{
+    margin: 1em 0;
+}
+
+@media screen and (max-width: 300px)
+{
+    body
+    {
+        background-color: lightblue;
+    }
+
+    .test
+    {
+        background: url(../images/test.png)
+    }
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    /**/
+    /* comment1 */
+    /**/
+    font-weight: normal;
+    /* comment2 */
+}
+
+/* comment3 */
+
+body, input, textarea, select
+{
+    line-height: 1.6;
+    font-family: "Microsoft YaHei","微软雅黑",Helvetica,"黑体",Arial,Tahoma;
+    color: #222;
+    font-size: 16px;
+}
+
+p
+{
+    line-height: 1.8;
+}
+
+img[border="0"]
+{
+    position: relative;
+    top: 5px;
+}
+
+.content
+{
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button
+{
+    border-radius: 3px;
+    padding: 5px 10px;
+    color: #eee;
+    background-color: #3585ff;
+    text-decoration: none;
+}
+
+    .button:hover
+    {
+        text-decoration: none;
+        background-color: #3585df;
+    }
+
+.warnning
+{
+    background-color: #f10215;
+}
+
+    .warnning:hover
+    {
+        background-color: #d10215;
+    }
+
+.on
+{
+    background-color: #44b549;
+}
+
+    .on:hover
+    {
+        background-color: #449549;
+    }
+
+pre
+{
+    overflow-x: auto;
+    border: 0;
+    border-left: 3px solid rgb(204, 204, 204);
+    margin-left: 2em;
+    padding: 0.5em;
+    font-size: 90%;
+    display: block;
+    font-family: "Microsoft YaHei","微软雅黑",Helvetica,"黑体",Arial,Tahoma;
+    margin: 1em 0px;
+    white-space: pre;
+}
+
+ol
+{
+    list-style-type: none;
+}
+
+a
+{
+    text-decoration: none;
+    color: #222;
+}
+
+    a:hover
+    {
+        text-decoration: underline;
+    }
+
+p a
+{
+    color: mediumblue;
+}

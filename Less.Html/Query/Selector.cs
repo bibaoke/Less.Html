@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using Less.Html.SelectorParamParser;
+using Less.Html.SelectorParser;
 using System.Linq;
 
 namespace Less.Html

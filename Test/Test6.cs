@@ -19,6 +19,12 @@ namespace Test
 
         public override bool Execute(params string[] args)
         {
+            {
+                string testCss = Application.SetupDir.CombinePath("testCss/bibaoke.com.css").ReadString(Encoding.UTF8);
+
+                Css css = CssParser.Parse(testCss);
+            }
+
             new Test1().Execute();
             new Test2().Execute();
             new Test3().Execute();

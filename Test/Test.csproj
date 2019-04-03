@@ -68,6 +68,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="testCss\bibaoke.com.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="testHtml\killedbypolice.net.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

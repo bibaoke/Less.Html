@@ -41,15 +41,28 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HtmlParser\AttributeReader.cs" />
-    <Compile Include="HtmlParser\CloseStyleReader.cs" />
-    <Compile Include="HtmlParser\CloseScriptReader.cs" />
-    <Compile Include="HtmlParser\Context.cs" />
-    <Compile Include="HtmlParser\EndingReader.cs" />
-    <Compile Include="HtmlParser\HtmlParser.cs" />
-    <Compile Include="HtmlParser\ReaderBase.cs" />
-    <Compile Include="HtmlParser\TagMark.cs" />
-    <Compile Include="HtmlParser\TagReader.cs" />
+    <Compile Include="Styles\Properties\Background.cs" />
+    <Compile Include="Styles\BlockCollection.cs" />
+    <Compile Include="Styles\Css.cs" />
+    <Compile Include="Styles\Block.cs" />
+    <Compile Include="CssInternal\Context.cs" />
+    <Compile Include="CssInternal\PropertyReader.cs" />
+    <Compile Include="Styles\Property.cs" />
+    <Compile Include="Styles\PropertyCollection.cs" />
+    <Compile Include="Styles\Style.cs" />
+    <Compile Include="Styles\StyleCollection.cs" />
+    <Compile Include="CssParser.cs" />
+    <Compile Include="CssInternal\ReaderBase.cs" />
+    <Compile Include="CssInternal\SelectorReader.cs" />
+    <Compile Include="HtmlInternal\AttributeReader.cs" />
+    <Compile Include="HtmlInternal\CloseStyleReader.cs" />
+    <Compile Include="HtmlInternal\CloseScriptReader.cs" />
+    <Compile Include="HtmlInternal\Context.cs" />
+    <Compile Include="HtmlInternal\EndingReader.cs" />
+    <Compile Include="HtmlParser.cs" />
+    <Compile Include="HtmlInternal\ReaderBase.cs" />
+    <Compile Include="HtmlInternal\TagMark.cs" />
+    <Compile Include="HtmlInternal\TagReader.cs" />
     <Compile Include="Nodes\Attr.cs" />
     <Compile Include="Nodes\Comment.cs" />
     <Compile Include="Nodes\Document.cs" />
@@ -67,19 +80,19 @@
     <Compile Include="Query\QueryExtensions.cs" />
     <Compile Include="Query\ElementExtensions.cs" />
     <Compile Include="Query\NodeExtensions.cs" />
-    <Compile Include="Query\Parser\Filters\FilterByAttr.cs" />
-    <Compile Include="Query\Parser\Readers\AttrSelectorReader.cs" />
-    <Compile Include="Query\Parser\Readers\SelectorReader.cs" />
-    <Compile Include="Query\Parser\Context.cs" />
-    <Compile Include="Query\Parser\ElementFilter.cs" />
-    <Compile Include="Query\Parser\Filters\FilterByAll.cs" />
-    <Compile Include="Query\Parser\Filters\FilterByClass.cs" />
-    <Compile Include="Query\Parser\Filters\FilterById.cs" />
-    <Compile Include="Query\Parser\Filters\FilterByTagName.cs" />
-    <Compile Include="Query\Parser\Filters\FilterByOther.cs" />
-    <Compile Include="Query\Parser\ParamParser.cs" />
-    <Compile Include="Query\Parser\ReaderBase.cs" />
-    <Compile Include="Query\Parser\SelectorParamException.cs" />
+    <Compile Include="SelectorParser\Filters\FilterByAttr.cs" />
+    <Compile Include="SelectorParser\AttrSelectorReader.cs" />
+    <Compile Include="SelectorParser\SelectorReader.cs" />
+    <Compile Include="SelectorParser\Context.cs" />
+    <Compile Include="SelectorParser\ElementFilter.cs" />
+    <Compile Include="SelectorParser\Filters\FilterByAll.cs" />
+    <Compile Include="SelectorParser\Filters\FilterByClass.cs" />
+    <Compile Include="SelectorParser\Filters\FilterById.cs" />
+    <Compile Include="SelectorParser\Filters\FilterByTagName.cs" />
+    <Compile Include="SelectorParser\Filters\FilterByOther.cs" />
+    <Compile Include="SelectorParser\ParamParser.cs" />
+    <Compile Include="SelectorParser\ReaderBase.cs" />
+    <Compile Include="SelectorParser\SelectorParamException.cs" />
     <Compile Include="Query\Query.cs" />
     <Compile Include="Query\Selector.cs" />
     <Compile Include="Query\SelectorParam.cs" />
@@ -90,6 +103,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
