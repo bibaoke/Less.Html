@@ -44,9 +44,12 @@ namespace Less.Html
 
         internal void Add(string id, Element element)
         {
-            if (!this.Dictionary.ContainsKey(id))
+            if (id.IsNotNull())
             {
-                this.Dictionary.Add(id, element);
+                if (!this.Dictionary.ContainsKey(id))
+                {
+                    this.Dictionary.Add(id, element);
+                }
             }
         }
     }

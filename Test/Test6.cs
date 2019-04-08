@@ -20,6 +20,14 @@ namespace Test
         public override bool Execute(params string[] args)
         {
             //
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("testHtml/js.html").ReadString(Encoding.UTF8);
+
+                Document doc = HtmlParser.Parse(testHtml);
+            }
+
+            //
             {
                 string testStyle = "width:100px; height:100px; display:none; background:url(\"../test/test.png\")";
 

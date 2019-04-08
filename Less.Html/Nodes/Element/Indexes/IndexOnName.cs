@@ -49,19 +49,22 @@ namespace Less.Html
 
         internal void Add(string name, Element element)
         {
-            List<Element> list;
-
-            if (this.Dictionary.TryGetValue(name, out list))
+            if (name.IsNotNull())
             {
-                list.Add(element);
-            }
-            else
-            {
-                list = new List<Element>();
+                List<Element> list;
 
-                list.Add(element);
+                if (this.Dictionary.TryGetValue(name, out list))
+                {
+                    list.Add(element);
+                }
+                else
+                {
+                    list = new List<Element>();
 
-                this.Dictionary.Add(name, list);
+                    list.Add(element);
+
+                    this.Dictionary.Add(name, list);
+                }
             }
         }
     }
