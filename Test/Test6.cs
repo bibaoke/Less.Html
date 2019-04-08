@@ -21,11 +21,22 @@ namespace Test
         {
             //
             {
-                string testStyle = "width:100px; height:100px; display:none";
+                string testStyle = "width:100px; height:100px; display:none; background:url(\"../test/test.png\")";
+
+                Style style = StyleParser.Parse(testStyle);
+
+                Assert.IsTrue(style.Background.Url == "../test/test.png");
+            }
+
+            //
+            {
+                string testStyle = "width:100px; height:100px; display:none; background:url(../test/test.png)";
 
                 Style style = StyleParser.Parse(testStyle);
 
                 Assert.IsTrue(style.Properties.Single(i => i.Name == "display").Value == "none");
+
+                Assert.IsTrue(style.Background.Url == "../test/test.png");
             }
 
             //

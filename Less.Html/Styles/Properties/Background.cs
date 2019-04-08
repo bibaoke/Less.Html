@@ -27,7 +27,11 @@ namespace Less.Html
 
         static Background()
         {
-            Background.UrlPattern = @"url\((?<url>.*?)\)".ToRegex(
+            Background.UrlPattern = @"
+                url\((?<mark>[""'])(?<url>.*?)\k<mark>\)|
+                url\((?<url>.*?)\)
+                ".ToRegex(
+                RegexOptions.IgnorePatternWhitespace |
                 RegexOptions.IgnoreCase |
                 RegexOptions.Compiled |
                 RegexOptions.ExplicitCapture);
