@@ -22,7 +22,7 @@ namespace Less.Html
         public string Url
         {
             get;
-            internal set;
+            private set;
         }
 
         static Background()

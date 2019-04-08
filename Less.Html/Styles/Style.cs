@@ -15,7 +15,7 @@ namespace Less.Html
         public string Selector
         {
             get;
-            internal set;
+            private set;
         }
 
         /// <summary>
@@ -36,11 +36,14 @@ namespace Less.Html
             private set;
         }
 
-        internal Style(string selector)
+        internal Style(string selector) : this()
+        {
+            this.Selector = selector;
+        }
+
+        internal Style()
         {
             this.Properties = new PropertyCollection();
-
-            this.Selector = selector;
         }
 
         internal void Add(Property property)

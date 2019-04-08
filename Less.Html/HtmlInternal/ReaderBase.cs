@@ -120,11 +120,11 @@ namespace Less.Html.HtmlInternal
         /// <summary>
         /// 提升阅读位置
         /// </summary>
-        /// <param name="capture"></param>
-        protected void Ascend(Capture capture)
+        /// <param name="match"></param>
+        protected void Ascend(Match match)
         {
             //设置阅读位置
-            this.Position = capture.Index + capture.Length;
+            this.Position = match.Index + match.Length;
         }
 
         /// <summary>

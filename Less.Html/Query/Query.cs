@@ -72,7 +72,7 @@ namespace Less.Html
         /// <param name="value"></param>
         /// <returns></returns>
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        /// <exception cref="ArgumentNullException">name 不能为 null value 不能为 null</exception>
+        /// <exception cref="ArgumentNullException">name 不能为 null，value 不能为 null</exception>
         public Query css(string name, string value)
         {
             if (name.IsNull())

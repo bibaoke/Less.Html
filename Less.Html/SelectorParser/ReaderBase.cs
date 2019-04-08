@@ -107,9 +107,9 @@ namespace Less.Html.SelectorParser
 
         internal abstract ReaderBase Read();
 
-        protected void Ascend(Capture capture)
+        protected void Ascend(Match match)
         {
-            this.Position = capture.Index + capture.Length;
+            this.Position = match.Index + match.Length;
         }
 
         protected T Pass<T>() where T : ReaderBase, new()

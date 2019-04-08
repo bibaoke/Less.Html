@@ -41,6 +41,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StyleParser.cs" />
     <Compile Include="Styles\Properties\Background.cs" />
     <Compile Include="Styles\BlockCollection.cs" />
     <Compile Include="Styles\Css.cs" />

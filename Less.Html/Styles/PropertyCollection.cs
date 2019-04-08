@@ -32,12 +32,12 @@ namespace Less.Html
         /// <returns></returns>
         public IEnumerator<Property> GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            return this.List.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new System.NotImplementedException();
+            return this.List.GetEnumerator();
         }
     }
 }

@@ -91,9 +91,9 @@ namespace Less.Html.CssInternal
             return t;
         }
 
-        protected void Ascend(Capture capture)
+        protected void Ascend(Match match)
         {
-            this.Position = capture.Index + capture.Length;
+            this.Position = match.Index + match.Length;
         }
     }
 }
