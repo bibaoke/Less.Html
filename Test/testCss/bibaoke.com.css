@@ -10,6 +10,11 @@ h1, h2, h3, h4, h5, h6, p
     margin: 1em 0;
 }
 
+.test_background_image
+{
+    background-image: url(../images/test_background_image.png)
+}
+
 @media screen and (max-width: 300px)
 {
     body

@@ -20,7 +20,6 @@ namespace Test
         public override bool Execute(params string[] args)
         {
             //
-            //
             {
                 string testHtml = Application.SetupDir.CombinePath("testHtml/js.html").ReadString(Encoding.UTF8);
 
@@ -52,6 +51,9 @@ namespace Test
                 string testCss = Application.SetupDir.CombinePath("testCss/bibaoke.com.css").ReadString(Encoding.UTF8);
 
                 Css css = CssParser.Parse(testCss);
+
+                Assert.IsTrue(
+                    css.Styles.Where(i => i.Selector == ".test_background_image").Single().BackgroundImage.Url == "../images/test_background_image.png");
             }
 
             //

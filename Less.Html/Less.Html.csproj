@@ -48,6 +48,7 @@
     <Compile Include="Styles\Block.cs" />
     <Compile Include="CssInternal\Context.cs" />
     <Compile Include="CssInternal\PropertyReader.cs" />
+    <Compile Include="Styles\Properties\BackgroundImage.cs" />
     <Compile Include="Styles\Property.cs" />
     <Compile Include="Styles\PropertyCollection.cs" />
     <Compile Include="Styles\Style.cs" />

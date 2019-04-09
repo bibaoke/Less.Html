@@ -36,6 +36,15 @@ namespace Less.Html
             private set;
         }
 
+        /// <summary>
+        /// 背景图片
+        /// </summary>
+        public BackgroundImage BackgroundImage
+        {
+            get;
+            private set;
+        }
+
         internal Style(string selector) : this()
         {
             this.Selector = selector;
@@ -53,6 +62,10 @@ namespace Less.Html
             if (property.Name.CompareIgnoreCase("background"))
             {
                 this.Background = new Background(property.Value);
+            }
+            else if (property.Name.CompareIgnoreCase("background-image"))
+            {
+                this.BackgroundImage = new BackgroundImage(property.Value);
             }
         }
     }
