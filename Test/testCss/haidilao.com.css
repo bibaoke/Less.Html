@@ -1,0 +1,674 @@
+﻿body
+{
+    font-size: 16px;
+    padding: 0px;
+    margin: 0px;
+    background: #fff;
+    font-family: "微软雅黑";
+    -webkit-tap-highlight-color: transparent;
+}
+
+*, :after, :before
+{
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+ul
+{
+    list-style-type: none;
+    margin-bottom: 0;
+}
+
+li
+{
+    list-style-type: none;
+}
+
+a
+{
+    text-decoration: none;
+    color: inherit;
+}
+
+    a:hover
+    {
+        text-decoration: none;
+    }
+
+img
+{
+    border: 0px;
+    display: block;
+    width: 100%;
+}
+
+input
+{
+    outline: none;
+}
+
+button
+{
+    outline: none;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    margin: 0;
+}
+
+p
+{
+    margin-bottom: 0;
+}
+
+/*设置浮动和清除浮动*/
+
+.fix
+{
+    *zoom: 1;
+    *clear: both;
+}
+
+    .fix:before, .fix:after
+    {
+        display: table;
+        clear: both;
+        content: '';
+    }
+
+.fl
+{
+    float: left;
+}
+
+.fr
+{
+    float: right;
+}
+
+.clear:after
+{
+    content: '';
+    display: block;
+    clear: both;
+}
+
+.wrap
+{
+    width: 1178px;
+    height: auto;
+    margin: 0 auto;
+}
+
+@font-face
+{
+    font-family: 'Open Sans-light';
+    src: url('../fonts/OpenSans-Light.ttf');
+}
+/*@font-face{
+    font-family: 'pier-regular';
+    src:url('../fonts/pier-regular.otf');
+}*/
+@font-face
+{
+    font-family: 'OpenSans-Regular';
+    src: url('../fonts/OpenSans-Regular.ttf');
+}
+/*头部*/
+
+.header
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    background: #fff;
+    z-index: 999;
+}
+
+.logo
+{
+    width: 164px;
+    height: 49px;
+    margin-top: 13px;
+}
+
+    .logo a
+    {
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+        .logo a img
+        {
+            width: 100%;
+            height: 100%;
+        }
+
+.nav
+{
+    height: 100%;
+    border-right: 1px solid #dadada;
+}
+
+.nav_list
+{
+    padding-left: 88px;
+    padding-right: 62px;
+}
+
+    .nav_list li
+    {
+        float: left;
+        height: 100%;
+        line-height: 75px;
+    }
+
+        .nav_list li a
+        {
+            padding: 0 18px;
+            font-size: 14px;
+            line-height: 14px;
+            color: #666;
+        }
+
+            .nav_list li a:hover
+            {
+                color: #ed1b23;
+            }
+
+.r_top_con
+{
+    position: relative;
+    height: 100%;
+}
+
+.search
+{
+    padding-left: 38px;
+}
+
+.ipt_sub
+{
+    width: 20px;
+    height: 20px;
+    margin-top: 31px;
+    margin-bottom: 24px;
+    background: url(../images/pagnify.png) no-repeat;
+    background-size: 100% 100%;
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+}
+
+.searchcon
+{
+    display: none;
+    width: 198px;
+    margin-top: 20px;
+    border: 1px solid #d8d8d8;
+    border-radius: 5px;
+}
+
+    .searchcon input
+    {
+        width: 160px;
+        height: 36px;
+        padding-left: 6px;
+        border: 0;
+        border-radius: 5px;
+        background: none;
+    }
+
+.language_change
+{
+    height: 100%;
+    padding-left: 28px;
+}
+
+    .language_change span
+    {
+        display: block;
+        float: left;
+        line-height: 75px;
+        font-size: 14px;
+        color: #bfbfbf;
+    }
+
+    .language_change select
+    {
+        display: block;
+        float: right;
+        width: 58px;
+        height: 42px;
+        margin-top: 17px;
+        font-size: 14px;
+        color: #434343;
+        border: 0;
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: #fff;
+        outline: 0;
+        background: url(../images/down_arrow.png) no-repeat center right;
+        background-size: 16px 8px;
+        cursor: pointer;
+    }
+
+        .language_change select:focus
+        {
+            border: 0;
+        }
+
+        .language_change select option
+        {
+            padding: 5px;
+        }
+
+.mobile_top
+{
+    display: none;
+}
+
+/*底部*/
+
+.footer
+{
+    width: 100%;
+    height: auto;
+}
+
+.ft_top
+{
+    width: 100%;
+    height: 108px;
+    background: #e60012;
+}
+
+.l_ft_con a
+{
+    display: block;
+}
+
+    .l_ft_con a:hover
+    {
+        opacity: .8;
+    }
+
+    .l_ft_con a h2
+    {
+        padding-top: 27px;
+        line-height: 32px;
+        font-size: 32px;
+        color: #fff;
+        font-weight: normal;
+    }
+
+    .l_ft_con a span
+    {
+        display: block;
+        line-height: 14px;
+        padding-top: 10px;
+        padding-bottom: 25px;
+        font-size: 14px;
+        color: #fff;
+    }
+
+.r_share .bds_more
+{
+    display: none;
+}
+
+.r_share .bds_fbook
+{
+    width: 48px;
+    height: 48px;
+    line-height: inherit;
+    margin: 30px 54px 30px 0;
+    background-image: url(../images/facebook.png);
+    background-position: 0 0 !important;
+}
+
+.r_share .bds_weibo
+{
+    width: 48px;
+    height: 48px;
+    line-height: inherit;
+    margin: 30px 54px 30px 0;
+    background-image: url(../images/weibo.png);
+    background-position: 0 0 !important;
+}
+
+.r_share .bds_weixin
+{
+    width: 57px;
+    height: 46px;
+    line-height: inherit;
+    margin: 33px 0 29px 0;
+    background-image: url(../images/wx_icon.png);
+    background-position: 0 0 !important;
+}
+
+.ft_btm
+{
+    width: 100%;
+    height: 72px;
+    background: #eee;
+}
+
+.copyright
+{
+    height: 100%;
+}
+
+    .copyright p
+    {
+        height: 100%;
+        line-height: 72px;
+        font-size: 12px;
+        color: #636363;
+    }
+
+.r_ft_info
+{
+    line-height: 72px;
+}
+
+    .r_ft_info a
+    {
+        margin-left: 22px;
+        font-size: 12px;
+        color: #898989;
+    }
+
+        .r_ft_info a:hover
+        {
+            color: #464545;
+        }
+
+/*侧边栏*/
+
+.sidebar
+{
+    position: fixed;
+    bottom: 20px;
+    right: 0;
+    z-index: 99999;
+}
+
+.sidelist li
+{
+    width: 80px;
+    height: 75px;
+    margin-bottom: 3px;
+    background: rgba(237, 27, 35, .8);
+}
+
+    .sidelist li:last-child
+    {
+        margin-bottom: 0;
+    }
+
+    .sidelist li a
+    {
+        display: block;
+        height: 100%;
+        padding-top: 14px;
+    }
+
+    .sidelist li:hover
+    {
+        background: rgba(237, 27, 35, 1);
+    }
+
+    .sidelist li a p
+    {
+        width: 33px;
+        height: 28px;
+        margin: 0 auto;
+    }
+
+        .sidelist li a p img
+        {
+            margin: 0 auto;
+        }
+
+    .sidelist li a span
+    {
+        display: block;
+        line-height: 12px;
+        padding-top: 6px;
+        font-size: 12px;
+        color: #f8efef;
+        text-align: center;
+    }
+
+@media screen and (min-width:320px) and (max-width:1200px)
+{
+    .wrap
+    {
+        width: 95%;
+    }
+
+    .r_top_con
+    {
+        display: none;
+    }
+
+    .nav
+    {
+        border-right: 0;
+    }
+}
+
+@media screen and (max-width:1026px)
+{
+    .nav_list
+    {
+        padding-left: 20px;
+        padding-right: 0px;
+    }
+
+    .logo
+    {
+        width: 125px;
+        height: auto;
+        margin-top: 20px;
+    }
+
+    .nav_list li a
+    {
+        padding: 0 12px;
+    }
+}
+
+@media screen and (max-width:767px)
+{
+    .header
+    {
+        display: none;
+    }
+
+    .mobile_top
+    {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 64px;
+        padding: 0 10px;
+        background: #fff;
+        z-index: 999;
+    }
+
+    .mb_logo
+    {
+        width: 164px;
+        height: 49px;
+        margin-top: 8px;
+    }
+
+        .mb_logo a
+        {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+            .mb_logo a img
+            {
+                width: 100%;
+                height: 100%;
+            }
+
+    .menu_icon
+    {
+        width: 34px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+        .menu_icon img
+        {
+            width: 22px;
+            height: 18px;
+            margin: 0 6px;
+        }
+
+    .hide_menu
+    {
+        display: none;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        width: 100%;
+        height: auto;
+        box-shadow: 0 3px 3px #eee;
+    }
+
+    .menu_list
+    {
+        background: rgba(255, 255, 255, .9);
+    }
+
+        .menu_list li
+        {
+            width: 100%;
+            height: 42px;
+            line-height: 42px;
+            text-align: center;
+        }
+
+            .menu_list li a
+            {
+                display: block;
+                width: 100%;
+                height: 100%;
+                font-size: 14px;
+                color: #666;
+            }
+
+                .menu_list li a:hover
+                {
+                    color: #ed1b23;
+                    background: rgba(244, 244, 244, .8);
+                }
+
+    .menu_icon:focus, .mb_menu:focus
+    {
+        outline: none;
+    }
+}
+
+@media screen and (max-width:720px)
+{
+    .r_ft_info
+    {
+        display: none;
+    }
+}
+
+@media screen and (min-width:320px) and (max-width:414px)
+{
+    .mobile_top
+    {
+        height: 50px;
+    }
+
+    .mb_logo
+    {
+        width: 120px;
+        height: auto;
+    }
+
+    .menu_icon
+    {
+        height: 50px;
+    }
+
+    .hide_menu
+    {
+        top: 50px;
+    }
+
+    .copyright
+    {
+        float: inherit;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width:320px)
+{
+    .r_share .bds_fbook
+    {
+        margin-right: 20px;
+    }
+}
+
+
+
+
+/*add by xavi*/
+.nav
+{
+    border-right: 0;
+}
+
+.r_top_con
+{
+    display: none;
+}
+
+.hidden
+{
+    display: none;
+}
+
+.share-wechart
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.3);
+}
+
+.r_share .bds_phone
+{
+    width: 56px;
+    height: 48px;
+    line-height: inherit;
+    margin: 31px 50px 29px 0;
+    background-image: url(../images/share_tel.png);
+    background-position: 0 0 !important;
+}

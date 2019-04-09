@@ -21,6 +21,16 @@ namespace Test
         {
             //
             {
+                string testCss = Application.SetupDir.CombinePath("testCss/haidilao.com.css").ReadString(Encoding.UTF8);
+
+                Css css = CssParser.Parse(testCss);
+
+                Assert.IsTrue(
+                    css.Styles.Where(i => i.Selector == ".r_share .bds_fbook").Single().BackgroundImage.Url == "../images/facebook.png");
+            }
+
+            //
+            {
                 string testHtml = Application.SetupDir.CombinePath("testHtml/js.html").ReadString(Encoding.UTF8);
 
                 Document doc = HtmlParser.Parse(testHtml);

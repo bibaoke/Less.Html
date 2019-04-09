@@ -24,7 +24,7 @@ namespace Less.Html.CssInternal
             SelectorReader.Pattern = @"
                 (\s*(?<close>}))|
                 (\s*/\*(?<comment>.*?)\*/)|
-                (\s*@(?<block>.*?)\s*{)|
+                (\s*@(?<at>.*?)\s*{)|
                 (\s*(?<selector>.*?)\s*{)".ToRegex(
                 RegexOptions.IgnorePatternWhitespace |
                 RegexOptions.Singleline |
@@ -67,15 +67,26 @@ namespace Less.Html.CssInternal
                     }
                     else
                     {
-                        Group block = match.Groups["block"];
+                        Group at = match.Groups["at"];
 
-                        if (block.Success)
+                        if (at.Success)
                         {
-                            if (block.Value.IsNotEmpty())
+                            if (at.Value.IsNotEmpty())
                             {
-                                this.CurrentBlock = new Block(block.Value);
+                                string prefix = at.Value.Split('-')[0];
 
-                                return this.Pass<SelectorReader>();
+                                if (prefix.CompareIgnoreCase("media"))
+                                {
+                                    this.CurrentBlock = new Block(at.Value);
+
+                                    return this.Pass<SelectorReader>();
+                                }
+                                else
+                                {
+                                    this.CurrentStyle = new Style(at.Value);
+
+                                    return this.Pass<PropertyReader>();
+                                }
                             }
                             else
                             {

@@ -11,7 +11,7 @@
     <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>添加样式属性</releaseNotes>
+    <releaseNotes>添加对 @ 指令的处理</releaseNotes>
     <copyright>Copyright 2017 Shao Zhuang</copyright>
     <tags>html-parser jQuery-style css-selector css-parser</tags>
   </metadata>
