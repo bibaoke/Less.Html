@@ -45,6 +45,15 @@ namespace Less.Html
             private set;
         }
 
+        /// <summary>
+        /// 源文件
+        /// </summary>
+        public Src Src
+        {
+            get;
+            private set;
+        }
+
         internal Style(string selector) : this()
         {
             this.Selector = selector;
@@ -66,6 +75,10 @@ namespace Less.Html
             else if (property.Name.CompareIgnoreCase("background-image"))
             {
                 this.BackgroundImage = new BackgroundImage(property.Value);
+            }
+            else if (property.Name.CompareIgnoreCase("src"))
+            {
+                this.Src = new Src(property.Value);
             }
         }
     }
