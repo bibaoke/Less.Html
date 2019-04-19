@@ -24,7 +24,7 @@ namespace Less.Html.CssInternal
             SelectorReader.Pattern = @"
                 (\s*(?<close>}))|
                 (\s*/\*(?<comment>.*?)\*/)|
-                (\s*@(?<at>.*?)\s*{)|
+                (\s*(?<at>@.*?)\s*{)|
                 (\s*(?<selector>.*?)\s*{)".ToRegex(
                 RegexOptions.IgnorePatternWhitespace |
                 RegexOptions.Singleline |
