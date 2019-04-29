@@ -16,6 +16,30 @@ namespace Less.Html
             set;
         }
 
+        /// <summary>
+        /// 集合计数
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return this.List.Count;
+            }
+        }
+
+        /// <summary>
+        /// 获取指定索引的源文件值
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public SrcValue this[int index]
+        {
+            get
+            {
+                return this.List[index];
+            }
+        }
+
         internal SrcValueCollection()
         {
             this.List = new List<SrcValue>();

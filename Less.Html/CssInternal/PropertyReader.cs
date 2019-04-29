@@ -51,27 +51,36 @@ namespace Less.Html.CssInternal
                 }
                 else
                 {
-                    string propertyString = match.GetValue("property");
-                    string ending = match.GetValue("ending");
+                    Group property = match.Groups["property"];
+                    Group ending = match.Groups["ending"];
 
-                    Match matchNameValue = PropertyReader.NameValuePattern.Match(propertyString);
+                    Match matchNameValue = PropertyReader.NameValuePattern.Match(property.Value);
 
                     if (matchNameValue.Success)
                     {
-                        string name = matchNameValue.GetValue("name");
-                        string value = matchNameValue.GetValue("value");
+                        Group name = matchNameValue.Groups["name"];
+                        Group value = matchNameValue.Groups["value"];
 
-                        Property property = new Property(name, value);
+                        int valueBegin = property.Index + value.Index;
 
-                        this.CurrentStyle.Add(property);
+                        Property p = new Property(this.Css,
+                            property.Index,
+                            property.Index + name.Length - 1,
+                            valueBegin,
+                            valueBegin + value.Length - 1,
+                            property.Index + property.Length - 1);
+
+                        this.CurrentStyle.Add(p);
                     }
 
-                    if (ending == ";")
+                    if (ending.Value == ";")
                     {
                         return this.Pass<PropertyReader>();
                     }
                     else
                     {
+                        this.CurrentStyle.End = ending.Index;
+
                         if (this.CurrentBlock.IsNull())
                         {
                             this.Styles.Add(this.CurrentStyle);

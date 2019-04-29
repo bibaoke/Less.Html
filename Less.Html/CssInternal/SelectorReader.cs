@@ -50,6 +50,8 @@ namespace Less.Html.CssInternal
                 {
                     if (this.CurrentBlock.IsNotNull())
                     {
+                        this.CurrentBlock.End = close.Index;
+
                         this.Blocks.Add(this.CurrentBlock);
 
                         this.CurrentBlock = null;
@@ -75,15 +77,17 @@ namespace Less.Html.CssInternal
                             {
                                 string prefix = at.Value.Split('-')[0];
 
+                                int endIndex = at.Index + at.Length - 1;
+
                                 if (prefix.CompareIgnoreCase("media"))
                                 {
-                                    this.CurrentBlock = new Block(at.Value);
+                                    this.CurrentBlock = new Block(this.Css, at.Index, endIndex);
 
                                     return this.Pass<SelectorReader>();
                                 }
                                 else
                                 {
-                                    this.CurrentStyle = new Style(at.Value);
+                                    this.CurrentStyle = new Style(this.Css, at.Index, endIndex);
 
                                     return this.Pass<PropertyReader>();
                                 }
@@ -95,11 +99,11 @@ namespace Less.Html.CssInternal
                         }
                         else
                         {
-                            string selector = match.GetValue("selector");
+                            Group selector = match.Groups["selector"];
 
-                            if (selector.IsNotEmpty())
+                            if (selector.Value.IsNotEmpty())
                             {
-                                this.CurrentStyle = new Style(selector);
+                                this.CurrentStyle = new Style(this.Css, selector.Index, selector.Index + selector.Length - 1);
 
                                 return this.Pass<PropertyReader>();
                             }

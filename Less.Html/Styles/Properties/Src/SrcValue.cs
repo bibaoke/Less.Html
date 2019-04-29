@@ -8,9 +8,21 @@ namespace Less.Html
     /// <summary>
     /// 源文件值
     /// </summary>
-    public class SrcValue
+    public class SrcValue : CssInfo
     {
-        private static Regex UrlPattern
+        internal int UrlBegin
+        {
+            get;
+            set;
+        }
+
+        internal int UrlEnd
+        {
+            get;
+            set;
+        }
+
+        internal bool HasUrl
         {
             get;
             set;
@@ -21,35 +33,47 @@ namespace Less.Html
         /// </summary>
         public string Url
         {
-            get;
-            private set;
-        }
-
-        static SrcValue()
-        {
-            SrcValue.UrlPattern = @"
-                url\((?<mark>[""'])(?<url>.*?)\k<mark>\)|
-                url\((?<url>.*?)\)
-                ".ToRegex(
-                RegexOptions.IgnorePatternWhitespace |
-                RegexOptions.IgnoreCase |
-                RegexOptions.Compiled |
-                RegexOptions.ExplicitCapture);
-        }
-
-        internal SrcValue(string value)
-        {
-            string[] values = value.SplitByWhiteSpace();
-
-            foreach (string i in values)
+            get
             {
-                Match matchUrl = SrcValue.UrlPattern.Match(i);
+                if (HasUrl)
+                {
+                    return this.OwnerCss.Content.SubstringUnsafe(this.UrlBegin, this.UrlEnd - this.UrlBegin + 1);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            set
+            {
+                if (HasUrl)
+                {
+                    this.OwnerCss.Replace(this.UrlBegin, this.UrlEnd - this.UrlBegin + 1, value);
+                }
+                else
+                {
+                    //
+                }
+            }
+        }
+
+        internal SrcValue(Css ownerCss, int begin, int end) : base(ownerCss, begin, end)
+        {
+            this.EachSpaceValue(this.ToString(), match =>
+            {
+                Match matchUrl = Property.UrlPattern.Match(match.Value);
 
                 if (matchUrl.Success)
                 {
-                    this.Url = matchUrl.GetValue("url");
+                    Group url = matchUrl.Groups["url"];
+
+                    this.UrlBegin = this.Begin + match.Index + url.Index;
+
+                    this.UrlEnd = this.UrlBegin + url.Length - 1;
+
+                    this.HasUrl = true;
                 }
-            }
+            });
         }
     }
 }

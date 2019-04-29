@@ -1,19 +1,29 @@
 ﻿//bibaoke.com
 
+using Less.Text;
+
 namespace Less.Html
 {
     /// <summary>
     /// 样式块
     /// </summary>
-    public class Block
+    public class Block : CssInfo
     {
+        internal int NameEnd
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// 样式块名称
         /// </summary>
         public string Name
         {
-            get;
-            private set;
+            get
+            {
+                return this.OwnerCss.Content.SubstringUnsafe(this.Begin, this.NameEnd - this.Begin + 1);
+            }
         }
 
         /// <summary>
@@ -25,11 +35,11 @@ namespace Less.Html
             private set;
         }
 
-        internal Block(string name)
+        internal Block(Css ownerCss, int begin, int nameEnd) : base(ownerCss, begin)
         {
             this.Styles = new StyleCollection();
 
-            this.Name = name;
+            this.NameEnd = nameEnd;
         }
     }
 }

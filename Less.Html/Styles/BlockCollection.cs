@@ -16,6 +16,30 @@ namespace Less.Html
             set;
         }
 
+        /// <summary>
+        /// 样式块计数
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return this.List.Count;
+            }
+        }
+
+        /// <summary>
+        /// 获取指定索引的样式块
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Block this[int index]
+        {
+            get
+            {
+                return this.List[index];
+            }
+        }
+
         internal BlockCollection()
         {
             this.List = new List<Block>();

@@ -21,9 +21,34 @@ namespace Test
         {
             //
             {
+                string testCss = Application.SetupDir.CombinePath("testCss/app.cb1b40f2.css").ReadString(Encoding.UTF8);
+
+                Css css = CssParser.Parse(testCss);
+
+                Style style = css.Styles[".gd_news_box_title_text"].Single();
+
+                Property property = style.Properties["background"].Single();
+
+                Assert.IsTrue(style.Background.Url == "/img/ico_bg.dd1a022e.png");
+
+                style.Background.Url = "../img/ico_bg.dd1a022e.png";
+
+                Assert.IsTrue(((Background)property).Url == "../img/ico_bg.dd1a022e.png");
+            }
+
+            //
+            {
                 string testCss = Application.SetupDir.CombinePath("testCss/haidilao.com.css").ReadString(Encoding.UTF8);
 
                 Css css = CssParser.Parse(testCss);
+
+                Style style = css.Styles["@font-face"].First();
+
+                SrcValue value = style.Src.Values[0];
+
+                value.Url = "../../OpenSans-Light.ttf";
+
+                Assert.IsTrue(style.Src.Values[0].Url == "../../OpenSans-Light.ttf");
 
                 Assert.IsTrue(
                     css.Styles.Where(i => i.Selector == ".r_share .bds_fbook").Single().BackgroundImage.Url == "../images/facebook.png");

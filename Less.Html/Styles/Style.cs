@@ -1,21 +1,37 @@
 ﻿//bibaoke.com
 
 using Less.Text;
+using System;
+using System.Collections.Generic;
 
 namespace Less.Html
 {
     /// <summary>
     /// 样式
     /// </summary>
-    public class Style
+    public class Style : CssInfo
     {
+        private Dictionary<string, Func<Property, Property>> Handlers
+        {
+            get;
+            set;
+        }
+
+        internal int SelectorEnd
+        {
+            get;
+            set;
+        }
+
         /// <summary>
         /// 选择器
         /// </summary>
         public string Selector
         {
-            get;
-            private set;
+            get
+            {
+                return this.OwnerCss.Content.SubstringUnsafe(this.Begin, this.SelectorEnd - this.Begin + 1);
+            }
         }
 
         /// <summary>
@@ -54,31 +70,33 @@ namespace Less.Html
             private set;
         }
 
-        internal Style(string selector) : this()
+        internal Style(Css ownerCss, int begin, int selectorEnd) : this(ownerCss, begin)
         {
-            this.Selector = selector;
+            this.SelectorEnd = selectorEnd;
         }
 
-        internal Style()
+        internal Style(Css ownerCss, int begin) : base(ownerCss, begin)
         {
+            this.Handlers = new Dictionary<string, Func<Property, Property>>(StringComparer.OrdinalIgnoreCase);
+
+            this.Handlers.Add("background", property => this.Background = new Background(property));
+            this.Handlers.Add("background-image", property => this.BackgroundImage = new BackgroundImage(property));
+            this.Handlers.Add("src", property => this.Src = new Src(property));
+
             this.Properties = new PropertyCollection();
         }
 
         internal void Add(Property property)
         {
-            this.Properties.Add(property);
+            Func<Property, Property> func;
 
-            if (property.Name.CompareIgnoreCase("background"))
+            if (this.Handlers.TryGetValue(property.Name, out func))
             {
-                this.Background = new Background(property.Value);
+                this.Properties.Add(func(property));
             }
-            else if (property.Name.CompareIgnoreCase("background-image"))
+            else
             {
-                this.BackgroundImage = new BackgroundImage(property.Value);
-            }
-            else if (property.Name.CompareIgnoreCase("src"))
-            {
-                this.Src = new Src(property.Value);
+                this.Properties.Add(property);
             }
         }
     }

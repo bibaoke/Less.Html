@@ -31,7 +31,9 @@ namespace Less.Html
         /// <returns></returns>
         public static Style Parse(string content)
         {
-            Style style = new Style();
+            Css css = new Css(content);
+
+            Style style = new Style(css, 0);
 
             int position = 0;
 
@@ -39,17 +41,26 @@ namespace Less.Html
 
             while (match.Success)
             {
-                position = match.Index + match.Length;
+                Group name = match.Groups["name"];
+                Group value = match.Groups["value"];
 
-                string name = match.GetValue("name");
-                string value = match.GetValue("value");
-
-                Property property = new Property(name, value);
+                Property property = new Property(css,
+                    name.Index,
+                    name.Index + name.Length - 1,
+                    value.Index,
+                    value.Index + value.Length - 1,
+                    match.Index + match.Length - 1);
 
                 style.Add(property);
 
+                position = match.Index + match.Length;
+
                 match = StyleParser.Pattern.Match(content, position);
             }
+
+            style.End = css.Content.Length - 1;
+
+            css.Styles.Add(style);
 
             return style;
         }

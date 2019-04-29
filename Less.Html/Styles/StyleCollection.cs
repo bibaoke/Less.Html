@@ -2,6 +2,8 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Less.Text;
 
 namespace Less.Html
 {
@@ -14,6 +16,43 @@ namespace Less.Html
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// 样式计数
+        /// </summary>
+        public int Count
+        {
+            get
+            {
+                return this.List.Count;
+            }
+        }
+
+        /// <summary>
+        /// 获取指定索引的样式
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        public Style this[int index]
+        {
+            get
+            {
+                return this.List[index];
+            }
+        }
+
+        /// <summary>
+        /// 获取指定选择器的样式
+        /// </summary>
+        /// <param name="selector"></param>
+        /// <returns></returns>
+        public Style[] this[string selector]
+        {
+            get
+            {
+                return this.List.Where(i => i.Selector.CompareIgnoreCase(selector)).ToArray();
+            }
         }
 
         internal StyleCollection()
