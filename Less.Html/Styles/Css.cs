@@ -62,6 +62,15 @@ namespace Less.Html
             this.Shift(index, offset);
         }
 
+        /// <summary>
+        /// 输出字面量
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return this.Content;
+        }
+
         private void Shift(int index, int offset)
         {
             for (int i = this.Blocks.Count - 1; i >= 0; i--)
