@@ -76,13 +76,13 @@ namespace Less.Html.SelectorParser
             {
                 Element last = source.LastOrDefault();
 
-                if (last.IsNotNull())
+                if (last.IsNull())
                 {
-                    return last.EnumerateAllElements().Last().ConstructArray();
+                    return new Element[0];
                 }
                 else
                 {
-                    return new Element[0];
+                    return last.ConstructArray();
                 }
             }
             else if (this.Condition.CompareIgnoreCase("checkbox"))
