@@ -2,6 +2,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Less.Text;
 using Less.Collection;
 
@@ -116,17 +117,17 @@ namespace Less.Html
 
         internal Element[] GetElementsByClassName(string className)
         {
-            return this.IndexOnClass.Get(className);
+            return this.IndexOnClass.Get(className).OrderBy(i => i.Index).ToArray();
         }
 
         internal Element[] GetElementsByTagName(string tagName)
         {
-            return this.IndexOnTagName.Get(tagName);
+            return this.IndexOnTagName.Get(tagName).OrderBy(i => i.Index).ToArray();
         }
 
         internal Element[] GetElementsByName(string name)
         {
-            return this.IndexOnName.Get(name);
+            return this.IndexOnName.Get(name).OrderBy(i => i.Index).ToArray();
         }
 
         internal IEnumerable<Element> GetEnumerator(int startIndex)
