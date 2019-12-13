@@ -1,14 +1,13 @@
 ﻿//bibaoke.com
 
 using System.Collections.Generic;
-using System;
 
 namespace Less.Html
 {
     /// <summary>
     /// 元素 class 索引
     /// </summary>
-    internal class IndexOnClass
+    internal class IndexOnClass : IndexBase
     {
         private Dictionary<string, List<Element>> Dictionary
         {
@@ -54,7 +53,7 @@ namespace Less.Html
 
             if (this.Dictionary.TryGetValue(className, out list))
             {
-                list.Add(element);
+                this.Insert(list, element);
             }
             else
             {

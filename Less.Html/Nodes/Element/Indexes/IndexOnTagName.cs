@@ -8,7 +8,7 @@ namespace Less.Html
     /// <summary>
     /// 元素 class 索引
     /// </summary>
-    internal class IndexOnTagName
+    internal class IndexOnTagName : IndexBase
     {
         private Dictionary<string, List<Element>> Dictionary
         {
@@ -54,7 +54,7 @@ namespace Less.Html
 
             if (this.Dictionary.TryGetValue(tagName, out list))
             {
-                list.Add(element);
+                this.Insert(list, element);
             }
             else
             {
