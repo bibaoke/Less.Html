@@ -64,7 +64,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 获取元素的 chked 属性
+        /// 获取元素的 checked 属性
         /// </summary>
         /// <returns></returns>
         public string chked()
@@ -73,7 +73,7 @@ namespace Less.Html
         }
 
         /// <summary>
-        /// 设置元素的 chked 属性
+        /// 设置元素的 checked 属性
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
