@@ -24,6 +24,7 @@ namespace Less.Html.SelectorParser
             AttrSelectorReader.Pattern = @"
                 (?<name>.*?)='(?<value>\S*?)'\]|
                 (?<name>.*?)=""(?<value>\S*?)""\]|
+                (?<name>.*?)=(?<value>\S*?)\]|
                 (?<name>.*?)\]
                 ".ToRegex(
                 RegexOptions.IgnorePatternWhitespace |

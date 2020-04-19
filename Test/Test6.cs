@@ -107,6 +107,12 @@ namespace Test
 
                 Assert.IsTrue(q("meta[name='description']").attr("content") == @"测试
 <meta name=");
+
+                Assert.IsTrue(q("meta[name=\"description\"]").attr("content") == @"测试
+<meta name=");
+
+                Assert.IsTrue(q("meta[name=description]").attr("content") == @"测试
+<meta name=");
             }
 
             //
