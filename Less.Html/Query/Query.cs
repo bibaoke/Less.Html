@@ -97,18 +97,27 @@ namespace Less.Html
 
                 List<string> list = new List<string>();
 
-                name = name.Trim();
+                string key = name.Trim();
+
+                bool exists = false;
 
                 foreach (KeyValuePair<string, string> i in dic)
                 {
-                    if (i.Key.CompareIgnoreCase(name))
+                    if (i.Key.CompareIgnoreCase(key))
                     {
-                        list.Add(name + ":" + value.Trim());
+                        list.Add(name + ":" + value);
+
+                        exists = true;
                     }
                     else
                     {
                         list.Add(i.Key + ":" + i.Value);
                     }
+                }
+
+                if (!exists)
+                {
+                    list.Add(name + ":" + value);
                 }
 
                 this.attr("style", list.Join("; "));

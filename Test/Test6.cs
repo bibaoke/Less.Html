@@ -347,6 +347,15 @@ namespace Test
 
             //
             {
+                string testHtml = "<div style='width:100px; height:100px'></div>";
+
+                var q = HtmlParser.Query(testHtml);
+
+                Assert.IsTrue(q("div").css("display", "block").css("display") == "block");
+            }
+
+            //
+            {
                 string testHtml = "<select></select>";
 
                 var q = HtmlParser.Query(testHtml);
