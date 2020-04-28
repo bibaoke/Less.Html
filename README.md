@@ -4,16 +4,15 @@
 <p align="left">
 	我写了这个解析器之后才知道，原来 C# 写的 html 解析器有很多。但是因为我没有参照别人的做法，Less.Html 有一个特点，就是它的用法是最接近 jQuery 的。我刻意模仿了 jQuery。比如我写的&nbsp;<a href="http://bibaoke.com/post/75" target="_blank">示例一</a>：
 </p>
-<pre class="brush:csharp">var q = HtmlParser.Query(testHtml);
-
-foreach (Element i in q("td"))
-{
-    if (!q(i).find("table").hasElement)
-    {
-        Console.WriteLine(i.textContent);
-    }
-}
-</pre>
+	var q = HtmlParser.Query(testHtml);
+	
+	foreach (Element i in q("td"))
+	{
+		if (!q(i).find("table").hasElement)
+		{
+			Console.WriteLine(i.textContent);
+		}
+	}
 <p align="left">
 	解析之后返回的 q 对象，等同于 jQuery 的 $，因为 C# 不支持用 $ 做变量名，所以我用 q 代替。foreach 循环的部分，在 jQuery 的写法应该是：
 </p>
