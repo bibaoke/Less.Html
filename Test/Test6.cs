@@ -254,15 +254,6 @@ namespace Test
 
             //
             {
-                string testHtml = "<head></head>";
-
-                var q = HtmlParser.Query(testHtml);
-
-                Assert.IsTrue(!q("head #icon").hasElement);
-            }
-
-            //
-            {
                 string testHtml = "<html><head><title></title></head></html>";
 
                 Document document = HtmlParser.Parse(testHtml);

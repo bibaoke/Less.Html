@@ -48,18 +48,6 @@ namespace Less.Html
             }
         }
 
-        /// <summary>
-        /// 是否查询到元素
-        /// </summary>
-        /// <exception cref="SelectorParamException">选择器参数错误</exception>
-        public bool hasElement
-        {
-            get
-            {
-                return this.length > 0;
-            }
-        }
-
         internal Query(Selector selector)
         {
             this.Selector = selector;
