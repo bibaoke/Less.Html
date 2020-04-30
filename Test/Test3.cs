@@ -26,12 +26,10 @@ namespace Test
 
             var q = HtmlParser.Query(aspDotNet);
 
-            var title = q("table.child_forum tr td.title");
+            var title = q(".forums_title");
 
             foreach (Element i in title)
             {
-                q(i).find(".forum_link").remove();
-
                 this.WriteLine(i.textContent);
             }
 
