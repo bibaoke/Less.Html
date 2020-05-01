@@ -6,13 +6,10 @@
 </p>
 	
 	var q = HtmlParser.Query(testHtml);
-	
+
 	foreach (Element i in q("td"))
 	{
-		if (!q(i).find("table").hasElement)
-		{
-			Console.WriteLine(i.textContent);
-		}
+		Console.WriteLine(i.textContent);
 	}
 <p align="left">
 	解析之后返回的 q 对象，等同于 jQuery 的 $，因为 C# 不支持用 $ 做变量名，所以我用 q 代替。foreach 循环的部分，在 jQuery 的写法应该是：
