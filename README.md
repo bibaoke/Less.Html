@@ -9,7 +9,7 @@
 
 	foreach (Element i in q("td"))
 	{
-		Console.WriteLine(i.textContent);
+	    Console.WriteLine(i.textContent);
 	}
 <p align="left">
 	解析之后返回的 q 对象，等同于 jQuery 的 $，因为 C# 不支持用 $ 做变量名，所以我用 q 代替。foreach 循环的部分，在 jQuery 的写法应该是：
@@ -212,7 +212,7 @@
 	下面是我写的一些使用示例：
 </p>
 <p align="left">
-	<a href="http://bibaoke.com/post/75" target="_blank">示例一：获取嵌套元素中的正确内容</a> <br />
+	<a href="http://bibaoke.com/post/75" target="_blank">示例一：获取元素中的内容</a> <br />
 <a href="http://bibaoke.com/post/76" target="_blank">示例二：以 Less.Html&nbsp;做视图引擎 </a><br />
 <a href="http://bibaoke.com/post/77" target="_blank">示例三：与 WebClient 的配合使用，以抓取 CSDN 论坛内容为例</a><br />
 <a href="http://bibaoke.com/post/78" target="_blank">示例四：与 WebBrowser 的配合使用，以抓取京东手机价格为例</a><br />
