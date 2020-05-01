@@ -17,85 +17,57 @@ namespace Test
 
         public override bool Execute(params string[] args)
         {
-            //构造数据源
-            dynamic[] data = new dynamic[]
+            string testHtml =
+@"
+<table>
+    <thead>
+        <tr>
+            <th>姓名</th>
+            <th>学号</th>
+            <th>学分</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>张三</td>
+            <td>201505047</td>
+            <td>52</td>
+        </tr>
+        <tr>
+            <td>李四</td>
+            <td>201502072</td>
+            <td>65</td>
+        </tr>
+    </tbody>
+</table>
+";
+
+            dynamic data = new[]
             {
-                new{id = 1, name = "A", pid = 0, _float = "" },
-                new{id = 2, name = "B", pid = 1, _float = "left" },
-                new{id = 3, name = "C", pid = 1, _float = "right" },
-                new{id = 4, name = "D", pid = 2, _float = "left" }
+                new { name = "Dizzy", num = "202001018", score = "80" },
+                new { name = "Mira", num = "202002016", score = "85" }
             };
 
-            //视图模板
-            string template = "<div><span>文字内容</span></div>";
+            Document document = HtmlParser.Parse(testHtml);
 
-            //绘制视图
-            string html = this.RenderNode(data, 1, template);
-
-            //输出
-            Console.WriteLine(html);
-
-            return true;
-        }
-
-        private string RenderNode(dynamic[] data, int id, string template)
-        {
-            //用 Less.Html 解析视图模板
-            Document document = HtmlParser.Parse(template);
-
-            //绑定查询器
             var q = Selector.Bind(document);
 
-            //非空节点
-            if (id > 0)
+            var template = q(q("tbody tr").remove()[0]);
+
+            foreach (dynamic i in data)
             {
-                //获取数据
-                dynamic item = data.Where(i => i.id == id).First();
+                var clone = template.clone();
 
-                //绘制本节点
-                q("span").html("用户" + item.name);
+                clone.find("td:eq(0)").text(i.name);
+                clone.find("td:eq(1)").text(i.num);
+                clone.find("td:eq(2)").text(i.score);
 
-                //绘制子节点
-                q("div").after("<ul></ul>");
-
-                //左边节点
-                dynamic left = data.Where(
-                    i =>
-                    i.pid == id &&
-                    i._float == "left").FirstOrDefault();
-
-                q("ul:first").append(
-                    q(
-                        "<li>" +
-                        this.RenderNode(
-                            data,
-                            left != null ? left.id : -1,
-                            template) +
-                        "</li>").attr("style", "float:left"));
-
-                //右边节点
-                dynamic right = data.Where(
-                    i =>
-                    i.pid == id &&
-                    i._float == "right").FirstOrDefault();
-
-                q("ul:first").append(
-                    q(
-                        "<li>" +
-                        this.RenderNode(
-                            data,
-                            right != null ? right.id : -1,
-                            template) +
-                        "</li>").attr("style", "float:right"));
-            }
-            //空节点
-            else
-            {
-                //绘制添加操作节点
-                q("span").html("添加");
+                q("tbody").append(clone);
             }
 
-            return document.ToString();
+            this.WriteLine(document);
+
+            return true;
         }
     }
 }
