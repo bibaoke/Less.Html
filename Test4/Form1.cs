@@ -58,7 +58,7 @@ namespace Test4
                     var q = Selector.Bind(document);
 
                     //获取页面所有的商品
-                    var sku = q(".j-sku-item");
+                    var sku = q(".gl-item");
 
                     List<Tuple<string, string>> list = new List<Tuple<string, string>>();
 
@@ -70,7 +70,7 @@ namespace Test4
 
                         //商品价格
                         string price = q(i).find(
-                            ".p-price .J_price:first").text();
+                            ".p-price i").text();
 
                         if (name.IsNotWhiteSpace() && price.IsNotWhiteSpace())
                         {
