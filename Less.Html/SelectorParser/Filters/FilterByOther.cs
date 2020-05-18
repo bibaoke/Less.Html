@@ -2,9 +2,9 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Less.Collection;
 using Less.Text;
-using System.Text.RegularExpressions;
 
 namespace Less.Html.SelectorParser
 {
