@@ -1,9 +1,9 @@
 ﻿using Less.Windows;
 using Less.Html;
+using Less.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Text;
 using System.Linq;
-using Less.Text;
 
 namespace Test
 {
@@ -19,6 +19,19 @@ namespace Test
 
         public override bool Execute(params string[] args)
         {
+            //
+            {
+                string testHtml = "<input />";
+
+                var q = HtmlParser.Query(testHtml);
+
+                string value = null;
+
+                q("input").val(value);
+
+                Assert.IsTrue(q("input").val() == "");
+            }
+
             //
             {
                 string testCss = Application.SetupDir.CombinePath("testCss/app.cb1b40f2.css").ReadString(Encoding.UTF8);

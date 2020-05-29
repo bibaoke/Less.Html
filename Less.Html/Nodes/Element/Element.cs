@@ -284,7 +284,7 @@ namespace Less.Html
         /// <param name="value"></param>
         public void setAttribute(string name, string value)
         {
-            this.setAttributeNode(new Attr(name, value, this.ownerDocument.Parse));
+            this.setAttributeNode(new Attr(name, value.IsNull(""), this.ownerDocument.Parse));
         }
 
         /// <summary>

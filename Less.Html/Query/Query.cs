@@ -299,14 +299,7 @@ namespace Less.Html
         /// <exception cref="SelectorParamException">选择器参数错误</exception>
         public Query val(object value)
         {
-            if (value.IsNull())
-            {
-                this.val("");
-            }
-            else
-            {
-                this.val(value.ToString());
-            }
+            this.attr("value", value);
 
             return this;
         }
