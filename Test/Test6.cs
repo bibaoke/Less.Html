@@ -491,6 +491,18 @@ namespace Test
                 Assert.IsTrue(q(":checkbox").removeClass("class2 class1").attr("class") == "class3");
             }
 
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("testHtml/kayak.com.html").ReadString(Encoding.UTF8);
+
+                var q = HtmlParser.Query(testHtml);
+
+                foreach (Element i in q("a, area"))
+                {
+                    //
+                }
+            }
+
             return true;
         }
     }
