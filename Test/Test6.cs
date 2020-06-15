@@ -71,7 +71,7 @@ namespace Test
             {
                 string testHtml = Application.SetupDir.CombinePath("testHtml/js.html").ReadString(Encoding.UTF8);
 
-                Document doc = HtmlParser.Parse(testHtml);
+                Document document = HtmlParser.Parse(testHtml);
             }
 
             //
@@ -498,6 +498,30 @@ namespace Test
                 var q = HtmlParser.Query(testHtml);
 
                 foreach (Element i in q("a, area"))
+                {
+                    //
+                }
+            }
+
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("testHtml/avon.co.za.html").ReadString(Encoding.UTF8);
+
+                var q = HtmlParser.Query(testHtml);
+
+                foreach (Element i in q("meta"))
+                {
+                    //
+                }
+            }
+
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("testHtml/tsite.jp.html").ReadString(Encoding.UTF8);
+
+                var q = HtmlParser.Query(testHtml);
+
+                foreach (Element i in q("meta"))
                 {
                     //
                 }
