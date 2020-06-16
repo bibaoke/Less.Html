@@ -527,6 +527,13 @@ namespace Test
                 }
             }
 
+            //
+            {
+                string testHtml = Application.SetupDir.CombinePath("testHtml/avon.co.za.error.html").ReadString(Encoding.UTF8);
+
+                Document document = HtmlParser.Parse(testHtml);
+            }
+
             return true;
         }
     }

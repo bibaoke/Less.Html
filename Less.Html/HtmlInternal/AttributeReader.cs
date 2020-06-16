@@ -53,7 +53,7 @@ namespace Less.Html.HtmlInternal
                 (?<name>\S+?)\s*=\s*(?<mark>[""'])\s*(?<value>.*?)\s*\k<mark>|
                 (?<name>\S+?)\s*=\s*(?<value>.*?)((?<space>\s)|(?<single>/>)|(?<double>>))|
                 (?<mark>[""'])\s*(?<value>.*?)\s*\k<mark>((?<space>\s)|(?<single>/>)|(?<double>>))|
-                (?<name>\S+?)((?<space>\s)|(?<single>/>)|(?<double>>))
+                (?<name>\S+?)((?<space>\s)|(?<single>/>)|(?<double>>)|$)
                 ".ToRegex(
                 RegexOptions.IgnorePatternWhitespace |
                 RegexOptions.Singleline |
@@ -171,8 +171,16 @@ namespace Less.Html.HtmlInternal
                     //如果当前位置在开标签内
                     if (this.Element.IsNotNull())
                     {
-                        //设置属性
-                        this.SetAttribute(match, -match.Groups["space"].Length);
+                        Group space = match.Groups["space"];
+
+                        if (space.Success)
+                        {
+                            this.SetAttribute(match, -space.Length);
+                        }
+                        else
+                        {
+                            this.SetAttribute(match, 0);
+                        }
                     }
 
                     //继续读取下一个属性
