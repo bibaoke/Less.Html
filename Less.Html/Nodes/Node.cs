@@ -16,15 +16,6 @@ namespace Less.Html
     public abstract class Node
     {
         /// <summary>
-        /// 正则表达式
-        /// </summary>
-        protected static Regex Pattern
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// 是否开启自检程序
         /// </summary>
         private bool SelfChecking
@@ -33,6 +24,15 @@ namespace Less.Html
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 正则表达式
+        /// </summary>
+        protected static Regex Pattern
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Less.Html
             string content = node.Content;
 
             //修改原文档内容
-            this.ownerDocument.Content = this.ownerDocument.Content.Remove(node.Begin, length);
+            this.ownerDocument.Content.Remove(node.Begin, length);
 
             int offset = -length;
 
@@ -370,7 +370,7 @@ namespace Less.Html
                 newItem.parentNode = this;
 
                 //修改此文档的内容
-                this.ownerDocument.Content = this.ownerDocument.Content.Insert(existingItem.Begin, newItem.Content);
+                this.ownerDocument.Content.Insert(existingItem.Begin, newItem.Content);
 
                 //设置新的索引
                 newItem.SetIndex(existingItem.Begin - newItem.Begin);
@@ -497,7 +497,7 @@ namespace Less.Html
                 int begin = this.GetAppendIndex();
 
                 //修改此文档的内容
-                this.ownerDocument.Content = this.ownerDocument.Content.Insert(begin, node.Content);
+                this.ownerDocument.Content.Insert(begin, node.Content);
 
                 //设置新的索引
                 node.SetIndex(begin - node.Begin);

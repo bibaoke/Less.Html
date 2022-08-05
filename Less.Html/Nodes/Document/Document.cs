@@ -1,9 +1,9 @@
 ﻿//bibaoke.com
 
 using System.Linq;
-using Less.Text;
 using System;
 using System.Collections.Generic;
+using Less.Text;
 using Less.Collection;
 
 namespace Less.Html
@@ -40,7 +40,7 @@ namespace Less.Html
         /// <summary>
         /// 文档内容
         /// </summary>
-        internal new string Content
+        internal new DocumentContent Content
         {
             get;
             set;

@@ -107,8 +107,10 @@ namespace Test
             //
             new Test1().Execute();
             new Test2().Execute();
-            new Test3().Execute();
-            new Test4().Execute();
+            //失效
+            //new Test3().Execute();
+            //暂不使用
+            //new Test4().Execute();
             new Test5().Execute();
 
             //

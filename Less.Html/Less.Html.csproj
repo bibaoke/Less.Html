@@ -44,6 +44,7 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Nodes\Document\DocumentContent.cs" />
     <Compile Include="Nodes\Element\Indexes\IndexBase.cs" />
     <Compile Include="StyleParser.cs" />
     <Compile Include="Styles\CssInfo.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="HtmlInternal\TagReader.cs" />
     <Compile Include="Nodes\Attr.cs" />
     <Compile Include="Nodes\Comment.cs" />
-    <Compile Include="Nodes\Document.cs" />
+    <Compile Include="Nodes\Document\Document.cs" />
     <Compile Include="Nodes\Element\Element.cs" />
     <Compile Include="Nodes\ElementCollection.cs" />
     <Compile Include="Nodes\Element\Indexes\IndexOnClass.cs" />
