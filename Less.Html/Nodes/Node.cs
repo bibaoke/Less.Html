@@ -775,7 +775,10 @@ namespace Less.Html
         {
             if (this.parentNode.IsNotNull())
             {
-                this.parentNode.End += offset;
+                if (!this.parentNode.nodeName.CompareIgnoreCase("#DOCUMENT"))
+                {
+                    this.parentNode.End += offset;
+                }
 
                 this.parentNode.OnShiftParent(offset);
 

@@ -37,6 +37,9 @@
     <Reference Include="Less.Common, Version=1.0.94.26892, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Less.Common.1.0.94.1\lib\net35\Less.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Less.Log, Version=1.0.1.31036, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Less.Log.1.0.1.1\lib\net35\Less.Log.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>

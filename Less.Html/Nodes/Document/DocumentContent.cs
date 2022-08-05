@@ -1,8 +1,11 @@
 ﻿//bibaoke.com
 
+using Less.Log;
 using Less.Text;
 using System;
 using System.Text;
+using System.Linq;
+using System.Diagnostics;
 
 namespace Less.Html
 {
@@ -30,6 +33,14 @@ namespace Less.Html
                 if (this.ValueBuilder.IsNotNull())
                 {
                     this.ValueCache = this.ValueBuilder.ToString();
+
+#if DEBUG
+                    AppLog.Write(new
+                    {
+                        this.ValueCache,
+                        StackTrace = new StackTrace().GetFrames().Select(i => i.GetMethod().Name)
+                    }, false);
+#endif
 
                     this.ValueBuilder = null;
                 }

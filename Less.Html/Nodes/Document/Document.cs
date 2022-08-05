@@ -68,7 +68,7 @@ namespace Less.Html
         {
             get
             {
-                return "#document".ToUpper();
+                return "#DOCUMENT";
             }
         }
 
