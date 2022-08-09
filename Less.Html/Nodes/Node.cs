@@ -596,28 +596,31 @@ namespace Less.Html
         {
             if (this.SelfChecking)
             {
-                try
+                this.ownerDocument.Content.ExecInSelfCheck(() =>
                 {
-                    string content = this.Content;
-                }
-                catch (Exception ex)
-                {
-                    throw new SelfCheckingException(ex);
-                }
+                    try
+                    {
+                        string content = this.Content;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new SelfCheckingException(ex);
+                    }
 
-                int collectionIndex = this.ownerDocument.AllNodes.IndexOf(this);
+                    int collectionIndex = this.ownerDocument.AllNodes.IndexOf(this);
 
-                if (this.Index != collectionIndex)
-                {
-                    throw new SelfCheckingException();
-                }
+                    if (this.Index != collectionIndex)
+                    {
+                        throw new SelfCheckingException();
+                    }
 
-                this.OnSelfCheck();
+                    this.OnSelfCheck();
 
-                foreach (Node i in this.ChildNodeList)
-                {
-                    i.SelfCheck();
-                }
+                    foreach (Node i in this.ChildNodeList)
+                    {
+                        i.SelfCheck();
+                    }
+                });
             }
         }
 

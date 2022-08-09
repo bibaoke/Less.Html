@@ -26,6 +26,12 @@ namespace Less.Html
             set;
         }
 
+        private bool SelfChecking
+        {
+            get;
+            set;
+        }
+
         private string Value
         {
             get
@@ -35,11 +41,14 @@ namespace Less.Html
                     this.ValueCache = this.ValueBuilder.ToString();
 
 #if DEBUG
-                    AppLog.Write(new
+                    if (!SelfChecking)
                     {
-                        this.ValueCache,
-                        StackTrace = new StackTrace().GetFrames().Select(i => i.GetMethod().Name)
-                    }, false);
+                        AppLog.Write(new
+                        {
+                            this.ValueCache,
+                            StackTrace = new StackTrace().GetFrames().Select(i => i.GetMethod().Name)
+                        }, false);
+                    }
 #endif
 
                     this.ValueBuilder = null;
@@ -112,10 +121,23 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 在自检状态下执行
+        /// </summary>
+        /// <param name="action">在自检状态下执行的方法</param>
+        public void ExecInSelfCheck(Action action)
+        {
+            this.SelfChecking = true;
+
+            action();
+
+            this.SelfChecking = false;
+        }
+
+        /// <summary>
         /// 将指定范围的字符从此实例中移除
         /// </summary>
-        /// <param name="startIndex"></param>
-        /// <param name="count"></param>
+        /// <param name="startIndex">起始索引</param>
+        /// <param name="count">长度</param>
         public void Remove(int startIndex, int count)
         {
             this.GetValueBuilder().Remove(startIndex, count);
@@ -136,7 +158,7 @@ namespace Less.Html
         /// </summary>
         /// <param name="startIndex">起始索引</param>
         /// <param name="length">长度</param>
-        /// <returns></returns>
+        /// <returns>返回引用此实例地址的子字符串</returns>
         public string SubstringUnsafe(int startIndex, int length)
         {
             return this.Value.SubstringUnsafe(startIndex, length);
