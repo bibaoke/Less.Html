@@ -1,12 +1,12 @@
 ﻿//bibaoke.com
 
 using Less.Text;
+using Less.Collection;
+using Less.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Less.Collection;
 using System;
-using System.Web;
 
 namespace Less.Html
 {
@@ -18,16 +18,10 @@ namespace Less.Html
         /// <summary>
         /// 是否开启自检程序
         /// </summary>
-        private bool SelfChecking
+        private static bool SelfChecking
         {
-            get
-            {
-#if DEBUG
-                return true;
-#else
-                return false;
-#endif
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -199,6 +193,15 @@ namespace Less.Html
 
         static Node()
         {
+#if DEBUG
+            bool? self_checking = Config.GetAppSetting("Less.Html.SelfChecking").ToBool();
+
+            if (self_checking.IsNotNull())
+            {
+                Node.SelfChecking = self_checking.Value;
+            }
+#endif
+
             Node.Pattern = @"\s+|&nbsp;|&nbsp".ToRegex(RegexOptions.Compiled);
         }
 
@@ -594,7 +597,7 @@ namespace Less.Html
 
         internal void SelfCheck()
         {
-            if (this.SelfChecking)
+            if (Node.SelfChecking)
             {
                 this.ownerDocument.Content.ExecInSelfCheck(() =>
                 {
