@@ -230,15 +230,9 @@ namespace Less.Html.HtmlInternal
             Group value = match.Groups["value"];
 
             //属性名索引
-            int nameBegin = -1;
+            int nameBegin = name.Index;
             //属性名长度
-            int nameLength = -1;
-
-            if (name.Success)
-            {
-                nameBegin = name.Index;
-                nameLength = name.Length;
-            }
+            int nameLength = name.Length;
 
             //属性值索引
             int valueBegin = -1;
@@ -251,16 +245,20 @@ namespace Less.Html.HtmlInternal
                 valueLength = value.Length;
             }
 
+            Attr attr = new Attr(
+                this.Element,
+                match.Index, match.Index + match.Length - 1 + offset,
+                nameBegin, nameLength,
+                valueBegin, valueLength);
+
+            //标记属性前面是否有空白字符分隔
+            if (char.IsWhiteSpace(this.Content[name.Index - 1]))
+            {
+                attr.IsWhiteSpaceBefore = true;
+            }
+
             //添加属性
-            this.Element.attributes.Add(
-                new Attr(
-                    this.Element,
-                    match.Index,
-                    match.Index + match.Length - 1 + offset,
-                    nameBegin,
-                    nameLength,
-                    valueBegin,
-                    valueLength));
+            this.Element.attributes.Add(attr);
         }
     }
 }

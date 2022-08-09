@@ -48,6 +48,15 @@ namespace Less.Html
             set;
         }
 
+        /// <summary>
+        /// 属性前面是否有空白字符分隔
+        /// </summary>
+        internal bool IsWhiteSpaceBefore
+        {
+            get;
+            set;
+        }
+
         internal bool InOpenTag
         {
             get
@@ -210,7 +219,7 @@ namespace Less.Html
 
             string postfix = Symbol.Space;
 
-            if (element.ownerDocument.Content[stringIndex - 1] == Symbol.Space[0])
+            if (attr.IsWhiteSpaceBefore)
             {
                 postfix = "";
             }
