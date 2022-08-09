@@ -114,6 +114,12 @@ namespace Less.Html.HtmlInternal
                     //如果标签对应的元素不为空 即当前位置在开标签内
                     if (this.Element.IsNotNull())
                     {
+                        //标记标签结束前是否存在空白字符
+                        if (char.IsWhiteSpace(this.Content[xdouble.Index - 1]))
+                        {
+                            this.Element.IsWhiteSpaceBeforeTagClosed = true;
+                        }
+
                         this.Element.InnerBegin = this.Position;
 
                         //如果是单标签元素
@@ -153,6 +159,12 @@ namespace Less.Html.HtmlInternal
 
                         //标记元素的标签结束方法
                         this.Element.IsSingleTagClosed = true;
+
+                        //标记标签结束前是否存在空白字符
+                        if (char.IsWhiteSpace(this.Content[single.Index - 1]))
+                        {
+                            this.Element.IsWhiteSpaceBeforeTagClosed = true;
+                        }
 
                         this.Element.End = this.Position - 1;
 
