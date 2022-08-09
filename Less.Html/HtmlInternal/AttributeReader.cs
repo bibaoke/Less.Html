@@ -1,6 +1,7 @@
 ﻿//bibaoke.com
 
 using System.Text.RegularExpressions;
+using System.Linq;
 using Less.Text;
 
 namespace Less.Html.HtmlInternal
@@ -149,6 +150,9 @@ namespace Less.Html.HtmlInternal
                     if (this.Element.IsNotNull())
                     {
                         this.Element.IsSingle = true;
+
+                        //标记元素的标签结束方法
+                        this.Element.IsSingleTagClosed = true;
 
                         this.Element.End = this.Position - 1;
 

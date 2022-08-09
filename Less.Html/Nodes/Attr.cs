@@ -275,7 +275,7 @@ namespace Less.Html
                 {
                     begin = element.End;
 
-                    if (element.ownerDocument.Content[begin - 1] == '/')
+                    if (element.IsSingleTagClosed)
                     {
                         begin--;
                     }
