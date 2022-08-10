@@ -252,9 +252,20 @@ namespace Less.Html.HtmlInternal
                 valueBegin, valueLength);
 
             //标记属性前面是否有空白字符分隔
-            if (char.IsWhiteSpace(this.Content[name.Index - 1]))
+            if (char.IsWhiteSpace(this.Content[attr.Begin - 1]))
             {
                 attr.IsWhiteSpaceBefore = true;
+            }
+
+            //标记属性后面是否有空白字符分隔
+            int end_next = attr.End + 1;
+
+            if (this.Content.Length > end_next)
+            {
+                if (char.IsWhiteSpace(this.Content[end_next]))
+                {
+                    attr.IsWhiteSpaceAfter = true;
+                }
             }
 
             //添加属性

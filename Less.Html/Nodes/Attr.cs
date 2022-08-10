@@ -57,6 +57,15 @@ namespace Less.Html
             set;
         }
 
+        /// <summary>
+        /// 属性后面是否有空白字符分隔
+        /// </summary>
+        internal bool IsWhiteSpaceAfter
+        {
+            get;
+            set;
+        }
+
         internal bool InOpenTag
         {
             get
@@ -354,7 +363,7 @@ namespace Less.Html
 
                 int length = this.End - this.Begin + 1;
 
-                int removeLength = this.ownerDocument.Content[this.End + 1] == Symbol.Space[0] ? length + 1 : length;
+                int removeLength = this.IsWhiteSpaceAfter ? length + 1 : length;
 
                 this.ownerDocument.Content.Remove(this.Begin, removeLength);
 
