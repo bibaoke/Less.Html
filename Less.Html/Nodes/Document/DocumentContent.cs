@@ -168,7 +168,18 @@ namespace Less.Html
         /// <returns>返回引用此实例地址的子字符串</returns>
         public string SubstringUnsafe(int startIndex, int length)
         {
-            return this.Value.SubstringUnsafe(startIndex, length);
+            if (this.ValueBuilder.IsNotNull())
+            {
+                char[] dest = new char[length];
+
+                this.ValueBuilder.CopyTo(startIndex, dest, 0, length);
+
+                return new string(dest);
+            }
+            else
+            {
+                return this.ValueCache.SubstringUnsafe(startIndex, length);
+            }
         }
 
         private StringBuilder GetValueBuilder()
