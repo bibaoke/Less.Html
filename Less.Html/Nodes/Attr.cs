@@ -86,6 +86,24 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 属性名称缓存
+        /// </summary>
+        internal string NameCache
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 属性值缓存
+        /// </summary>
+        internal string ValueCache
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// 节点名称
         /// </summary>
         public override string nodeName
@@ -140,6 +158,12 @@ namespace Less.Html
             Document document = new Document("{0}=\"{1}\"".FormatString(name, value), parse);
 
             this.ownerDocument = document;
+
+            //设置属性名称和属性值的缓存
+            //即使属性移动到别的文档，属性名称和属性值是不会改变的
+            //这样就可以读取缓存来改善性能
+            this.NameCache = name;
+            this.ValueCache = value;
 
             this.Begin = 0;
             this.End = document.End;
