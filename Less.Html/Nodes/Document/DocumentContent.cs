@@ -74,14 +74,7 @@ namespace Less.Html
         {
             get
             {
-                if (this.ValueBuilder.IsNull())
-                {
-                    return this.Value.Length;
-                }
-                else
-                {
-                    return this.ValueBuilder.Length;
-                }
+                return this.Value.Length;
             }
         }
 

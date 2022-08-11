@@ -210,7 +210,14 @@ namespace Less.Html
 
             string postfix = Symbol.Space;
 
-            if (element.ownerDocument.Content[stringIndex - 1] == Symbol.Space[0])
+            if (element.ownerDocument.End > stringIndex)
+            {
+                if (element.ownerDocument.Content[stringIndex + 1] == Symbol.Space[0])
+                {
+                    postfix = "";
+                }
+            }
+            else
             {
                 postfix = "";
             }
@@ -284,7 +291,7 @@ namespace Less.Html
                     postfix = "";
                 }
 
-                if (element.IsWhiteSpaceBeforeTagClosed)
+                if (element.ownerDocument.Content[begin - 1] == Symbol.Space[0])
                 {
                     prefix = "";
                 }

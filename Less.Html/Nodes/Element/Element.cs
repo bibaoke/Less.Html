@@ -79,15 +79,6 @@ namespace Less.Html
             set;
         }
 
-        /// <summary>
-        /// 标签结束前是否存在空白字符
-        /// </summary>
-        internal bool IsWhiteSpaceBeforeTagClosed
-        {
-            get;
-            set;
-        }
-
         internal int InnerBegin
         {
             get;

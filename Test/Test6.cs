@@ -362,19 +362,6 @@ namespace Test
 
             //
             {
-                string testHtml = "<div style='width:100px; height:100px'></div>";
-
-                Document document = HtmlParser.Parse(testHtml);
-
-                var q = Selector.Bind(document);
-
-                q("div").css("display", "block");
-
-                Assert.IsTrue(document.ToString() == "<div style=\"width:100px; height:100px; display:block\"></div>");
-            }
-
-            //
-            {
                 string testHtml = "<select></select>";
 
                 var q = HtmlParser.Query(testHtml);
