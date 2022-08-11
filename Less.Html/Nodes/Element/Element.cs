@@ -70,15 +70,6 @@ namespace Less.Html
             set;
         }
 
-        /// <summary>
-        /// 标签是否使用单标签的结束表示方法，即以 /> 结尾
-        /// </summary>
-        internal bool IsSingleTagClosed
-        {
-            get;
-            set;
-        }
-
         internal int InnerBegin
         {
             get;
