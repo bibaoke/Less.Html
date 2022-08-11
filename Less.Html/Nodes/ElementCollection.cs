@@ -213,29 +213,16 @@ namespace Less.Html
 
         internal void AddIndex(Attr attr)
         {
-            string name = attr.NameCache;
-            string value = attr.ValueCache;
-
-            if (name.IsNull())
-            {
-                name = attr.name;
-            }
-
-            if (value.IsNull())
-            {
-                value = attr.value;
-            }
-
-            switch (name)
+            switch (attr.name)
             {
                 case "id":
-                    this.IndexOnId.Add(value, attr.Element);
+                    this.IndexOnId.Add(attr.value, attr.Element);
                     break;
                 case "class":
-                    this.AddIndexOnClass(value, attr.Element);
+                    this.AddIndexOnClass(attr.value, attr.Element);
                     break;
                 case "name":
-                    this.IndexOnName.Add(value, attr.Element);
+                    this.IndexOnName.Add(attr.value, attr.Element);
                     break;
             }
         }

@@ -120,6 +120,8 @@ namespace Less.Html
             {
                 item.OnAddNamedItem(this.Reference);
 
+                item.OnAddToNamedNodeMap();
+
                 return null;
             }
             else
