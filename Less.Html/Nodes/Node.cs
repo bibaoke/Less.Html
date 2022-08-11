@@ -324,18 +324,8 @@ namespace Less.Html
 
             document.AllNodesCount += node.AllNodesCount;
 
-            //在新文档重新编排元素的索引
-            IEnumerable<Element> elements = removeNodes.GetElements();
+            this.OnRemovedChild(document, removeNodes);
 
-            elements.Each((index, item) =>
-            {
-                item.Index = document.all.Count + index;
-            });
-
-            //把元素添加到新文档的 all 属性
-            document.all.AddRange(elements);
-
-            //自检
             this.ownerDocument.SelfCheck();
             node.ownerDocument.SelfCheck();
 
@@ -465,9 +455,6 @@ namespace Less.Html
                 //如果添加的节点有所属文档，则需要自检
                 checking = true;
 
-                //在原文档中删除节点
-                node.parentNode.removeChild(node);
-
                 //把节点添加到文档的节点列表
                 Node nextNode = this.GetNextNode();
 
@@ -485,6 +472,9 @@ namespace Less.Html
                 this.AlterAllChildNodesCount(node.AllNodesCount);
 
                 this.OnAppendChild(node);
+
+                //在原文档中删除节点
+                node.parentNode.removeChild(node);
 
                 //重新编排节点索引
                 if (nextNode.IsNotNull())
@@ -674,6 +664,16 @@ namespace Less.Html
         protected virtual int GetAppendIndex()
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 在移除子节点之后调用 此时子节点会属于一个新的文档
+        /// </summary>
+        /// <param name="document">移除节点的所属文档</param>
+        /// <param name="nodes">已经移除的节点</param>
+        protected virtual void OnRemovedChild(Document document, Node[] nodes)
+        {
+            //
         }
 
         /// <summary>
