@@ -74,7 +74,14 @@ namespace Less.Html
         {
             get
             {
-                return this.Value.Length;
+                if (this.ValueBuilder.IsNotNull())
+                {
+                    return this.ValueBuilder.Length;
+                }
+                else
+                {
+                    return this.Value.Length;
+                }
             }
         }
 
@@ -87,7 +94,14 @@ namespace Less.Html
         {
             get
             {
-                return this.Value[index];
+                if (this.ValueBuilder.IsNotNull())
+                {
+                    return this.ValueBuilder[index];
+                }
+                else
+                {
+                    return this.Value[index];
+                }
             }
         }
 
