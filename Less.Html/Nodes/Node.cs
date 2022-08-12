@@ -326,6 +326,7 @@ namespace Less.Html
 
             this.OnRemovedChild(document, removeNodes);
 
+            //自检
             this.ownerDocument.SelfCheck();
             node.ownerDocument.SelfCheck();
 
