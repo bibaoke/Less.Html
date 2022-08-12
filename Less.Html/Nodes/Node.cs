@@ -450,11 +450,20 @@ namespace Less.Html
             //是否需要自检
             bool checking = false;
 
+            //要添加的子节点和本节点是否属于同一个文档
+            bool same_document = false;
+
             //如果节点已经有所属文档
             if (node.ownerDocument.IsNotNull())
             {
                 //如果添加的节点有所属文档，则需要自检
                 checking = true;
+
+                //判断要添加的子节点和本节点是否属于同一个文档
+                if (this.ownerDocument == node.ownerDocument)
+                {
+                    same_document = true;
+                }
 
                 //把节点添加到文档的节点列表
                 Node nextNode = this.GetNextNode();
@@ -538,6 +547,12 @@ namespace Less.Html
             node.ChildIndex = this.ChildNodeList.Count;
 
             this.ChildNodeList.Add(node);
+
+            if (same_document)
+            {
+                //在同一个文档中移动节点后执行
+                this.OnAppendedChildInSameDocument();
+            }
 
             //自检
             if (checking)
@@ -706,11 +721,19 @@ namespace Less.Html
         }
 
         /// <summary>
+        /// 在同一个文档中移动节点之后调用
+        /// </summary>
+        protected virtual void OnAppendedChildInSameDocument()
+        {
+            //
+        }
+
+        /// <summary>
         /// 自检函数
         /// </summary>
         protected virtual void OnSelfCheck()
         {
-
+            //
         }
 
         /// <summary>

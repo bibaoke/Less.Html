@@ -472,7 +472,7 @@ namespace Less.Html
 
             elements.Each((index, item) =>
             {
-                item.Index = document.all.Count + index;
+                item.Index = index;
             });
 
             document.all.AddRange(elements);
@@ -616,6 +616,18 @@ namespace Less.Html
 
                 this.AlterAllChildElementsCount(element.AllElementsCount);
             }
+        }
+
+        /// <summary>
+        /// 在同一个文档中移动节点之后执行
+        /// </summary>
+        protected override void OnAppendedChildInSameDocument()
+        {
+            //重新设置元素的索引
+            this.ownerDocument.all.Each((index, item) =>
+            {
+                item.Index = index;
+            });
         }
 
         /// <summary>
